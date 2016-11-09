@@ -1,0 +1,45 @@
+{% extends "forms/header.html" %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12 page-header">
+		<h2>Forms</h2>
+		<a href="workflows/new" class="btn btn-success btn-sm pull-right">Create New Form</a>
+		<div class="text-muted">
+			The available forms that can be submitted
+		</div>
+
+	</div>
+
+	<div class="col-md-12">
+	<table class="table table-hover table-bordered table-responsive">
+	<thead>
+		<tr class="row">
+			<th>Name</th>
+			<th>Description</th>
+			<!-- if current user can perform any of these actions -->
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for workflow in workflows %}
+		<tr class="row">
+			<td><a href="workflows/{{workflow.id}}">{{ workflow.name }}</a></td>
+			<td>{{workflow.description }}</td>
+			<td class="text-center">
+				<div class="btn-group" role="group" aria-label="...">
+					<a href="workflows/{{workflow.id}}/edit" class="btn btn-sm btn-success">
+						<span class="glyphicon glyphicon-pencil"/>
+					</a>
+					<a href="#" class="btn btn-sm btn-danger">
+						<span class="glyphicon glyphicon-trash"/>
+					</a>
+				</div>
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+	</div>
+</div>
+{% endblock %}
