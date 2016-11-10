@@ -10,17 +10,17 @@ class Workflow(models.Model):
     def __str__(self):
         return self.name
 
-class FormElementType(models.Model):
-    kind = models.CharField(max_length=200)
-    
-    def __str__(self):
-        return self.kind
-
 class FormElement(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
-    element_type = models.ForeignKey(FormElementType, on_delete=models.CASCADE)
     caption = models.CharField(max_length=200)
-    hint = models.CharField(max_length=500)
+    hint = models.CharField(max_length=500, blank=True)
+    AVAILABLE_ELEMENT_TYPES = (
+        ('text_input', 'Text Input'),
+        ('number_input', 'Number Input'),
+        ('option_group', 'Option Group'),
+        ('text_area', 'Text Area')
+    )
+    element_type = models.CharField(max_length=50, choices=AVAILABLE_ELEMENT_TYPES)
 
     def __str__(self):
         return self.caption
@@ -36,7 +36,13 @@ class FormElementListItem(models.Model):
 class State(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    kind = models.CharField(max_length=500)
+    AVAILABLE_KINDS = (
+        ('Initial', 'Initial'),
+        ('Intermediate', 'Intermediate'),
+        ('Accepted', 'Accepted'),
+        ('Rejected', 'Rejected')
+    )
+    kind = models.CharField(max_length=500, choices=AVAILABLE_KINDS)
 
     def __str__(self):
         return self.name
