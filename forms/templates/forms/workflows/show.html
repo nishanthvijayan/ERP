@@ -3,12 +3,121 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12 page-header">
-		<h2>Show Form</h2>
+		<h2>{{ workflow.name }}</h2>
+		<div class="btn-group pull-right" role="group" aria-label="...">
+			<a href="#" class="btn btn-primary btn" data-toggle="modal" data-target="#form_preview">Preview</a>
+			<a href="{% url 'forms:workflows-edit' workflow.id %}" class="btn btn-success btn">Edit</a>
+		</div>
+		<div class="text-muted">
+			{{ workflow.description }}
+		</div>
+	</div>
+
+	<div class="modal fade" id="form_preview" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">{{ workflow.name }}</h4>
+	      </div>
+	      <div class="modal-body">
+		<table class="table table-responsive">
+			<tbody>
+			{% for form_element in form_elements %}
+				<tr class="row">
+					<td>
+						{{ form_element.caption }}
+						{% if form_element.hint %}
+						<div class="text-muted">
+							({{ form_element.hint }})
+						</div>
+						{% endif %}
+					</td>
+					<td>
+					{% if form_element.element_type == 'text_input' %}
+						<input type="text"/>    
+					{% elif form_element.element_type == 'number_input' %}
+					    	<input type="number" name="">
+					{% elif form_element.element_type == 'text_area' %}
+					    	<textarea></textarea>
+					{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>	        
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 	<div class="col-md-12">
-	Name: {{workflow.name}}
-	Description: {{workflow.description}}
+		<h3>Form UI</h3>
+		<table class="table table-hover table-bordered table-responsive">
+			<thead>
+				<tr class="row">
+					<th>#</th>
+					<th>Field Title</th>
+					<th>Field Hint</th>
+					<th>Field Type</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for form_element in form_elements %}
+				<tr class="row">
+					<td>{{ forloop.counter }}</td>
+					<td>{{ form_element.caption }}</td>
+					<td>{{ form_element.hint }}</td>
+					<td>{{ form_element.element_type }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-12">
+		<h3>States</h3>
+		<table class="table table-hover table-bordered table-responsive">
+			<thead>
+				<tr class="row">
+					<th>#</th>
+					<th>Name</th>
+					<th>Type</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for state in states %}
+				<tr class="row">
+					<td>{{ forloop.counter }}</td>
+					<td>{{ state.name }}</td>
+					<td>{{ state.kind }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="col-md-12">
+		<h3>Transitions</h3>
+		<table class="table table-hover table-bordered table-responsive">
+			<thead>
+				<tr class="row">
+					<th>#</th>
+					<th>From</th>
+					<th>To</th>
+					<th>Groups allowed to make this transition</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for transition in transitions %}
+				<tr class="row">
+					<td>{{ forloop.counter }}</td>
+					<td>{{ transition.from_state.name }}</td>
+					<td>{{ transition.to_state.name }}</td>
+					<td>under construction</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
 	</div>
 </div>
 {% endblock %}

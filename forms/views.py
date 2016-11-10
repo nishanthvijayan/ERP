@@ -10,4 +10,8 @@ def edit(request, workflow_id):
 
 def show(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
-    return render(request, 'forms/workflows/show.html', {'workflow': workflow})
+    context = {'workflow': workflow,
+     'states': workflow.state_set.all(),
+      'transitions': workflow.transition_set.all(),
+      'form_elements': workflow.formelement_set.all()}
+    return render(request, 'forms/workflows/show.html', context)

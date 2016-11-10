@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-md-12 page-header">
 		<h2>Forms</h2>
-		<a href="workflows/new" class="btn btn-success btn-sm pull-right">Create New Form</a>
+		<a href="#" class="btn btn-success btn-sm pull-right">Create New Form</a>
 		<div class="text-muted">
 			The available forms that can be submitted
 		</div>
@@ -24,16 +24,13 @@
 	<tbody>
 	{% for workflow in workflows %}
 		<tr class="row">
-			<td><a href="workflows/{{workflow.id}}">{{ workflow.name }}</a></td>
+			<td><a href="{% url 'forms:workflows-show' workflow.id %}">{{ workflow.name }}</a></td>
 			<td>{{workflow.description }}</td>
 			<td class="text-center">
 				<div class="btn-group" role="group" aria-label="...">
-					<a href="workflows/{{workflow.id}}/edit" class="btn btn-sm btn-success">
-						<span class="glyphicon glyphicon-pencil"/>
-					</a>
-					<a href="#" class="btn btn-sm btn-danger">
-						<span class="glyphicon glyphicon-trash"/>
-					</a>
+					<a href="{% url 'forms:workflows-show' workflow.id %}" class="btn btn-sm btn-primary">View</a>
+					<a href="{% url 'forms:workflows-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
+					<a href="#" class="btn btn-sm btn-danger">Delete</a>
 				</div>
 			</td>
 		</tr>
