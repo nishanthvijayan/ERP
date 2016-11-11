@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import models
 
 
@@ -51,9 +51,10 @@ class Transition(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     from_state = models.ForeignKey(State, on_delete=models.CASCADE)
     to_state = models.ForeignKey(State, on_delete=models.CASCADE, related_name='+')
+    allowed_groups = models.ManyToManyField(Group)
 
     def __str__(self):
-        return self.from_state + ' -> ' + self.to_state
+        return self.from_state.name + ' -> ' + self.to_state.name
 
 class WorkflowInstance(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
