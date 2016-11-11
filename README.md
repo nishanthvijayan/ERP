@@ -16,9 +16,8 @@ python manage.py migrate
 ```
 
 Now, to run the app  
-`python manage.py runserver`
-If everything went weel upto this point, go to
-http://127.0.0.1:8000/forms/  
-to see the app running
+`python manage.py runserver`  
+  
+If everything went weel upto this point, go to http://127.0.0.1:8000/forms/  to see the app running
 
 
