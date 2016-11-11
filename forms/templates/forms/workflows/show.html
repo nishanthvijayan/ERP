@@ -52,72 +52,114 @@
 	</div>
 
 	<div class="col-md-12">
-		<h3>Form UI</h3>
-		<table class="table table-hover table-bordered table-responsive">
-			<thead>
-				<tr class="row">
-					<th>#</th>
-					<th>Field Title</th>
-					<th>Field Hint</th>
-					<th>Field Type</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for form_element in form_elements %}
-				<tr class="row">
-					<td>{{ forloop.counter }}</td>
-					<td>{{ form_element.caption }}</td>
-					<td>{{ form_element.hint }}</td>
-					<td>{{ form_element.element_type }}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<b>Form UI</b>
+			</div>
+			<div class="panel-body">
+
+				<table class="table table-hover table-bordered table-responsive">
+					<thead>
+						<tr class="row">
+							<th class="col-md-1">#</th>
+							<th class="col-md-3">Field Title</th>
+							<th class="col-md-5">Field Hint</th>
+							<th class="col-md-3">Field Type</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for form_element in form_elements %}
+						<tr class="row">
+							<td>{{ forloop.counter }}</td>
+							<td>{{ form_element.caption }}</td>
+							<td>
+								{% if form_element.hint %}
+									{{ form_element.hint }}
+								{% else %}
+									-
+								{% endif %}
+							</td>
+							<td>{{ form_element.element_type }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 	<div class="col-md-12">
-		<h3>States</h3>
-		<table class="table table-hover table-bordered table-responsive">
-			<thead>
-				<tr class="row">
-					<th>#</th>
-					<th>Name</th>
-					<th>Type</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for state in states %}
-				<tr class="row">
-					<td>{{ forloop.counter }}</td>
-					<td>{{ state.name }}</td>
-					<td>{{ state.kind }}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<b>States</b>
+				<a href="#" class="btn btn-default btn-xs pull-right">Add New State</a>
+				<br>
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover table-bordered table-responsive">
+					<thead>
+						<tr class="row">
+							<th class="col-md-1">#</th>
+							<th class="col-md-5">Name</th>
+							<th class="col-md-4">Type</th>
+							<th class="col-md-2">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for state in states %}
+						<tr class="row">
+							<td>{{ forloop.counter }}</td>
+							<td>{{ state.name }}</td>
+							<td>{{ state.kind }}</td>
+							<td class="text-center">
+								<div class="btn-group" role="group" aria-label="...">
+									<a href="#" class="btn btn-success btn-sm">Edit</a>
+									<a href="#" class="btn btn-danger btn-sm">Delete</a>
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-md-12">
-		<h3>Transitions</h3>
-		<table class="table table-hover table-bordered table-responsive">
-			<thead>
-				<tr class="row">
-					<th>#</th>
-					<th>From</th>
-					<th>To</th>
-					<th>Groups allowed to make this transition</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for transition in transitions %}
-				<tr class="row">
-					<td>{{ forloop.counter }}</td>
-					<td>{{ transition.from_state.name }}</td>
-					<td>{{ transition.to_state.name }}</td>
-					<td>under construction</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<b>Transitions</b>
+				<a href="#" class="btn btn-default btn-xs pull-right">Add New Transition</a>
+				<br>
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover table-bordered table-responsive">
+					<thead>
+						<tr class="row">
+							<th class="col-md-1">#</th>
+							<th class="col-md-3">From</th>
+							<th class="col-md-3">To</th>
+							<th class="col-md-3">Groups allowed to make this transition</th>
+							<th class="col-md-2">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for transition in transitions %}
+						<tr class="row">
+							<td>{{ forloop.counter }}</td>
+							<td>{{ transition.from_state.name }}</td>
+							<td>{{ transition.to_state.name }}</td>
+							<td>under construction</td>
+							<td class="text-center">
+								<div class="btn-group" role="group" aria-label="...">
+									<a href="#" class="btn btn-success btn-sm">Edit</a>
+									<a href="#" class="btn btn-danger btn-sm">Delete</a>
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
 	</div>
 </div>
 {% endblock %}
