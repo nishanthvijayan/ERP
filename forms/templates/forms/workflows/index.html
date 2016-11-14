@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-md-12 page-header">
 		<h2>Forms</h2>
-		<a href="#" class="btn btn-success btn-sm pull-right">Create New Form</a>
+		<a href="{% url 'forms:workflow-new' %}" class="btn btn-success btn-sm pull-right">Create New Form</a>
 		<div class="text-muted">
 			The available forms that can be submitted
 		</div>
@@ -24,13 +24,13 @@
 	<tbody>
 	{% for workflow in workflows %}
 		<tr class="row">
-			<td><a href="{% url 'forms:workflows-show' workflow.id %}">{{ workflow.name }}</a></td>
+			<td><a href="{% url 'forms:workflow-show' workflow.id %}">{{ workflow.name }}</a></td>
 			<td>{{workflow.description }}</td>
 			<td class="text-center">
 				<div class="btn-group" role="group" aria-label="...">
-					<a href="{% url 'forms:workflows-show' workflow.id %}" class="btn btn-sm btn-primary">View</a>
-					<a href="{% url 'forms:workflows-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
-					<a href="#" class="btn btn-sm btn-danger">Delete</a>
+					<a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">View</a>
+					<a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
+					<a href="{% url 'forms:workflow-delete' workflow.id %}"  class="btn btn-sm btn-danger">Delete</a>
 				</div>
 			</td>
 		</tr>

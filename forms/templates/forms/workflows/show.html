@@ -6,7 +6,7 @@
 		<h2>{{ workflow.name }}</h2>
 		<div class="btn-group pull-right" role="group" aria-label="...">
 			<a href="#" class="btn btn-primary btn" data-toggle="modal" data-target="#form_preview">Preview</a>
-			<a href="{% url 'forms:workflows-edit' workflow.id %}" class="btn btn-success btn">Edit</a>
+			<a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-success btn">Edit</a>
 		</div>
 		<div class="text-muted">
 			{{ workflow.description }}
@@ -14,7 +14,7 @@
 	</div>
 
 	<div class="modal fade" id="form_preview" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-lg" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -63,8 +63,9 @@
 						<tr class="row">
 							<th class="col-md-1">#</th>
 							<th class="col-md-3">Field Title</th>
-							<th class="col-md-5">Field Hint</th>
-							<th class="col-md-3">Field Type</th>
+							<th class="col-md-4">Field Hint</th>
+							<th class="col-md-2">Field Type</th>
+							<th class="col-md-2">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -80,10 +81,17 @@
 								{% endif %}
 							</td>
 							<td>{{ form_element.element_type }}</td>
+							<td class="text-center">
+								<div class="btn-group" role="group" aria-label="...">
+									<a href="{% url 'forms:form-element-edit' workflow.id form_element.id %}" class="btn btn-success btn-sm">Edit</a>
+									<a href="{% url 'forms:form-element-delete' workflow.id form_element.id %}" class="btn btn-danger btn-sm">Delete</a>
+								</div>
+							</td>
 						</tr>
 					{% endfor %}
 					</tbody>
 				</table>
+				<a href="{% url 'forms:form-element-new' workflow.id %}" class="btn btn-primary btn-sm">New Element</a>
 			</div>
 		</div>
 	</div>
@@ -91,8 +99,6 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<b>States</b>
-				<a href="#" class="btn btn-default btn-xs pull-right">Add New State</a>
-				<br>
 			</div>
 			<div class="panel-body">
 				<table class="table table-hover table-bordered table-responsive">
@@ -112,14 +118,15 @@
 							<td>{{ state.kind }}</td>
 							<td class="text-center">
 								<div class="btn-group" role="group" aria-label="...">
-									<a href="#" class="btn btn-success btn-sm">Edit</a>
-									<a href="#" class="btn btn-danger btn-sm">Delete</a>
+									<a href="{% url 'forms:state-edit' workflow.id state.id %}" class="btn btn-success btn-sm">Edit</a>
+									<a href="{% url 'forms:state-delete' workflow.id state.id %}" class="btn btn-danger btn-sm">Delete</a>
 								</div>
 							</td>
 						</tr>
 					{% endfor %}
 					</tbody>
 				</table>
+				<a href="{% url 'forms:state-new' workflow.id %}" class="btn btn-sm btn-primary">New State</a>
 			</div>
 		</div>
 	</div>
@@ -128,8 +135,6 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<b>Transitions</b>
-				<a href="#" class="btn btn-default btn-xs pull-right">Add New Transition</a>
-				<br>
 			</div>
 			<div class="panel-body">
 				<table class="table table-hover table-bordered table-responsive">
@@ -151,14 +156,15 @@
 							<td>under construction</td>
 							<td class="text-center">
 								<div class="btn-group" role="group" aria-label="...">
-									<a href="#" class="btn btn-success btn-sm">Edit</a>
-									<a href="#" class="btn btn-danger btn-sm">Delete</a>
+									<a href="{% url 'forms:transition-edit' workflow.id transition.id %}" class="btn btn-success btn-sm">Edit</a>
+									<a href="{% url 'forms:transition-delete' workflow.id transition.id %}" class="btn btn-danger btn-sm">Delete</a>
 								</div>
 							</td>
 						</tr>
 					{% endfor %}
 					</tbody>
 				</table>
+				<a href="{% url 'forms:transition-new' workflow.id %}" class="btn btn-sm btn-primary">New Transition</a>
 			</div>
 	</div>
 </div>

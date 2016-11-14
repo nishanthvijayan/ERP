@@ -3,13 +3,13 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12 page-header">
-		<h2>Edit Form</h2>
+		<h2>Edit State</h2>
 	</div>
 
 	<div class="col-md-12">
-		<form action="{% url 'forms:workflow-edit' workflow.id %}" method="post">
+		<form action="{% url 'forms:state-edit' workflow_id state_id %}" method="post">
 		    {% csrf_token %}
-		    {{ form }}
+		    {{ form.as_p }}
 		    <input type="submit" value="Submit" />
 		</form>
 	</div>
