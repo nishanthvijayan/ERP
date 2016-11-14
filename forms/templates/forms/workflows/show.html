@@ -5,8 +5,9 @@
 	<div class="col-md-12 page-header">
 		<h2>{{ workflow.name }}</h2>
 		<div class="btn-group pull-right" role="group" aria-label="...">
-			<a href="#" class="btn btn-primary btn" data-toggle="modal" data-target="#form_preview">Preview</a>
-			<a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-success btn">Edit</a>
+			<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#form_preview">Preview</a>
+			<a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-success">Edit</a>
+			<a href="{% url 'forms:workflow-instance-index' workflow.id %}" class="btn btn-warning">Responses</a>
 		</div>
 		<div class="text-muted">
 			{{ workflow.description }}

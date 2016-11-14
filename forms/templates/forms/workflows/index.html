@@ -24,13 +24,14 @@
 	<tbody>
 	{% for workflow in workflows %}
 		<tr class="row">
-			<td><a href="{% url 'forms:workflow-show' workflow.id %}">{{ workflow.name }}</a></td>
-			<td>{{workflow.description }}</td>
-			<td class="text-center">
+			<td class="col-md-3"><a href="{% url 'forms:workflow-instance-new' workflow.id %}">{{ workflow.name }}</a></td>
+			<td class="col-md-6">{{workflow.description }}</td>
+			<td class="col-md-3 text-center">
 				<div class="btn-group" role="group" aria-label="...">
-					<a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">View</a>
+					<a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">Details</a>
 					<a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
 					<a href="{% url 'forms:workflow-delete' workflow.id %}"  class="btn btn-sm btn-danger">Delete</a>
+					<a href="{% url 'forms:workflow-instance-index' workflow.id %}" class="btn btn-sm btn-warning">Responses</a>
 				</div>
 			</td>
 		</tr>

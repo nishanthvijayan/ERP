@@ -6,3 +6,9 @@ class Workflow(models.Model):
 
     def __str__(self):
         return self.name
+
+    def initial_state(self):
+        try:
+            return self.state_set.filter(kind='Initial')[0]
+        except IndexError:
+            return None

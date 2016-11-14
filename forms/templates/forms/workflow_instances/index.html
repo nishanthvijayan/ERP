@@ -1,0 +1,40 @@
+{% extends "forms/header.html" %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12 page-header">
+		<h2>Responses to {{ workflow.name }}</h2>
+	</div>
+
+	<div class="col-md-12">
+		<table class="table table-hover table-bordered table-responsive">
+			<thead>
+				<tr class="row">
+					<th>Submitted By</th>
+					<th>Status</th>
+					{% for form_element in form_elements %}
+						<th>{{ form_element.caption }}</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody>
+			{% for response in responses %}
+				<tr class="row">
+					<td>{{ response.creator.username }}</td>
+					<td>{{ response.current_state.name }}</td>
+					{% for element in response.formelementinstance_set.all %}
+						<td>
+							{% if element.value %}
+								{{ element.value }}
+							{% else %}
+								-
+							{% endif %}
+						</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "forms/header.html" %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12 page-header">
+		<h2>{{ workflow.name }}</h2>
+		<div class="text-muted">
+			{{ workflow.description }}
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<form action="{% url 'forms:workflow-instance-new' workflow.id %}" method="post">
+			{% csrf_token %}
+			<table class="table table-responsive">
+				<tbody>
+				{% for form_element in form_elements %}
+					<tr class="row">
+						<td>
+							{{ form_element.caption }}
+							{% if form_element.hint %}
+							<div class="text-muted">
+								({{ form_element.hint }})
+							</div>
+							{% endif %}
+						</td>
+						<td>
+						{% if form_element.element_type == 'text_input' %}
+							<input type="text" name='{{ form_element.caption }}'/>    
+						{% elif form_element.element_type == 'number_input' %}
+						    	<input type="number" name='{{ form_element.caption }}'>
+						{% elif form_element.element_type == 'text_area' %}
+						    	<textarea name='{{ form_element.caption }}'></textarea>
+						{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			<input type="submit" value="Submit" />
+		</form>
+	</div>
+</div>
+{% endblock %}
