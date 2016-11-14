@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="col-md-12">
-		<form action="{% url 'forms:workflows-new' %}" method="post">
+		<form action="{% url 'forms:workflow-new' %}" method="post">
 		    {% csrf_token %}
 		    {{ form.as_p }}
 		    <input type="submit" value="Submit" />
