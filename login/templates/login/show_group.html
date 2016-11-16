@@ -1,0 +1,53 @@
+{% extends "login/base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="row page-header">
+    <div class="col-sm-10 col-md-6">
+      <div class="thumbnail">
+        <div class="caption">
+          <h4><b>Group Name : </b>{{ group.name }}</h4>
+          <p><b>Description : </b>Head of the departments</p>
+          <p>
+            <a href="/edit-group/{{ group.name }}/change-name" class="btn btn-sm btn-primary">Edit Name</a>
+            <a href="/edit-group/{{ group.name }}/add-user/" class="btn btn-sm btn-success">Add User</a>
+            <a href="/delete-group/{{ group.name }}"  class="btn btn-sm btn-danger">Delete Group</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <h4>List of all users in the group</h4>
+  </div>
+  <div class="row">
+  <div class="col-md-6 col-xs-12">
+  <table class="table table-hover table-bordered table-responsive">
+  <thead>
+    <tr class="row">
+      <th>Names</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+    <tr class="row">
+      <td><a href="#">{{ user.username }}</a></td>
+      <td>{{ user.email }}</td>
+      <td class="text-center">
+        <div class="btn-group" role="group" aria-label="...">
+          <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
+          <a href="/edit-group/{{ group.name }}/remove-user/{{ user.username }}"  class="btn btn-sm btn-danger">Remove user</a>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+  </div>
+  </div>
+</div>
+
+{% endblock %}
