@@ -6,14 +6,14 @@
   <div class="col-md-12 page-header">
     {% if message %}
     <h3>{{ message }}</h3>
-    <h3><a href="{% url 'login:show-group' group_name %}">Go Back</a></h3>
+    <h3><a href="{% url 'login:show-group' group_id %}">Go Back</a></h3>
     {% elif change_name_form %}
-    <form action="{% url 'login:edit-group' group_name 'change-name' %}" method="post">{% csrf_token %}
+    <form action="{% url 'login:edit-group' group_id 'change-name' %}" method="post">{% csrf_token %}
       {{ change_name_form.as_p }}
       <input type="submit" class="btn btn-primary" value="Save"/> 
     </form>
     {% else %}
-    <form action="{% url 'login:edit-group' group_name 'add-user' %}" method="post">{% csrf_token %}
+    <form action="{% url 'login:edit-group' group_id 'add-user' %}" method="post">{% csrf_token %}
       <div class="input-group col-md-6 pull-left">
         <span class="input-group-addon" id="sizing-addon2">@</span>
         <input type="text" class="form-control" name="username" placeholder="Username" aria-describedby="sizing-addon2">

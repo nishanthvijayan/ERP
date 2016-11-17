@@ -8,7 +8,7 @@
     <h3>{{ message }}</h3>
     <h3><a href="{% url 'login:login' %}">Go Back</a></h3>
     {% else %}
-    <form action="/create-group" method="post">{% csrf_token %}
+    <form action="{% url 'login:create-group' %}" method="post">{% csrf_token %}
       {{ form.as_p }}
       <input type="submit" class="btn btn-primary" value="Create Group"/> 
     </form>

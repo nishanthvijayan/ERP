@@ -33,8 +33,8 @@
 			<td class="text-center">
 				<div class="btn-group" role="group" aria-label="...">
 					<!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-					<a href="{% url 'login:edit-user' user.username %}" class="btn btn-sm btn-success">Edit</a>
-					<a href="{% url 'login:remove-user' user.username %}"  class="btn btn-sm btn-danger">Delete</a>
+					<a href="{% url 'login:edit-user' user.pk %}" class="btn btn-sm btn-success">Edit</a>
+					<a href="{% url 'login:remove-user' user.pk %}"  class="btn btn-sm btn-danger">Delete</a>
 				</div>
 			</td>
 		</tr>
@@ -72,8 +72,8 @@
 			<td class="text-center">
 				<div class="btn-group" role="group" aria-label="...">
 					<!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-					<a href="{% url 'login:show-group' group.name %}" class="btn btn-sm btn-primary">Show Group</a>
-					<a href="{% url 'login:delete-group' group.name %}"  class="btn btn-sm btn-danger">Delete</a>
+					<a href="{% url 'login:show-group' group.pk %}" class="btn btn-sm btn-primary">Show Group</a>
+					<a href="{% url 'login:delete-group' group.pk %}"  class="btn btn-sm btn-danger">Delete</a>
 				</div>
 			</td>
 		</tr>
