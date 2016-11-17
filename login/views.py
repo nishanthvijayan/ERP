@@ -105,12 +105,7 @@ def show_group(request,name):
 	c['group'] = group
 	return render_to_response('login/show_group.html',c)
 
-def test(request,name,arg):
-	print name, arg
-	return HttpResponseRedirect('/')
-
 def edit_group(request, name, task):
-	print task
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 	try:
