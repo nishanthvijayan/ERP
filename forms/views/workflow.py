@@ -19,7 +19,7 @@ def workflow_new(request):
         if form.is_valid():
             workflow = Workflow(name=form.cleaned_data['name'], description=form.cleaned_data['description'])
             workflow.save()
-            return render(request, 'forms/workflows/index.html', {'workflows': Workflow.objects.all()})
+            return redirect('forms:workflow-index')
     else:
         form = WorkflowForm()
 
@@ -33,7 +33,7 @@ def workflow_edit(request, workflow_id):
             workflow.name = form.cleaned_data['name']
             workflow.description = form.cleaned_data['description']
             workflow.save()
-            return render(request, 'forms/workflows/index.html', {'workflows': Workflow.objects.all()})
+            return redirect('forms:workflow-index')
     else:
         form = WorkflowForm({"name": workflow.name, "description": workflow.description})
 
