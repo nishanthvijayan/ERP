@@ -1,10 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+
 from forms.models import Workflow
 from forms.forms import WorkflowForm
 
+@login_required
 def workflow_index(request):
     return render(request, 'forms/workflows/index.html', {'workflows': Workflow.objects.all()})
 
+@login_required
 def workflow_show(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
     context = {'workflow': workflow,
@@ -13,6 +17,7 @@ def workflow_show(request, workflow_id):
       'form_elements': workflow.formelement_set.all()}
     return render(request, 'forms/workflows/show.html', context)
 
+@login_required
 def workflow_new(request):
     if request.method == 'POST':
         form = WorkflowForm(request.POST)
@@ -25,6 +30,7 @@ def workflow_new(request):
 
     return render(request, 'forms/workflows/new.html', {'form': form})
 
+@login_required
 def workflow_edit(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
     if request.method == 'POST':
@@ -39,6 +45,7 @@ def workflow_edit(request, workflow_id):
 
     return render(request, 'forms/workflows/edit.html', {'form': form, 'workflow': workflow})
 
+@login_required
 def workflow_delete(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
     workflow.delete()

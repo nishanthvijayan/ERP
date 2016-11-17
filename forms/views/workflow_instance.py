@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+
 from forms.models import WorkflowInstance, FormElementInstance, Workflow
 
+@login_required
 def workflow_instance_index(request, workflow_id): 
     workflow = get_object_or_404(Workflow, pk=workflow_id)
     form_elements = workflow.formelement_set.all()
@@ -8,6 +11,7 @@ def workflow_instance_index(request, workflow_id):
     context = {'workflow': workflow, 'form_elements': form_elements, "responses": responses}
     return render(request, 'forms/workflow_instances/index.html', context)
 
+@login_required
 def workflow_instance_new(request, workflow_id): 
     workflow = get_object_or_404(Workflow, pk=workflow_id)
     form_elements = workflow.formelement_set.all()
