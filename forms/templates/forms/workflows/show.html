@@ -63,9 +63,10 @@
 					<thead>
 						<tr class="row">
 							<th class="col-md-1">#</th>
-							<th class="col-md-3">Field Title</th>
+							<th class="col-md-2">Field Title</th>
 							<th class="col-md-4">Field Hint</th>
 							<th class="col-md-2">Field Type</th>
+							<th class="col-md-1">Position</th>
 							<th class="col-md-2">Actions</th>
 						</tr>
 					</thead>
@@ -82,6 +83,7 @@
 								{% endif %}
 							</td>
 							<td>{{ form_element.element_type }}</td>
+							<td>{{ form_element.position }}</td>
 							<td class="text-center">
 								<div class="btn-group" role="group" aria-label="...">
 									<a href="{% url 'forms:form-element-edit' workflow.id form_element.id %}" class="btn btn-success btn-sm">Edit</a>
