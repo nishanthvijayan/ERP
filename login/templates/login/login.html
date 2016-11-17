@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>ERP Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static "/login/css/login.css" %}">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static "/login/css/bootstrap.min.css" %}">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="login-box">
+      <h1 id="logo-label">ERP | Login</h1>
+      <form action="{% url 'login:login' %}" method="post">{% csrf_token %}
+          <input id="username" type="text" name="username" placeholder="Username" required="required" /><br>
+          <input id="password" type="password" name="password" placeholder="Password" required="required" /><br>
+          <input type="submit" value="Let me in" class="btn btn-primary btn-block btn-large" />
+      </form>
+      {% if message %}
+        <br>
+        <h5 id="logo-label">{{ message }}</h5>
+      {% else %}
+        <h6 id="signup-link">New Here? <a href="#">Sign Up</a></h6>
+      {% endif %}
+    </div>
+  </body>
+</html>
