@@ -88,7 +88,7 @@ def create_group(request):
 def delete_group(request,name):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
-	user = get_object_or_404(User, username=username)
+	group = get_object_or_404(Group, name=name)
 	if group.delete():
 		return render_to_response("login/delete_group.html",{'message': 'Group \'' + name + '\' successfully deleted!'})
 	else:
@@ -98,7 +98,8 @@ def delete_group(request,name):
 def show_group(request,name):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
-	user = get_object_or_404(User, username=username)
+	group = get_object_or_404(Group, name=name)
+	users = group.user_set.all()
 	c = {}
 	c.update(csrf(request))
 	c['users'] = users
@@ -151,13 +152,10 @@ def edit_group(request, name, task):
 			c.update(csrf(request))
 			c['group_name'] = group.name
 			return render_to_response('login/edit_group.html',c)
-		elif task[:12] == 'remove-user/':
-			if request.method == 'GET':
-				username = task[12:]
-				try:	
-					user = User.objects.get(username=username)
-				except User.DoesNotExist:
-					user = None
+		elif task == 'remove-user':
+			if request.method == 'POST':
+				username = request.POST.get('username')
+				user = get_object_or_404(User, username=username)
 				if user:
 					user.groups.remove(group)
 					return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' successfully removed from the group \'' + group.name +'\'.', 'group_name': group.name})
@@ -166,9 +164,8 @@ def edit_group(request, name, task):
 		else:
 			return HttpResponseRedirect('/')
 
-# Login
+# LoginView
 class LoginView(View):
-	
 	def post(self, request):
 		username = request.POST['username']
 		password = request.POST['password']
