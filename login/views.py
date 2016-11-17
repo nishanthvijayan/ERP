@@ -44,7 +44,7 @@ def remove_user(request,user_id):
 		messages.success(request, 'User \'' + user.username + '\' successfully removed!')
 	else:
 		messages.error(request, 'Some error occured!')
-	return redirect('login:login')
+	return redirect('login:home')
 
 def edit_user(request,user_id):
 	if not request.user.is_authenticated():
