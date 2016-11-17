@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.template.context_processors import csrf
 from django.views import View
 from django.contrib.auth.models import User, Group
-from login.models import RegisterUserForm, EditUserForm, CreateGroupForm, EditGroupForm
+from login.forms import RegisterUserForm, EditUserForm, CreateGroupForm, EditGroupForm
 
 
 # After Login
