@@ -174,7 +174,7 @@ class LoginView(View):
 		else:
 			c = {}
 			c.update(csrf(request))
-			c['message'] = 'invalid'
+			c['message'] = 'Invalid Credentials. Please try again'
 			return render_to_response('login/login.html',c)
 	
 	def get(self, request):
@@ -187,4 +187,7 @@ class LoginView(View):
 class LogoutView(View):
 	def get(self, request):
 		auth.logout(request)
-		return render_to_response("login/logout.html") 
+		c = {}
+		c.update(csrf(request))
+		c['message'] = 'You have successfully logged out.'
+		return render_to_response('login/login.html',c) 
