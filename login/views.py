@@ -131,17 +131,9 @@ def edit_group(request, name, task):
 	elif task == 'add-user':
 		if request.method == 'POST':
 			username = request.POST.get('username')
-			if not username:
-				return render_to_response('login/edit_group.html',{'message': 'Some error occured', 'group_name': group.name})
-			try:	
-				user = User.objects.get(username=username)
-			except User.DoesNotExist:
-				user = None
-			if user:
-				group.user_set.add(user)
-				return render_to_response('login/edit_group.html',{'message': 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.', 'group_name': group.name})
-			else:
-				return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' not found!', 'group_name': group.name})
+			user = get_object_or_404(User, username=username)
+			group.user_set.add(user)
+			return render_to_response('login/edit_group.html',{'message': 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.', 'group_name': group.name})
 		else:
 			pass
 		c = {}
@@ -152,11 +144,8 @@ def edit_group(request, name, task):
 	elif task == 'remove-user':
 		username = request.POST.get('username')
 		user = get_object_or_404(User, username=username)
-		if user:
-			user.groups.remove(group)
-			return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' successfully removed from the group \'' + group.name +'\'.', 'group_name': group.name})
-		else:
-			return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' not found!', 'group_name': group.name})
+		user.groups.remove(group)
+		return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' successfully removed from the group \'' + group.name +'\'.', 'group_name': group.name})
 	else:
 		return HttpResponseRedirect('/')
 
