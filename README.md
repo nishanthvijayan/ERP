@@ -4,11 +4,11 @@
   
 * Install Django (preferably 1.10.0+)  
   
-`sudo pip install django`
+	`sudo pip install django`
 
 * Install django-positions (version 0.5.4)  
   
-`sudo pip install django-positions`
+	`sudo pip install django-positions`
     
 Clone/Download this repository and cd into the project  
   
