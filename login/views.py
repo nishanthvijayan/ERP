@@ -41,13 +41,7 @@ def register_user(request):
 def remove_user(request,username):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
-	# user = get_object_or_404(User, username=username)
-	try:
-		user = User.objects.get(username=username)
-	except User.DoesNotExist:
-		user = None
-	if not user:
-		return render_to_response('login/remove_user.html',{'message': 'User \'' + username + '\' not found!'})
+	user = get_object_or_404(User, username=username)
 	if user.delete():
 		return render_to_response("login/remove_user.html",{'message': 'User \'' + username + '\' successfully removed!'})
 	else:
@@ -56,28 +50,22 @@ def remove_user(request,username):
 def edit_user(request,username):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
-	try:
-		user = User.objects.get(username=username)
-	except User.DoesNotExist:
-		user = None
-	if not user:
-		return render_to_response('login/edit_user.html',{'message': 'User \'' + username + '\' not found!'})
+	user = get_object_or_404(User, username=username)
+	if request.method == 'POST':
+		form = EditUserForm(request.POST, instance=user)
+		if form.is_valid():
+			if form.save():
+				return render_to_response("login/edit_user.html",{'message': 'User \'' + username + '\' info successfully updated!'})
+			else:
+				return render_to_response('login/edit_user.html',{'message': 'Some error occured'})
 	else:
-		if request.method == 'POST':
-			form = EditUserForm(request.POST, instance=user)
-			if form.is_valid():
-				if form.save():
-					return render_to_response("login/edit_user.html",{'message': 'User \'' + username + '\' info successfully updated!'})
-				else:
-					return render_to_response('login/edit_user.html',{'message': 'Some error occured'})
-		else:
-			form = EditUserForm(instance=user)
+		form = EditUserForm(instance=user)
 
-		c = {}
-		c.update(csrf(request))
-		c['form'] = form
-		c['username'] = user.username 
-		return render_to_response('login/edit_user.html',c)
+	c = {}
+	c.update(csrf(request))
+	c['form'] = form
+	c['username'] = user.username 
+	return render_to_response('login/edit_user.html',c)
 
 # Group Management
 def create_group(request):
@@ -100,13 +88,7 @@ def create_group(request):
 def delete_group(request,name):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
-	# user = get_object_or_404(User, username=username)
-	try:
-		group = Group.objects.get(name=name)
-	except Group.DoesNotExist:
-		group = None
-	if not group:
-		return render_to_response('login/delete_group.html',{'message': 'Group \'' + name + '\' not found!'})
+	user = get_object_or_404(User, username=username)
 	if group.delete():
 		return render_to_response("login/delete_group.html",{'message': 'Group \'' + name + '\' successfully deleted!'})
 	else:
@@ -116,19 +98,12 @@ def delete_group(request,name):
 def show_group(request,name):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
-	try:
-		group = Group.objects.get(name=name)
-		users = group.user_set.all()
-	except Group.DoesNotExist:
-		group = None
-	if not group:
-		return render_to_response('login/edit_group.html',{'message': 'Group \'' + name + '\' not found!'})
-	else:
-		c = {}
-		c.update(csrf(request))
-		c['users'] = users
-		c['group'] = group
-		return render_to_response('login/show_group.html',c)
+	user = get_object_or_404(User, username=username)
+	c = {}
+	c.update(csrf(request))
+	c['users'] = users
+	c['group'] = group
+	return render_to_response('login/show_group.html',c)
 
 def test(request,name,arg):
 	print name, arg
