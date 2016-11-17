@@ -27,7 +27,12 @@
           <input id="password" type="password" name="password" placeholder="Password" required="required" /><br>
           <input type="submit" value="Let me in" class="btn btn-primary btn-block btn-large" />
       </form>
-      <h6 id="signup-link">New Here? <a href="#">Sign Up</a></h6>
+      {% if message %}
+        <br>
+        <h6 id="logo-label">Invalid Login Credentials, Please try again</h6>
+      {% else %}
+        <h6 id="signup-link">New Here? <a href="#">Sign Up</a></h6>
+      {% endif %}
     </div>
   </body>
 </html>

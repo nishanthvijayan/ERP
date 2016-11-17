@@ -109,60 +109,56 @@ def show_group(request,name):
 def edit_group(request, name, task):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
-	try:
-		group = Group.objects.get(name=name)
-	except Group.DoesNotExist:
-		group = None
-	if not group:
-		return render_to_response('login/edit_group.html',{'message': 'Group \'' + name + '\' not found!'})
-	else:
-		if task == 'change-name':
-			if request.method == 'POST':
-				form = EditGroupForm(request.POST,instance=group)
-				if form.is_valid():
-					if form.save():
-						return render_to_response("login/edit_group.html",{'message': 'Group name successfully changed form \'' + name + '\' to \'' + group.name + '\'.', 'group_name': group.name})
-					else:
-						return render_to_response('login/edit_group.html',{'message': 'Some error occured'})
-			else:
-				form = EditGroupForm(instance=group)
-
-			c = {}
-			c.update(csrf(request))
-			c['change_name_form'] = form
-			c['group_name'] = group.name
-			return render_to_response('login/edit_group.html',c)
-		elif task == 'add-user':
-			if request.method == 'POST':
-				username = request.POST.get('username')
-				if not username:
-					return render_to_response('login/edit_group.html',{'message': 'Some error occured', 'group_name': group.name})
-				try:	
-					user = User.objects.get(username=username)
-				except User.DoesNotExist:
-					user = None
-				if user:
-					group.user_set.add(user)
-					return render_to_response('login/edit_group.html',{'message': 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.', 'group_name': group.name})
+	group = get_object_or_404(Group, name=name)
+	# URL: /edit_group/{{ group_name }}/change-name
+	if task == 'change-name':
+		if request.method == 'POST':
+			form = EditGroupForm(request.POST,instance=group)
+			if form.is_valid():
+				if form.save():
+					return render_to_response("login/edit_group.html",{'message': 'Group name successfully changed form \'' + name + '\' to \'' + group.name + '\'.', 'group_name': group.name})
 				else:
-					return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' not found!', 'group_name': group.name})
-			else:
-				pass
-			c = {}
-			c.update(csrf(request))
-			c['group_name'] = group.name
-			return render_to_response('login/edit_group.html',c)
-		elif task == 'remove-user':
-			if request.method == 'POST':
-				username = request.POST.get('username')
-				user = get_object_or_404(User, username=username)
-				if user:
-					user.groups.remove(group)
-					return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' successfully removed from the group \'' + group.name +'\'.', 'group_name': group.name})
-				else:
-					return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' not found!', 'group_name': group.name})
+					return render_to_response('login/edit_group.html',{'message': 'Some error occured'})
 		else:
-			return HttpResponseRedirect('/')
+			form = EditGroupForm(instance=group)
+
+		c = {}
+		c.update(csrf(request))
+		c['change_name_form'] = form
+		c['group_name'] = group.name
+		return render_to_response('login/edit_group.html',c)
+	# URL: /edit_group/{{ group_name }}/add-user
+	elif task == 'add-user':
+		if request.method == 'POST':
+			username = request.POST.get('username')
+			if not username:
+				return render_to_response('login/edit_group.html',{'message': 'Some error occured', 'group_name': group.name})
+			try:	
+				user = User.objects.get(username=username)
+			except User.DoesNotExist:
+				user = None
+			if user:
+				group.user_set.add(user)
+				return render_to_response('login/edit_group.html',{'message': 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.', 'group_name': group.name})
+			else:
+				return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' not found!', 'group_name': group.name})
+		else:
+			pass
+		c = {}
+		c.update(csrf(request))
+		c['group_name'] = group.name
+		return render_to_response('login/edit_group.html',c)
+	# URL: /edit_group/{{ group_name }}/remove-user
+	elif task == 'remove-user':
+		username = request.POST.get('username')
+		user = get_object_or_404(User, username=username)
+		if user:
+			user.groups.remove(group)
+			return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' successfully removed from the group \'' + group.name +'\'.', 'group_name': group.name})
+		else:
+			return render_to_response('login/edit_group.html',{'message': 'User \'' + username + '\' not found!', 'group_name': group.name})
+	else:
+		return HttpResponseRedirect('/')
 
 # LoginView
 class LoginView(View):
@@ -176,7 +172,10 @@ class LoginView(View):
 			auth.login(request, user)
 			return HttpResponseRedirect('home')
 		else:
-			return HttpResponseRedirect('invalid')
+			c = {}
+			c.update(csrf(request))
+			c['message'] = 'invalid'
+			return render_to_response('login/login.html',c)
 	
 	def get(self, request):
 		if request.user.is_authenticated():
