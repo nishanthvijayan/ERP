@@ -1,6 +1,8 @@
 from django.conf.urls import url
 import views
 
+app_name='login'
+
 urlpatterns = [
     url(r'^$', views.LoginView.as_view(), name='login'),
     url(r'^home/{0,1}$', views.home, name='home'),

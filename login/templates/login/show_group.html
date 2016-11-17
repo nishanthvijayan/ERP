@@ -10,9 +10,9 @@
           <h4><b>Group Name : </b>{{ group.name }}</h4>
           <p><b>Description : </b>Head of the departments</p>
           <p>
-            <a href="/edit-group/{{ group.name }}/change-name" class="btn btn-sm btn-primary">Edit Name</a>
-            <a href="/edit-group/{{ group.name }}/add-user/" class="btn btn-sm btn-success">Add User</a>
-            <a href="/delete-group/{{ group.name }}"  class="btn btn-sm btn-danger">Delete Group</a>
+            <a href="{% url 'login:edit-group' group.name 'change-name' %}" class="btn btn-sm btn-primary">Edit Name</a>
+            <a href="{% url 'login:edit-group' group.name 'add-user' %}" class="btn btn-sm btn-success">Add User</a>
+            <a href="{% url 'login:delete-group' group.name %}"  class="btn btn-sm btn-danger">Delete Group</a>
           </p>
         </div>
       </div>

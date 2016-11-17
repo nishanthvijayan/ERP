@@ -6,7 +6,7 @@
   <div class="col-md-12 page-header">
     {% if message %}
     <h3>{{ message }}</h3>
-    <h3><a href="/">Go Back</a></h3>
+    <h3><a href="{% url 'login:login' %}">Go Back</a></h3>
     {% else %}
     <form action="/create-group" method="post">{% csrf_token %}
       {{ form.as_p }}

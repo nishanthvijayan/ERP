@@ -9,7 +9,7 @@
   </head>
   <body>
     <header class="navbar center navbar-fixed-top navbar-inverse">
-      <a href="/" id="logo">IIT Ropar - ERP</a>
+      <a href="{% url 'login:login' %}" id="logo">IIT Ropar - ERP</a>
       <div class="container">
         <nav>
           <ul class="nav navbar-nav navbar-right">
@@ -23,7 +23,7 @@
               <ul class="dropdown-menu">
                 <li><a href="#">Settings</a></li>
                 <li class="divider"></li>
-                <li><a href="logout">Log Out</a></li>
+                <li><a href="{% url 'login:loggedout' %}">Log Out</a></li>
               </ul>
             </li>
           </ul>
