@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'user_management.apps.UserManagementConfig',
     'forms.apps.FormsConfig',
+    'bootstrap_pagination'
 ]
 
 MIDDLEWARE = [

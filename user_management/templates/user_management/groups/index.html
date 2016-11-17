@@ -1,6 +1,7 @@
 {% extends "user_management/app_base.html" %}
 
 {% block content %}
+{% load bootstrap_pagination %}
 
 <div class="row">
     <div class="col-md-12 page-header">
@@ -38,6 +39,10 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <div class="text-center">
+            {% bootstrap_paginate groups %}
+        </div>
     </div>
 </div>
 

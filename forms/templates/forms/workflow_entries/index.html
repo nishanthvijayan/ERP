@@ -1,6 +1,8 @@
 {% extends "forms/app_base.html" %}
 
 {% block content %}
+{% load bootstrap_pagination %}
+
 <div class="row">
     <div class="col-md-12 page-header">
         <h2>Responses to {{ workflow.name }}</h2>
@@ -35,6 +37,10 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <div class="text-center">
+            {% bootstrap_paginate responses %}
+        </div>
     </div>
 </div>
 {% endblock %}
