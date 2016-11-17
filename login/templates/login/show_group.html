@@ -10,8 +10,7 @@
           <h4><b>Group Name : </b>{{ group.name }}</h4>
           <p><b>Description : </b>Head of the departments</p>
           <p>
-            <a href="{% url 'login:edit-group' group.id 'change-name' %}" class="btn btn-sm btn-primary">Edit Name</a>
-            <a href="{% url 'login:edit-group' group.id 'add-user' %}" class="btn btn-sm btn-success">Add User</a>
+            <a href="{% url 'login:edit-group-name' group.id %}" class="btn btn-sm btn-primary">Edit Name</a>
             <a href="{% url 'login:delete-group' group.id %}"  class="btn btn-sm btn-danger">Delete Group</a>
           </p>
         </div>
@@ -19,7 +18,20 @@
     </div>
   </div>
   <div class="row">
-    <h4>List of all users in the group</h4>
+    <div class="col-md-8">
+      <form action="{% url 'login:toggle-user-group' group.id %}" method="post">{% csrf_token %}
+        <div class="input-group col-md-6 pull-left">
+          <span class="input-group-addon" id="sizing-addon2">@</span>
+          <input type="text" class="form-control" name="username" placeholder="Username" aria-describedby="sizing-addon2">
+        </div>
+          <input type="submit" class="btn btn-primary" value="Add User"/> 
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h4>List of all users in the group</h4>
+    </div>
   </div>
   <div class="row">
   <div class="col-md-6 col-xs-12">
@@ -37,10 +49,10 @@
       <td><a href="#">{{ user.username }}</a></td>
       <td>{{ user.email }}</td>
       <td class="text-center">
-        <div class="btn-group" role="group" aria-label="...">
+        <div class="btn-group" role="group">
           <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-          <form action="{% url 'login:edit-group' group.id 'remove-user' %}" method="post">{% csrf_token %}
-            <input type="hidden" name="user_id" value="{{ user.id }}">
+          <form action="{% url 'login:toggle-user-group' group.id %}" method="post">{% csrf_token %}
+            <input type="hidden" name="username" value="{{ user.username }}">
             <input type="submit" name="submit" value="Remove user" class="btn btn-sm btn-danger">
           </form>
         </div>
