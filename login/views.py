@@ -25,9 +25,10 @@ def register_user(request):
 		form = RegisterUserForm(data=request.POST)
 		if form.is_valid():
 			if form.save():
-				return render(request, 'login/register_user.html',{'message':'User \'' + form.cleaned_data['username'] + '\' successfully registered!'})
+				messages.success(request, 'User \'' + form.cleaned_data['username'] + '\' successfully registered!')
 			else:
-				return render(request, 'login/register_user.html',{'message': 'Some error occured'})
+				messages.error(request, 'Some error occured')
+			return redirect('login:register-user')
 	else:
 		form = RegisterUserForm()
 	args = {}
@@ -40,9 +41,10 @@ def remove_user(request,user_id):
 		return HttpResponseRedirect('/')
 	user = get_object_or_404(User, id=user_id)
 	if user.delete():
-		return render(request, "login/remove_user.html",{'message': 'User \'' + user.username + '\' successfully removed!'})
+		messages.success(request, 'User \'' + user.username + '\' successfully removed!')
 	else:
-		return render(request, 'login/remove_user.html',{'message': 'Some error occured'})
+		messages.error(request, 'Some error occured!')
+	return redirect('login:login')
 
 def edit_user(request,user_id):
 	if not request.user.is_authenticated():
@@ -52,9 +54,10 @@ def edit_user(request,user_id):
 		form = EditUserForm(request.POST, instance=user)
 		if form.is_valid():
 			if form.save():
-				return render(request, "login/edit_user.html",{'message': 'User \'' + user.username + '\' info successfully updated!'})
+				messages.success(request,'User \'' + user.username + '\' info successfully updated!')
 			else:
-				return render(request, 'login/edit_user.html',{'message': 'Some error occured'})
+				messages.error(request, 'Some error occured!')
+			return redirect('login:edit-user',user_id)
 	else:
 		form = EditUserForm(instance=user)
 
@@ -73,9 +76,10 @@ def create_group(request):
 		form = CreateGroupForm(data=request.POST)
 		if form.is_valid():
 			if form.save():
-				return render(request, 'login/create_group.html',{'message':'Group \'' + form.cleaned_data['name'] + '\' successfully created!'})
+				messages.success(request,'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
 			else:
-				return render(request, 'login/create_group.html',{'message': 'Some error occured'})
+				messages.error(request, 'Some error occured!')
+			return redirect('login:create-group',user_id)
 	else:
 		form = CreateGroupForm()
 	args = {}
@@ -88,11 +92,10 @@ def delete_group(request,group_id):
 		return HttpResponseRedirect('/')
 	group = get_object_or_404(Group, id=group_id)
 	if group.delete():
-		messages.success(request, 'Hello world.')
-		return redirect('login:home')
+		messages.success(request, 'Group \'' + group.name +'\' successfull deleted!')
 	else:
-		messages.error(request, 'Document deleted.')
-		return render(request, 'login/home.html')
+		messages.error(request, 'Some error occured!')
+	return redirect('login:home')
 
 
 def show_group(request,group_id):
@@ -117,9 +120,10 @@ def edit_group(request, group_id, task):
 			form = EditGroupForm(request.POST,instance=group)
 			if form.is_valid():
 				if form.save():
-					return render(request,"login/edit_group.html",{'message': 'Group name successfully changed form \'' + old_name + '\' to \'' + group.name + '\'.', 'group_id': group.id})
+					messages.success(request, 'Group name successfully changed form \'' + old_name + '\' to \'' + group.name + '\'.')
 				else:
-					return render(request, 'login/edit_group.html',{'message': 'Some error occured'})
+					messages.error(request, 'Some error occured!')
+				return redirect('login:edit-group', group_id, task)
 		else:
 			form = EditGroupForm(instance=group)
 
@@ -134,7 +138,8 @@ def edit_group(request, group_id, task):
 			username = request.POST.get('username')
 			user = get_object_or_404(User, username=username)
 			group.user_set.add(user)
-			return render(request, 'login/edit_group.html',{'message': 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.', 'group_id': group.id})
+			messages.success(request, 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.')
+			return redirect('login:edit-group', group_id, task)
 		else:
 			pass
 		c = {}
@@ -147,7 +152,8 @@ def edit_group(request, group_id, task):
 		print "USER : ", user_id
 		user = get_object_or_404(User, id=user_id)
 		user.groups.remove(group)
-		return render(request, 'login/edit_group.html',{'message': 'User \'' + user.username + '\' successfully removed from the group \'' + group.name +'\'.', 'group_id': group.id})
+		messages.success(request, 'User \'' + user.username + '\' successfully removed from the group \'' + group.name +'\'.')
+		return redirect('login:edit-group', group_id, task)
 	else:
 		return HttpResponseRedirect('/')
 
