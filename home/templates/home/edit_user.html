@@ -1,11 +1,11 @@
-{% extends "login/base.html" %}
+{% extends "home/base.html" %}
 
 {% block content %}
 
 <div class="row">
   <div class="col-md-12 page-header">
-    <form action="{% url 'login:edit-group-name' group_id %}" method="post">{% csrf_token %}
-      {{ change_name_form.as_p }}
+    <form action="{% url 'home:edit-user' user_id %}" method="post">{% csrf_token %}
+      {{ form.as_p }}
       <input type="submit" class="btn btn-primary" value="Save"/> 
     </form>
   </div>
