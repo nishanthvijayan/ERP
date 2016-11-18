@@ -100,7 +100,7 @@ def create_group(request):
 				messages.success(request,'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
 			else:
 				messages.error(request, 'Some error occured!')
-			return redirect('login:create-group', user_id)
+			return redirect('login:create-group')
 	else:
 		form = CreateGroupForm()
 	context = {'form' : form}
