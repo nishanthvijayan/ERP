@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-12 page-header">
-        <form action="{% url 'home:edit-group-name' group_id %}" method="post">
+        <form action="{% url 'home:group-edit' group_id %}" method="post">
             {% csrf_token %}
             {{ change_name_form.as_p }}
             <input type="submit" class="btn btn-primary" value="Save"/> 
