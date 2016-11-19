@@ -28,6 +28,7 @@
                 {% csrf_token %}
                 <input id="username" type="text" name="username" placeholder="Username" required="required" /><br>
                 <input id="password" type="password" name="password" placeholder="Password" required="required" /><br>
+                <input type="hidden" name="next" value="{{ next }}" />
                 <input type="submit" value="Let me in" class="btn btn-primary btn-block btn-large" />
             </form>
 
