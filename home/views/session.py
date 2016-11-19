@@ -12,17 +12,18 @@ class LoginView(View):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('home:home')
+            return redirect('home:user-index')
         else:
             context = {'message' : 'Invalid Credentials. Please try again'}
             return render(request, 'home/login.html', context)
 
     def get(self, request):
-         return render(request, 'home/login.html')
+        if request.user.is_authenticated():
+            return redirect('home:user-index')
+        return render(request, 'home/login.html')
 
 class LogoutView(View):
     def get(self, request):
         auth.logout(request)
         context = {'message' : 'You have successfully logged out.'}
         return render(request, 'home/login.html', context) 
-

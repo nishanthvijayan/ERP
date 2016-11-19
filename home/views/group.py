@@ -21,7 +21,7 @@ def group_new(request):
                 messages.success(request,'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:group-create')
+            return redirect('home:group-index')
     else:
         form = CreateGroupForm()
     context = {'form' : form}
@@ -48,7 +48,7 @@ def group_edit(request, group_id):
                 messages.success(request, 'Group name successfully changed form \'' + old_name + '\' to \'' + group.name + '\'.')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:group-edit', group_id)
+            return redirect('home:group-show', group_id)
     else:
         form = EditGroupForm(instance=group)
 
@@ -65,7 +65,7 @@ def group_delete(request, group_id):
         messages.success(request, 'Group \'' + group.name +'\' successfull deleted!')
     else:
         messages.error(request, 'Some error occured!')
-    return redirect('home:home')
+    return redirect('home:group-index')
 
 @login_required
 def group_user_toggle(request, group_id):

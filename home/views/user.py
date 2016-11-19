@@ -7,7 +7,7 @@ from home.forms import RegisterUserForm, EditUserForm
 
 # After Login
 @login_required
-def home(request):
+def user_index(request):
     users = User.objects.all()
     return render(request, 'home/users/index.html', {'users': users})
 
@@ -21,7 +21,7 @@ def user_new(request):
                 messages.success(request, 'User \'' + form.cleaned_data['username'] + '\' successfully registered!')
             else:
                 messages.error(request, 'Some error occured')
-            return redirect('home:user-new')
+            return redirect('home:user-index')
     else:
         form = RegisterUserForm()
     context = {'form' : form}
@@ -37,7 +37,8 @@ def user_edit(request, user_id):
                 messages.success(request,'User \'' + user.username + '\' info successfully updated!')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:user-edit', user_id)
+            # TODO: Once a user profile page is implemented, the redirect should lead there
+            return redirect('home:user-index')
     else:
         form = EditUserForm(instance=user)
     context = {
@@ -54,5 +55,4 @@ def user_delete(request, user_id):
         messages.success(request, 'User \'' + user.username + '\' successfully removed!')
     else:
         messages.error(request, 'Some error occured!')
-    return redirect('home:home')
-
+    return redirect('home:user-index')
