@@ -76,6 +76,7 @@ def user_edit(request, user_id):
             'user_id' : user.id,
             'username' : user.username
         }
+    return render(request, 'home/users/edit.html', context)
 
 def user_remove(request, user_id):
     if not request.user.is_authenticated():
@@ -86,8 +87,6 @@ def user_remove(request, user_id):
     else:
         messages.error(request, 'Some error occured!')
     return redirect('home:home')
-
-    return render(request, 'home/users/edit.html', context)
 
 # Group Management
 def group_index(request):
