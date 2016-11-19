@@ -1,86 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import auth, messages
-from django.template.context_processors import csrf
-from django.views import View
-from django.contrib.auth.models import User, Group
+from django.contrib import messages
+from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
-from home.forms import RegisterUserForm, EditUserForm, CreateGroupForm, EditGroupForm
+from home.forms import CreateGroupForm, EditGroupForm
 
-# LoginView
-class LoginView(View):
-    def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = auth.authenticate(username=username, password=password)
-
-        if user is not None:
-            auth.login(request, user)
-            return redirect('home:home')
-        else:
-            context = {'message' : 'Invalid Credentials. Please try again'}
-            return render(request, 'home/login.html', context)
-
-    def get(self, request):
-         return render(request, 'home/login.html')
-
-class LogoutView(View):
-    def get(self, request):
-        auth.logout(request)
-        context = {'message' : 'You have successfully logged out.'}
-        return render(request, 'home/login.html', context) 
-
-# After Login
-@login_required
-def home(request):
-    users = User.objects.all()
-    return render(request, 'home/users/index.html', {'users': users})
-
-# User - Management
-@login_required
-def user_new(request):
-    if request.method == 'POST':
-        form = RegisterUserForm(data=request.POST)
-        if form.is_valid():
-            if form.save():
-                messages.success(request, 'User \'' + form.cleaned_data['username'] + '\' successfully registered!')
-            else:
-                messages.error(request, 'Some error occured')
-            return redirect('home:user-new')
-    else:
-        form = RegisterUserForm()
-    context = {'form' : form}
-    return render(request, "home/users/new.html", context)
-
-@login_required
-def user_edit(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    if request.method == 'POST':
-        form = EditUserForm(request.POST, instance=user)
-        if form.is_valid():
-            if form.save():
-                messages.success(request,'User \'' + user.username + '\' info successfully updated!')
-            else:
-                messages.error(request, 'Some error occured!')
-            return redirect('home:user-edit', user_id)
-    else:
-        form = EditUserForm(instance=user)
-    context = {
-            'form' : form,
-            'user_id' : user.id,
-            'username' : user.username
-        }
-    return render(request, 'home/users/edit.html', context)
-
-@login_required
-def user_delete(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    if user.delete():
-        messages.success(request, 'User \'' + user.username + '\' successfully removed!')
-    else:
-        messages.error(request, 'Some error occured!')
-    return redirect('home:home')
 
 # Group Management
 @login_required
