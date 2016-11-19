@@ -1,86 +1,48 @@
 {% extends "home/base.html" %}
 
 {% block content %}
-<div class="row">
-	<div class="col-md-12 page-header">
-		<h2>Users</h2>
-		<a href="{% url 'home:register-user' %}" class="btn btn-success btn-sm pull-right">Create New User</a>
-		<div class="text-muted">
-			List of registered users.
-		</div>
-	</div>
-
-	<div class="col-md-12">
-	<table class="table table-hover table-bordered table-responsive">
-	<thead>
-		<tr class="row">
-			<th>Names</th>
-			<th>Email</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Groups</th>
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-	{% for user in users %}
-		<tr class="row">
-			<td><a href="#">{{ user.username }}</a></td>
-			<td>{{ user.email }}</td>
-			<td>{{ user.first_name }}</td>
-			<td>{{ user.last_name }}</td>
-			<td>{{user.groups.all|join:", "|truncatewords:"3" }}</td>
-			<td class="text-center">
-				<div class="btn-group" role="group" aria-label="...">
-					<!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-					<a href="{% url 'home:edit-user' user.id %}" class="btn btn-sm btn-success">Edit</a>
-					<a href="{% url 'home:remove-user' user.id %}"  class="btn btn-sm btn-danger">Delete</a>
-				</div>
-			</td>
-		</tr>
-	{% endfor %}
-	</tbody>
-	</table>
-	</div>
-</div>
 
 <div class="row">
-	<div class="col-md-12 page-header">
-		<h2>Groups</h2>
-		<a href="{% url 'home:create-group' %}" class="btn btn-success btn-sm pull-right">Create New Group</a>
-		<div class="text-muted">
-			List of registered groups.
-		</div>
-	</div>
+    <div class="col-md-12 page-header">
+        <h2>Users</h2>
+        <a href="{% url 'home:register-user' %}" class="btn btn-success btn-sm pull-right">Create New User</a>
+        <div class="text-muted">
+            List of registered users.
+        </div>
+    </div>
 
-	<div class="col-md-12">
-	<table class="table table-hover table-bordered table-responsive">
-	<thead>
-		<tr class="row">
-			<th>Group Name</th>
-			<th># of Members</th>
-			<th>Members</th>
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-	{% for group in groups %}
-		<tr class="row">
-			<td><a href="#">{{ group.name }}</a></td>
-			<td>{{ group.user_set.all.count }}</td>
-			<td>{{ group.user_set.all|join:", "|truncatewords:"4" }}</td>
-			<td class="text-center">
-				<div class="btn-group" role="group" aria-label="...">
-					<!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-					<a href="{% url 'home:show-group' group.id %}" class="btn btn-sm btn-primary">Show Group</a>
-					<a href="{% url 'home:delete-group' group.id %}"  class="btn btn-sm btn-danger">Delete</a>
-				</div>
-			</td>
-		</tr>
-	{% endfor %}
-	</tbody>
-	</table>
-	</div>
+    <div class="col-md-12">
+        <table class="table table-hover table-bordered table-responsive">
+            <thead>
+                <tr class="row">
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Groups</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr class="row">
+                    <td>
+                        <a href="#">{{ user.username }}</a>
+                    </td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{user.groups.all|join:", "|truncatewords:"3" }}</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
+                            <a href="{% url 'home:edit-user' user.id %}" class="btn btn-sm btn-success">Edit</a>
+                            <a href="{% url 'home:remove-user' user.id %}"  class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}

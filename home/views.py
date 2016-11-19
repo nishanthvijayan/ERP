@@ -36,8 +36,7 @@ class LogoutView(View):
 def home(request):
 	if request.user.is_authenticated():
 		users = User.objects.all()
-		groups = Group.objects.all()
-		return render(request, 'home/users/index.html', {'users': users, 'groups': groups})
+		return render(request, 'home/users/index.html', {'users': users})
 	else:
 		return redirect('home:login')
 
@@ -90,6 +89,13 @@ def edit_user(request, user_id):
 	return render(request, 'home/users/edit.html', context)
 
 # Group Management
+def index_group(request):
+	if request.user.is_authenticated():
+		groups = Group.objects.all()
+		return render(request, 'home/groups/index.html', {'groups': groups})
+	else:
+		return redirect('home:login')
+
 def create_group(request):
 	if not request.user.is_authenticated():
 		return redirect('home:login')
