@@ -51,7 +51,7 @@ def user_register(request):
                 messages.success(request, 'User \'' + form.cleaned_data['username'] + '\' successfully registered!')
             else:
                 messages.error(request, 'Some error occured')
-            return redirect('home:user-register')
+            return redirect('home:user-new')
     else:
         form = RegisterUserForm()
     context = {'form' : form}
