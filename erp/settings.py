@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'forms.apps.FormsConfig',
-    'login.apps.LoginConfig',
+    'home.apps.HomeConfig',
     'positions',
 ]
 

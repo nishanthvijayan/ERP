@@ -1,10 +1,10 @@
-{% extends "login/base.html" %}
+{% extends "home/base.html" %}
 
 {% block content %}
 
 <div class="row">
   <div class="col-md-12 page-header">
-    <form action="{% url 'login:create-group' %}" method="post">{% csrf_token %}
+    <form action="{% url 'home:create-group' %}" method="post">{% csrf_token %}
       {{ form.as_p }}
       <input type="submit" class="btn btn-primary" value="Create Group"/> 
     </form>

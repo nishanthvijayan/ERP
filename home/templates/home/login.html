@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>ERP Login</title>
-    <link rel="stylesheet" type="text/css" href="{% static "/login/css/login.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "/home/css/login.css" %}">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{% static "/login/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "/home/css/bootstrap.min.css" %}">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,7 +22,7 @@
   <body>
     <div id="login-box">
       <h1 id="logo-label">ERP | Login</h1>
-      <form action="{% url 'login:login' %}" method="post">{% csrf_token %}
+      <form action="{% url 'home:login' %}" method="post">{% csrf_token %}
           <input id="username" type="text" name="username" placeholder="Username" required="required" /><br>
           <input id="password" type="password" name="password" placeholder="Password" required="required" /><br>
           <input type="submit" value="Let me in" class="btn btn-primary btn-block btn-large" />
