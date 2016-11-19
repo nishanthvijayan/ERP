@@ -18,11 +18,12 @@ class LoginView(View):
             return render(request, 'home/login.html', context)
 
     def get(self, request):
-         return render(request, 'home/login.html')
+        if request.user.is_authenticated():
+            return redirect('home:user-index')
+        return render(request, 'home/login.html')
 
 class LogoutView(View):
     def get(self, request):
         auth.logout(request)
         context = {'message' : 'You have successfully logged out.'}
         return render(request, 'home/login.html', context) 
-
