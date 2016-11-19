@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/nishanthvijayan/ERP.svg?branch=master)](https://travis-ci.org/nishanthvijayan/ERP)
 # ERP
 
 ## Installation and set-up  
