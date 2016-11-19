@@ -2,42 +2,42 @@
 
 {% block content %}
 <div class="row">
-	<div class="col-md-12 page-header">
-		<h2>Forms</h2>
-		<a href="{% url 'forms:workflow-new' %}" class="btn btn-success btn-sm pull-right">Create New Form</a>
-		<div class="text-muted">
-			The available forms that can be submitted
-		</div>
+    <div class="col-md-12 page-header">
+        <h2>Forms</h2>
+        <a href="{% url 'forms:workflow-new' %}" class="btn btn-success btn-sm pull-right">Create New Form</a>
+        <div class="text-muted">
+            The available forms that can be submitted
+        </div>
 
-	</div>
+    </div>
 
-	<div class="col-md-12">
-	<table class="table table-hover table-bordered table-responsive">
-	<thead>
-		<tr class="row">
-			<th>Name</th>
-			<th>Description</th>
-			<!-- if current user can perform any of these actions -->
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-	{% for workflow in workflows %}
-		<tr class="row">
-			<td class="col-md-3"><a href="{% url 'forms:workflow-instance-new' workflow.id %}">{{ workflow.name }}</a></td>
-			<td class="col-md-6">{{workflow.description }}</td>
-			<td class="col-md-3 text-center">
-				<div class="btn-group" role="group" aria-label="...">
-					<a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">Details</a>
-					<a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
-					<a href="{% url 'forms:workflow-delete' workflow.id %}"  class="btn btn-sm btn-danger">Delete</a>
-					<a href="{% url 'forms:workflow-instance-index' workflow.id %}" class="btn btn-sm btn-warning">Responses</a>
-				</div>
-			</td>
-		</tr>
-	{% endfor %}
-	</tbody>
-	</table>
-	</div>
+    <div class="col-md-12">
+    <table class="table table-hover table-bordered table-responsive">
+    <thead>
+        <tr class="row">
+            <th>Name</th>
+            <th>Description</th>
+            <!-- if current user can perform any of these actions -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for workflow in workflows %}
+        <tr class="row">
+            <td class="col-md-3"><a href="{% url 'forms:workflow-instance-new' workflow.id %}">{{ workflow.name }}</a></td>
+            <td class="col-md-6">{{workflow.description }}</td>
+            <td class="col-md-3 text-center">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">Details</a>
+                    <a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
+                    <a href="{% url 'forms:workflow-delete' workflow.id %}"  class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'forms:workflow-instance-index' workflow.id %}" class="btn btn-sm btn-warning">Responses</a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
 </div>
 {% endblock %}
