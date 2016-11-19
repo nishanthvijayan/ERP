@@ -78,7 +78,7 @@ def user_edit(request, user_id):
         }
     return render(request, 'home/users/edit.html', context)
 
-def user_remove(request, user_id):
+def user_delete(request, user_id):
     if not request.user.is_authenticated():
         return redirect('home:login')
     user = get_object_or_404(User, id=user_id)
@@ -96,7 +96,7 @@ def group_index(request):
     else:
         return redirect('home:login')
 
-def group_create(request):
+def group_new(request):
     if not request.user.is_authenticated():
         return redirect('home:login')
     if request.method == 'POST':
