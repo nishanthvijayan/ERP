@@ -41,7 +41,7 @@ def home(request):
         return redirect('home:login')
 
 # User - Management
-def user_register(request):
+def user_new(request):
     if not request.user.is_authenticated():
         return redirect('home:login')
     if request.method == 'POST':
