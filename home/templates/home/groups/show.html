@@ -1,0 +1,70 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>{{ group.name }}</h2>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <a href="{% url 'home:edit-group-name' group.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'home:delete-group' group.id %}" class="btn btn-danger">Delete</a>
+        </div>
+        <div class="text-muted">
+            <!-- {{ group.description }} -->
+            Placeholder for group description
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 pull-left">
+        <form action="{% url 'home:toggle-user-group' group.id %}" method="post">{% csrf_token %}
+            <div class="input-group col-md-6 pull-left">
+                <span class="input-group-addon" id="sizing-addon2">@</span>
+                <input type="text" class="form-control" name="username" placeholder="Username" aria-describedby="sizing-addon2">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-primary" value="Add"/>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="page-header col-md-12">
+        <h3>List of all users in the group ({{ users.count }})</h3>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover table-bordered table-responsive">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-3">Username</th>
+                    <th class="col-md-4">Name</th>
+                    <th class="col-md-4">Email</th>
+                    <th class="col-md-1">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr class="row">
+                    <td><a href="#">{{ user.username }}</a></td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
+                            <form action="{% url 'home:toggle-user-group' group.id %}" method="post">{% csrf_token %}
+                                <input type="hidden" name="username" value="{{ user.username }}">
+                                <input type="submit" name="submit" value="Remove" class="btn btn-sm btn-danger">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

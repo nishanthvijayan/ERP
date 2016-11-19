@@ -37,7 +37,7 @@ def home(request):
 	if request.user.is_authenticated():
 		users = User.objects.all()
 		groups = Group.objects.all()
-		return render(request, 'home/home.html', {'users': users, 'groups': groups})
+		return render(request, 'home/users/index.html', {'users': users, 'groups': groups})
 	else:
 		return redirect('home:login')
 
@@ -56,7 +56,7 @@ def register_user(request):
 	else:
 		form = RegisterUserForm()
 	context = {'form' : form}
-	return render(request, "home/register_user.html", context)
+	return render(request, "home/users/new.html", context)
 
 def remove_user(request, user_id):
 	if not request.user.is_authenticated():
@@ -87,7 +87,7 @@ def edit_user(request, user_id):
 			'user_id' : user.id,
 			'username' : user.username
 		}
-	return render(request, 'home/edit_user.html', context)
+	return render(request, 'home/users/edit.html', context)
 
 # Group Management
 def create_group(request):
@@ -104,7 +104,7 @@ def create_group(request):
 	else:
 		form = CreateGroupForm()
 	context = {'form' : form}
-	return render(request, "home/create_group.html", context)
+	return render(request, "home/groups/new.html", context)
 
 def delete_group(request, group_id):
 	if not request.user.is_authenticated():
@@ -126,7 +126,7 @@ def show_group(request, group_id):
 			'users' : users,
 			'group' : group
 		}
-	return render(request, 'home/show_group.html', context)
+	return render(request, 'home/groups/show.html', context)
 
 def edit_group_name(request, group_id):
 	if not request.user.is_authenticated():
@@ -148,7 +148,7 @@ def edit_group_name(request, group_id):
 			'change_name_form' : form,
 			'group_id'         : group.id
 		}
-	return render(request, 'home/edit_group_name.html', context)
+	return render(request, 'home/groups/edit.html', context)
 
 def toggle_user_group(request, group_id):
 	if request.method == 'POST':
