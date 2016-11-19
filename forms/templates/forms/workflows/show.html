@@ -2,173 +2,173 @@
 
 {% block content %}
 <div class="row">
-	<div class="col-md-12 page-header">
-		<h2>{{ workflow.name }}</h2>
-		<div class="btn-group pull-right" role="group" aria-label="...">
-			<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#form_preview">Preview</a>
-			<a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-success">Edit</a>
-			<a href="{% url 'forms:workflow-instance-index' workflow.id %}" class="btn btn-warning">Responses</a>
-		</div>
-		<div class="text-muted">
-			{{ workflow.description }}
-		</div>
-	</div>
+    <div class="col-md-12 page-header">
+        <h2>{{ workflow.name }}</h2>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#form_preview">Preview</a>
+            <a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-success">Edit</a>
+            <a href="{% url 'forms:workflow-instance-index' workflow.id %}" class="btn btn-warning">Responses</a>
+        </div>
+        <div class="text-muted">
+            {{ workflow.description }}
+        </div>
+    </div>
 
-	<div class="modal fade" id="form_preview" tabindex="-1" role="dialog">
-	  <div class="modal-dialog modal-lg" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">{{ workflow.name }}</h4>
-	      </div>
-	      <div class="modal-body">
-		<table class="table table-responsive">
-			<tbody>
-			{% for form_element in form_elements %}
-				<tr class="row">
-					<td>
-						{{ form_element.caption }}
-						{% if form_element.hint %}
-						<div class="text-muted">
-							({{ form_element.hint }})
-						</div>
-						{% endif %}
-					</td>
-					<td>
-					{% if form_element.element_type == 'text_input' %}
-						<input type="text"/>    
-					{% elif form_element.element_type == 'number_input' %}
-					    	<input type="number" name="">
-					{% elif form_element.element_type == 'text_area' %}
-					    	<textarea></textarea>
-					{% endif %}
-					</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>	        
-	      </div>
-	    </div>
-	  </div>
-	</div>
+    <div class="modal fade" id="form_preview" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">{{ workflow.name }}</h4>
+          </div>
+          <div class="modal-body">
+        <table class="table table-responsive">
+            <tbody>
+            {% for form_element in form_elements %}
+                <tr class="row">
+                    <td>
+                        {{ form_element.caption }}
+                        {% if form_element.hint %}
+                        <div class="text-muted">
+                            ({{ form_element.hint }})
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                    {% if form_element.element_type == 'text_input' %}
+                        <input type="text"/>    
+                    {% elif form_element.element_type == 'number_input' %}
+                            <input type="number" name="">
+                    {% elif form_element.element_type == 'text_area' %}
+                            <textarea></textarea>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>            
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<b>Form UI</b>
-			</div>
-			<div class="panel-body">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>Form UI</b>
+            </div>
+            <div class="panel-body">
 
-				<table class="table table-hover table-bordered table-responsive">
-					<thead>
-						<tr class="row">
-							<th class="col-md-1">#</th>
-							<th class="col-md-2">Field Title</th>
-							<th class="col-md-4">Field Hint</th>
-							<th class="col-md-2">Field Type</th>
-							<th class="col-md-1">Position</th>
-							<th class="col-md-2">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					{% for form_element in form_elements %}
-						<tr class="row">
-							<td>{{ forloop.counter }}</td>
-							<td>{{ form_element.caption }}</td>
-							<td>
-								{% if form_element.hint %}
-									{{ form_element.hint }}
-								{% else %}
-									-
-								{% endif %}
-							</td>
-							<td>{{ form_element.element_type }}</td>
-							<td>{{ form_element.position }}</td>
-							<td class="text-center">
-								<div class="btn-group" role="group" aria-label="...">
-									<a href="{% url 'forms:form-element-edit' workflow.id form_element.id %}" class="btn btn-success btn-sm">Edit</a>
-									<a href="{% url 'forms:form-element-delete' workflow.id form_element.id %}" class="btn btn-danger btn-sm">Delete</a>
-								</div>
-							</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-				<a href="{% url 'forms:form-element-new' workflow.id %}" class="btn btn-primary btn-sm">New Element</a>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<b>States</b>
-			</div>
-			<div class="panel-body">
-				<table class="table table-hover table-bordered table-responsive">
-					<thead>
-						<tr class="row">
-							<th class="col-md-1">#</th>
-							<th class="col-md-5">Name</th>
-							<th class="col-md-4">Type</th>
-							<th class="col-md-2">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					{% for state in states %}
-						<tr class="row">
-							<td>{{ forloop.counter }}</td>
-							<td>{{ state.name }}</td>
-							<td>{{ state.kind }}</td>
-							<td class="text-center">
-								<div class="btn-group" role="group" aria-label="...">
-									<a href="{% url 'forms:state-edit' workflow.id state.id %}" class="btn btn-success btn-sm">Edit</a>
-									<a href="{% url 'forms:state-delete' workflow.id state.id %}" class="btn btn-danger btn-sm">Delete</a>
-								</div>
-							</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-				<a href="{% url 'forms:state-new' workflow.id %}" class="btn btn-sm btn-primary">New State</a>
-			</div>
-		</div>
-	</div>
+                <table class="table table-hover table-bordered table-responsive">
+                    <thead>
+                        <tr class="row">
+                            <th class="col-md-1">#</th>
+                            <th class="col-md-2">Field Title</th>
+                            <th class="col-md-4">Field Hint</th>
+                            <th class="col-md-2">Field Type</th>
+                            <th class="col-md-1">Position</th>
+                            <th class="col-md-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for form_element in form_elements %}
+                        <tr class="row">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ form_element.caption }}</td>
+                            <td>
+                                {% if form_element.hint %}
+                                    {{ form_element.hint }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>{{ form_element.element_type }}</td>
+                            <td>{{ form_element.position }}</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a href="{% url 'forms:form-element-edit' workflow.id form_element.id %}" class="btn btn-success btn-sm">Edit</a>
+                                    <a href="{% url 'forms:form-element-delete' workflow.id form_element.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'forms:form-element-new' workflow.id %}" class="btn btn-primary btn-sm">New Element</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>States</b>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-bordered table-responsive">
+                    <thead>
+                        <tr class="row">
+                            <th class="col-md-1">#</th>
+                            <th class="col-md-5">Name</th>
+                            <th class="col-md-4">Type</th>
+                            <th class="col-md-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for state in states %}
+                        <tr class="row">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ state.name }}</td>
+                            <td>{{ state.kind }}</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a href="{% url 'forms:state-edit' workflow.id state.id %}" class="btn btn-success btn-sm">Edit</a>
+                                    <a href="{% url 'forms:state-delete' workflow.id state.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'forms:state-new' workflow.id %}" class="btn btn-sm btn-primary">New State</a>
+            </div>
+        </div>
+    </div>
 
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<b>Transitions</b>
-			</div>
-			<div class="panel-body">
-				<table class="table table-hover table-bordered table-responsive">
-					<thead>
-						<tr class="row">
-							<th class="col-md-1">#</th>
-							<th class="col-md-3">From</th>
-							<th class="col-md-3">To</th>
-							<th class="col-md-3">Groups allowed to make this transition</th>
-							<th class="col-md-2">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					{% for transition in transitions %}
-						<tr class="row">
-							<td>{{ forloop.counter }}</td>
-							<td>{{ transition.from_state.name }}</td>
-							<td>{{ transition.to_state.name }}</td>
-							<td>under construction</td>
-							<td class="text-center">
-								<div class="btn-group" role="group" aria-label="...">
-									<a href="{% url 'forms:transition-edit' workflow.id transition.id %}" class="btn btn-success btn-sm">Edit</a>
-									<a href="{% url 'forms:transition-delete' workflow.id transition.id %}" class="btn btn-danger btn-sm">Delete</a>
-								</div>
-							</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-				<a href="{% url 'forms:transition-new' workflow.id %}" class="btn btn-sm btn-primary">New Transition</a>
-			</div>
-	</div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>Transitions</b>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-bordered table-responsive">
+                    <thead>
+                        <tr class="row">
+                            <th class="col-md-1">#</th>
+                            <th class="col-md-3">From</th>
+                            <th class="col-md-3">To</th>
+                            <th class="col-md-3">Groups allowed to make this transition</th>
+                            <th class="col-md-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for transition in transitions %}
+                        <tr class="row">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ transition.from_state.name }}</td>
+                            <td>{{ transition.to_state.name }}</td>
+                            <td>under construction</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a href="{% url 'forms:transition-edit' workflow.id transition.id %}" class="btn btn-success btn-sm">Edit</a>
+                                    <a href="{% url 'forms:transition-delete' workflow.id transition.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'forms:transition-new' workflow.id %}" class="btn btn-sm btn-primary">New Transition</a>
+            </div>
+    </div>
 </div>
 {% endblock %}

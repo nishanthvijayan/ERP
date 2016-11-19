@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html lang='en'>
-  <head>
-    <meta charset="UTF-8" /> 
-    <title>ERP - FORMS</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/base.css' %}" />
-  </head>
-  <body>
-    <header class="navbar center navbar-top navbar-inverse">
-      <a href="{% url 'home:login' %}" id="logo">IIT Ropar - ERP</a>
-      <div class="container">
-        <nav>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle nav-links" data-toggle="dropdown" >
-                {{ request.user.username }}
-                <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Settings</a></li>
-                <li class="divider"></li>
-                <li><a href="{% url 'home:loggedout' %}">Log Out</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-    <div class='col-md-10 col-md-offset-1'>
-    
-    {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        {{ message }}
-      </div>
-    {% endfor %}
-    {% endif %}
-    {% block content %}
-    {% endblock %}
-    </div>
-    <script src="{% static 'home/js/jquery.min.js' %}"></script>
-    <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" /> 
+        <title>ERP - FORMS</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/css/base.css' %}" />
+    </head>
+
+    <body>
+        <header class="navbar center navbar-top navbar-inverse">
+            <a href="{% url 'home:login' %}" id="logo">IIT Ropar - ERP</a>
+            <div class="container">
+                <nav>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle nav-links" data-toggle="dropdown" >
+                                {{ request.user.username }}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="{% url 'home:loggedout' %}">Log Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class='col-md-10 col-md-offset-1'>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+        <script src="{% static 'home/js/jquery.min.js' %}"></script>
+        <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+    </body>
 </html>

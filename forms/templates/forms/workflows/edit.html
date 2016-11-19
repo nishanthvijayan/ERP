@@ -2,16 +2,16 @@
 
 {% block content %}
 <div class="row">
-	<div class="col-md-12 page-header">
-		<h2>Edit Form</h2>
-	</div>
+    <div class="col-md-12 page-header">
+        <h2>Edit Form</h2>
+    </div>
 
-	<div class="col-md-12">
-		<form action="{% url 'forms:workflow-edit' workflow.id %}" method="post">
-		    {% csrf_token %}
-		    {{ form }}
-		    <input type="submit" value="Submit" />
-		</form>
-	</div>
+    <div class="col-md-12">
+        <form action="{% url 'forms:workflow-edit' workflow.id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
 </div>
 {% endblock %}

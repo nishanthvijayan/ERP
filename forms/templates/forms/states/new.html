@@ -2,16 +2,16 @@
 
 {% block content %}
 <div class="row">
-	<div class="col-md-12 page-header">
-		<h2>Add State</h2>
-	</div>
+    <div class="col-md-12 page-header">
+        <h2>Add State</h2>
+    </div>
 
-	<div class="col-md-12">
-		<form action="{% url 'forms:state-new' workflow_id %}" method="post">
-		    {% csrf_token %}
-		    {{ form.as_p }}
-		    <input type="submit" value="Submit" />
-		</form>
-	</div>
+    <div class="col-md-12">
+        <form action="{% url 'forms:state-new' workflow_id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
 </div>
 {% endblock %}

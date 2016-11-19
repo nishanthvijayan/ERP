@@ -3,12 +3,13 @@
 {% block content %}
 
 <div class="row">
-  <div class="col-md-12 page-header">
-    <form action="{% url 'home:register-user' %}" method="post">{% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit" class="btn btn-primary" value="Register"/> 
-    </form>
-  </div>
+    <div class="col-md-12 page-header">
+        <form action="{% url 'home:register-user' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Register"/> 
+        </form>
+    </div>
 </div>
 
 {% endblock %}
