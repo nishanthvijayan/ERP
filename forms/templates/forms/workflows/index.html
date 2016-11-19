@@ -35,7 +35,7 @@
                     <a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">Details</a>
                     <a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
                     <a href="{% url 'forms:workflow-delete' workflow.id %}"  class="btn btn-sm btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
-                    <a href="{% url 'forms:workflow-entry-index' workflow.id %}" class="btn btn-sm btn-warning">Responses</a>
+                    <a href="{% url 'forms:workflow-entry-admin-index' workflow.id %}" class="btn btn-sm btn-warning">Responses</a>
                 </div>
             </td>
         </tr>

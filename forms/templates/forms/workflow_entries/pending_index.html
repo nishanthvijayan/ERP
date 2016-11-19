@@ -1,0 +1,68 @@
+{% extends "forms/app_base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Forms Pending Approval ({{ responses.count }})</h2>
+        <div class="text-muted">
+            List of forms that can be approved by you
+        </div>
+    </div>
+
+    {% for response in responses %}
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>{{ response.workflow.name }}</b>
+                <b class="pull-right">
+                    Submitted by: {{ response.creator.first_name }} {{ response.creator.last_name }} |
+                    State: {{ response.current_state.name }}
+                </b>
+            </div>
+            <div class="panel-body">
+                    <form class="row">
+                    {% for element in response.formelemententry_set.all %}
+                            <div class="form-group col-md-6">
+                                <label>
+                                    {{ element.form_element.caption }}
+                                    {% if element.form_element.hint %}
+                                        <span class="text-muted">({{ element.form_element.hint }})</span>
+                                    {% endif %}
+                                </label>
+
+                                {% if element.form_element.element_type == 'text_input' %}
+                                    <input type="text" name='{{ element.form_element.caption }}' value='{{ element.value }}' class='form-control' disabled/>    
+                                {% elif element.form_element.element_type == 'number_input' %}
+                                        <input type="number" name='{{ element.form_element.caption }}' value='{{ element.value }}' class='form-control' disabled>
+                                {% elif element.form_element.element_type == 'text_area' %}
+                                        <textarea name='{{ element.form_element.caption }}' value='{{ element.value }}' class='form-control' disabled></textarea>
+                                {% endif %}
+                            </div>
+                    {% endfor %}
+                    </form>
+
+                    <div class="dropdown pull-right ">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="actions-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <!-- TODO: Display the drop down only i f the there are transitions possible -->
+                        <ul class="dropdown-menu" aria-labelledby="actions-dropdown">
+                            {% for transition in response.current_state.transition_set.all %}
+                            <li>
+                                <form action="{% url 'forms:workflow-entry-change-state' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="workflow_entry_id" value="{{ response.id }}" />
+                                    <input type="hidden" name="transition_id" value="{{ transition.id }}" />
+                                     <input type="submit" name="submit" value="{{ transition.name }}" class="btn btn-link" />
+                                </form>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
