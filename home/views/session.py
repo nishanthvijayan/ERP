@@ -12,7 +12,7 @@ class LoginView(View):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('home:home')
+            return redirect('home:user-index')
         else:
             context = {'message' : 'Invalid Credentials. Please try again'}
             return render(request, 'home/login.html', context)
