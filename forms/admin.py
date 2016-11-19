@@ -8,4 +8,3 @@ admin.site.register(State)
 admin.site.register(Transition)
 admin.site.register(WorkflowInstance)
 admin.site.register(FormElementInstance)
-
