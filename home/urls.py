@@ -5,17 +5,17 @@ app_name='home'
 
 urlpatterns = [
     url(r'^$', views.LoginView.as_view(), name='login'),
-    url(r'^users/logout/{0,1}$', views.LogoutView.as_view(), name='loggedout'),
+    url(r'^logout$', views.LogoutView.as_view(), name='logout'),
 
-    url(r'^home/{0,1}$', views.home, name='home'),
-    url(r'^users/register/{0,1}$', views.register_user, name='register-user'),
-    url(r'^users/(?P<user_id>\d+)/edit/{0,1}$', views.edit_user, name='edit-user'),
-    url(r'^users/(?P<user_id>\d+)/remove/{0,1}$', views.remove_user, name='remove-user'),
+    url(r'^home$', views.home, name='home'),
+    url(r'^users/register$', views.user_register, name='user-register'),
+    url(r'^users/(?P<user_id>\d+)/edit$', views.user_edit, name='user-edit'),
+    url(r'^users/(?P<user_id>\d+)/remove$', views.user_remove, name='user-remove'),
 
-    url(r'^groups/{0,1}$', views.index_group, name='index-group'),
-    url(r'^groups/create/{0,1}$', views.create_group, name='create-group'),
-    url(r'^groups/(?P<group_id>\d+)/{0,1}$', views.show_group, name='show-group'),
-    url(r'^groups/(?P<group_id>\d+)/edit/edit-name/{0,1}$', views.edit_group_name, name='edit-group-name'),
-    url(r'^groups/(?P<group_id>\d+)/edit/toggle-user/{0,1}$', views.toggle_user_group, name='toggle-user-group'),
-    url(r'^groups/(?P<group_id>\d+)/delete/{0,1}$', views.delete_group, name='delete-group'),
+    url(r'^groups$', views.group_index, name='group-index'),
+    url(r'^groups/create$', views.group_create, name='group-create'),
+    url(r'^groups/(?P<group_id>\d+)$', views.group_show, name='group-show'),
+    url(r'^groups/(?P<group_id>\d+)/edit$', views.group_edit, name='group-edit'),
+    url(r'^groups/(?P<group_id>\d+)/delete$', views.group_delete, name='group-delete'),
+    url(r'^groups/(?P<group_id>\d+)/edit/user-toggle$', views.group_user_toggle, name='group-user-toggle'),
 ]

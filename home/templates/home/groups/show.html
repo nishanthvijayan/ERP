@@ -6,8 +6,8 @@
     <div class="col-md-12 page-header">
         <h2>{{ group.name }}</h2>
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <a href="{% url 'home:edit-group-name' group.id %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'home:delete-group' group.id %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'home:group-edit' group.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'home:group-delete' group.id %}" class="btn btn-danger">Delete</a>
         </div>
         <div class="text-muted">
             <!-- {{ group.description }} -->
@@ -18,7 +18,7 @@
 
 <div class="row">
     <div class="col-md-12 pull-left">
-        <form action="{% url 'home:toggle-user-group' group.id %}" method="post">{% csrf_token %}
+        <form action="{% url 'home:group-user-toggle' group.id %}" method="post">{% csrf_token %}
             <div class="input-group col-md-6 pull-left">
                 <span class="input-group-addon" id="sizing-addon2">@</span>
                 <input type="text" class="form-control" name="username" placeholder="Username" aria-describedby="sizing-addon2">
@@ -54,7 +54,7 @@
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-                            <form action="{% url 'home:toggle-user-group' group.id %}" method="post">{% csrf_token %}
+                            <form action="{% url 'home:group-user-toggle' group.id %}" method="post">{% csrf_token %}
                                 <input type="hidden" name="username" value="{{ user.username }}">
                                 <input type="submit" name="submit" value="Remove" class="btn btn-sm btn-danger">
                             </form>

@@ -41,7 +41,7 @@ def home(request):
         return redirect('home:login')
 
 # User - Management
-def register_user(request):
+def user_register(request):
     if not request.user.is_authenticated():
         return redirect('home:login')
     if request.method == 'POST':
@@ -51,23 +51,13 @@ def register_user(request):
                 messages.success(request, 'User \'' + form.cleaned_data['username'] + '\' successfully registered!')
             else:
                 messages.error(request, 'Some error occured')
-            return redirect('home:register-user')
+            return redirect('home:user-register')
     else:
         form = RegisterUserForm()
     context = {'form' : form}
     return render(request, "home/users/new.html", context)
 
-def remove_user(request, user_id):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
-    user = get_object_or_404(User, id=user_id)
-    if user.delete():
-        messages.success(request, 'User \'' + user.username + '\' successfully removed!')
-    else:
-        messages.error(request, 'Some error occured!')
-    return redirect('home:home')
-
-def edit_user(request, user_id):
+def user_edit(request, user_id):
     if not request.user.is_authenticated():
         return redirect('home:login')
     user = get_object_or_404(User, id=user_id)
@@ -78,7 +68,7 @@ def edit_user(request, user_id):
                 messages.success(request,'User \'' + user.username + '\' info successfully updated!')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:edit-user', user_id)
+            return redirect('home:user-edit', user_id)
     else:
         form = EditUserForm(instance=user)
     context = {
@@ -86,17 +76,28 @@ def edit_user(request, user_id):
             'user_id' : user.id,
             'username' : user.username
         }
+
+def user_remove(request, user_id):
+    if not request.user.is_authenticated():
+        return redirect('home:login')
+    user = get_object_or_404(User, id=user_id)
+    if user.delete():
+        messages.success(request, 'User \'' + user.username + '\' successfully removed!')
+    else:
+        messages.error(request, 'Some error occured!')
+    return redirect('home:home')
+
     return render(request, 'home/users/edit.html', context)
 
 # Group Management
-def index_group(request):
+def group_index(request):
     if request.user.is_authenticated():
         groups = Group.objects.all()
         return render(request, 'home/groups/index.html', {'groups': groups})
     else:
         return redirect('home:login')
 
-def create_group(request):
+def group_create(request):
     if not request.user.is_authenticated():
         return redirect('home:login')
     if request.method == 'POST':
@@ -106,24 +107,13 @@ def create_group(request):
                 messages.success(request,'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:create-group')
+            return redirect('home:group-create')
     else:
         form = CreateGroupForm()
     context = {'form' : form}
     return render(request, "home/groups/new.html", context)
 
-def delete_group(request, group_id):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
-    group = get_object_or_404(Group, id=group_id)
-    if group.delete():
-        messages.success(request, 'Group \'' + group.name +'\' successfull deleted!')
-    else:
-        messages.error(request, 'Some error occured!')
-    return redirect('home:home')
-
-
-def show_group(request, group_id):
+def group_show(request, group_id):
     if not request.user.is_authenticated():
         return redirect('home:login')
     group = get_object_or_404(Group, id=group_id)
@@ -134,7 +124,7 @@ def show_group(request, group_id):
         }
     return render(request, 'home/groups/show.html', context)
 
-def edit_group_name(request, group_id):
+def group_edit(request, group_id):
     if not request.user.is_authenticated():
         return redirect('home:login')
     group = get_object_or_404(Group, id=group_id)
@@ -146,7 +136,7 @@ def edit_group_name(request, group_id):
                 messages.success(request, 'Group name successfully changed form \'' + old_name + '\' to \'' + group.name + '\'.')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:edit-group-name', group_id)
+            return redirect('home:group-edit', group_id)
     else:
         form = EditGroupForm(instance=group)
 
@@ -156,7 +146,17 @@ def edit_group_name(request, group_id):
         }
     return render(request, 'home/groups/edit.html', context)
 
-def toggle_user_group(request, group_id):
+def group_delete(request, group_id):
+    if not request.user.is_authenticated():
+        return redirect('home:login')
+    group = get_object_or_404(Group, id=group_id)
+    if group.delete():
+        messages.success(request, 'Group \'' + group.name +'\' successfull deleted!')
+    else:
+        messages.error(request, 'Some error occured!')
+    return redirect('home:home')
+
+def group_user_toggle(request, group_id):
     if request.method == 'POST':
         username = request.POST.get('username')
         user = get_object_or_404(User, username=username)
@@ -167,4 +167,4 @@ def toggle_user_group(request, group_id):
         else:
             group.user_set.add(user)
             messages.success(request, 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.')
-    return redirect('home:show-group', group_id)
+    return redirect('home:group-show', group_id)
