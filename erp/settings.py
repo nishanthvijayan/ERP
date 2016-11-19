@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'forms.apps.FormsConfig',
     'home.apps.HomeConfig',
-    'positions',
 ]
 
 MIDDLEWARE = [

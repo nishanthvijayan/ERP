@@ -3,6 +3,7 @@ from django.contrib import auth, messages
 from django.template.context_processors import csrf
 from django.views import View
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
 
 from home.forms import RegisterUserForm, EditUserForm, CreateGroupForm, EditGroupForm
 
@@ -20,11 +21,9 @@ class LoginView(View):
         else:
             context = {'message' : 'Invalid Credentials. Please try again'}
             return render(request, 'home/login.html', context)
-    
+
     def get(self, request):
-        if request.user.is_authenticated():
-            return redirect('home:home')
-        return render(request, 'home/login.html')
+         return render(request, 'home/login.html')
 
 class LogoutView(View):
     def get(self, request):
@@ -33,17 +32,14 @@ class LogoutView(View):
         return render(request, 'home/login.html', context) 
 
 # After Login
+@login_required
 def home(request):
-    if request.user.is_authenticated():
-        users = User.objects.all()
-        return render(request, 'home/users/index.html', {'users': users})
-    else:
-        return redirect('home:login')
+    users = User.objects.all()
+    return render(request, 'home/users/index.html', {'users': users})
 
 # User - Management
+@login_required
 def user_new(request):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
     if request.method == 'POST':
         form = RegisterUserForm(data=request.POST)
         if form.is_valid():
@@ -57,9 +53,8 @@ def user_new(request):
     context = {'form' : form}
     return render(request, "home/users/new.html", context)
 
+@login_required
 def user_edit(request, user_id):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
         form = EditUserForm(request.POST, instance=user)
@@ -78,9 +73,8 @@ def user_edit(request, user_id):
         }
     return render(request, 'home/users/edit.html', context)
 
+@login_required
 def user_delete(request, user_id):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
     user = get_object_or_404(User, id=user_id)
     if user.delete():
         messages.success(request, 'User \'' + user.username + '\' successfully removed!')
@@ -89,16 +83,13 @@ def user_delete(request, user_id):
     return redirect('home:home')
 
 # Group Management
+@login_required
 def group_index(request):
-    if request.user.is_authenticated():
-        groups = Group.objects.all()
-        return render(request, 'home/groups/index.html', {'groups': groups})
-    else:
-        return redirect('home:login')
+    groups = Group.objects.all()
+    return render(request, 'home/groups/index.html', {'groups': groups})
 
+@login_required
 def group_new(request):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
     if request.method == 'POST':
         form = CreateGroupForm(data=request.POST)
         if form.is_valid():
@@ -112,9 +103,8 @@ def group_new(request):
     context = {'form' : form}
     return render(request, "home/groups/new.html", context)
 
+@login_required
 def group_show(request, group_id):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
     group = get_object_or_404(Group, id=group_id)
     users = group.user_set.all()
     context = {
@@ -123,9 +113,8 @@ def group_show(request, group_id):
         }
     return render(request, 'home/groups/show.html', context)
 
+@login_required
 def group_edit(request, group_id):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
     group = get_object_or_404(Group, id=group_id)
     old_name = group.name
     if request.method == 'POST':
@@ -145,9 +134,8 @@ def group_edit(request, group_id):
         }
     return render(request, 'home/groups/edit.html', context)
 
+@login_required
 def group_delete(request, group_id):
-    if not request.user.is_authenticated():
-        return redirect('home:login')
     group = get_object_or_404(Group, id=group_id)
     if group.delete():
         messages.success(request, 'Group \'' + group.name +'\' successfull deleted!')
@@ -155,6 +143,7 @@ def group_delete(request, group_id):
         messages.error(request, 'Some error occured!')
     return redirect('home:home')
 
+@login_required
 def group_user_toggle(request, group_id):
     if request.method == 'POST':
         username = request.POST.get('username')
