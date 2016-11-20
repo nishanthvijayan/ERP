@@ -7,14 +7,14 @@ from forms.forms import TransitionForm
 @login_required
 def transition_new(request, workflow_id):
     if request.method == 'POST':
-        form = TransitionForm(request.POST)
+        form = TransitionForm(request.POST, workflow_id=workflow_id)
         if form.is_valid():
             transition = form.save(commit=False)
             transition.workflow_id = workflow_id
             transition.save()
             return redirect('forms:workflow-show', workflow_id)
     else:
-        form = TransitionForm()
+        form = TransitionForm(workflow_id=workflow_id)
 
     return render(request, 'forms/transitions/new.html', {'form': form, 'workflow_id': workflow_id})
 
@@ -22,12 +22,12 @@ def transition_new(request, workflow_id):
 def transition_edit(request, workflow_id, transition_id):
     transition = get_object_or_404(Transition, pk=transition_id)
     if request.method == 'POST':
-        form = TransitionForm(request.POST, instance=transition)
+        form = TransitionForm(request.POST, instance=transition, workflow_id=workflow_id)
         if form.is_valid():
             form.save()
             return redirect('forms:workflow-show', workflow_id)
     else:
-        form = TransitionForm(instance=transition)
+        form = TransitionForm(instance=transition, workflow_id=workflow_id)
 
     return render(request, 'forms/transitions/edit.html', {'form': form, 'workflow_id': workflow_id, 'transition_id': transition_id})
 

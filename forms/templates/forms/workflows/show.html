@@ -27,20 +27,22 @@
             {% for form_element in form_elements %}
                 <tr class="row">
                     <td>
+                        <label>
                         {{ form_element.caption }}
                         {% if form_element.hint %}
                         <div class="text-muted">
                             ({{ form_element.hint }})
                         </div>
                         {% endif %}
+                        </label>
                     </td>
                     <td>
                     {% if form_element.element_type == 'text_input' %}
-                        <input type="text"/>    
+                        <input type="text" class="form-control"/>    
                     {% elif form_element.element_type == 'number_input' %}
-                            <input type="number" name="">
+                            <input type="number" class="form-control">
                     {% elif form_element.element_type == 'text_area' %}
-                            <textarea></textarea>
+                            <textarea class="form-control"> </textarea>
                     {% endif %}
                     </td>
                 </tr>

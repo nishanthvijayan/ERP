@@ -17,27 +17,29 @@
                 {% for form_element in form_elements %}
                     <tr class="row">
                         <td>
+                            <label>
                             {{ form_element.caption }}
                             {% if form_element.hint %}
-                            <div class="text-muted">
-                                ({{ form_element.hint }})
-                            </div>
+                                <div class="text-muted">
+                                    ({{ form_element.hint }})
+                                </div>
                             {% endif %}
+                            </label>
                         </td>
                         <td>
                         {% if form_element.element_type == 'text_input' %}
-                            <input type="text" name='{{ form_element.caption }}'/>    
+                            <input type="text" name='{{ form_element.caption }}' class="form-control"/>
                         {% elif form_element.element_type == 'number_input' %}
-                                <input type="number" name='{{ form_element.caption }}'>
+                                <input type="number" name='{{ form_element.caption }}' class="form-control">
                         {% elif form_element.element_type == 'text_area' %}
-                                <textarea name='{{ form_element.caption }}'></textarea>
+                                <textarea name='{{ form_element.caption }}' class="form-control"></textarea>
                         {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" class="btn btn-primary" />
         </form>
     </div>
 </div>
