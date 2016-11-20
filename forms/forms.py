@@ -1,4 +1,7 @@
-from django.forms import Form, ModelForm, TextInput, Select
+from django.forms import Form, ModelForm, TextInput, Select, ModelChoiceField, ModelMultipleChoiceField, SelectMultiple
+from django.contrib.auth.models import Group
+from django.shortcuts import get_object_or_404
+
 from .models import Workflow, FormElement, State, Transition
 
 class WorkflowForm(ModelForm):
@@ -49,7 +52,8 @@ class TransitionForm(ModelForm):
         exclude = ['workflow']
 
     def __init__(self, *args, **kwargs):
+        workflow = get_object_or_404(Workflow, pk=int(kwargs.pop('workflow_id')))
         super(TransitionForm, self).__init__(*args, **kwargs)
-        self.fields['from_state'].widget = Select(attrs={'class': 'form-control','required': True})
-        self.fields['to_state'].widget = Select(attrs={'class': 'form-control','required': True})
-        self.fields['allowed_groups'].widget = Select(attrs={'class': 'form-control','required': True,'multiple': 'multiple'})
+        self.fields['from_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control', 'required': True}))
+        self.fields['to_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control', 'required': True}))
+        self.fields['allowed_groups'] = ModelMultipleChoiceField(queryset=Group.objects.all(), widget=SelectMultiple(attrs={'class': 'form-control', 'required': True, 'multiple': 'multiple'}))
