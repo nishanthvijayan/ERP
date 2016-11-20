@@ -1,6 +1,8 @@
 {% extends "home/base.html" %}
 
 {% block content %}
+{% load form_extras %}
+
 <div class="row">
     <div class="col-md-12 page-header">
         <h2>{{ workflow.name }}</h2>
@@ -158,7 +160,7 @@
                             <td>{{ forloop.counter }}</td>
                             <td>{{ transition.from_state.name }}</td>
                             <td>{{ transition.to_state.name }}</td>
-                            <td>under construction</td>
+                            <td>{{ transition.allowed_groups.all|values_list:"name"|join:", "|truncatewords:3 }}</td>
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="...">
                                     <a href="{% url 'forms:transition-edit' workflow.id transition.id %}" class="btn btn-success btn-sm">Edit</a>
