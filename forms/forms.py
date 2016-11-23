@@ -13,6 +13,7 @@ class WorkflowForm(ModelForm):
         super(WorkflowForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['description'].widget = TextInput(attrs={'class': 'form-control'})
+        self.fields['description'].required = False
 
 class FormElementForm(ModelForm):
     class Meta:
@@ -26,10 +27,11 @@ class FormElementForm(ModelForm):
         ('number_input', 'Number Input'),
         ('option_group', 'Option Group'),
         ('text_area', 'Text Area'))
-        self.fields['caption'].widget = TextInput(attrs={'class': 'form-control','required': True})
-        self.fields['hint'].widget = TextInput(attrs={'class': 'form-control','required': True})
-        self.fields['element_type'].widget = Select(attrs={'class': 'form-control','required': True}, choices=AVAILABLE_ELEMENT_TYPES)
-        self.fields['position'].widget = TextInput(attrs={'type':'number','class': 'form-control','required': True })
+        self.fields['caption'].widget = TextInput(attrs={'class': 'form-control'})
+        self.fields['hint'].widget = TextInput(attrs={'class': 'form-control'})
+        self.fields['hint'].required = False
+        self.fields['element_type'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_ELEMENT_TYPES)
+        self.fields['position'].widget = TextInput(attrs={'type':'number','class': 'form-control' })
 
 class StateForm(ModelForm):
     class Meta:
@@ -43,8 +45,8 @@ class StateForm(ModelForm):
         ('Intermediate', 'Intermediate'),
         ('Accepted', 'Accepted'),
         ('Rejected', 'Rejected'))
-        self.fields['name'].widget = TextInput(attrs={'class': 'form-control','required': True})
-        self.fields['kind'].widget = Select(attrs={'class': 'form-control','required': True}, choices=AVAILABLE_KINDS)
+        self.fields['name'].widget = TextInput(attrs={'class': 'form-control'})
+        self.fields['kind'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_KINDS)
 
 class TransitionForm(ModelForm):
     class Meta:
@@ -54,6 +56,6 @@ class TransitionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         workflow = get_object_or_404(Workflow, pk=int(kwargs.pop('workflow_id')))
         super(TransitionForm, self).__init__(*args, **kwargs)
-        self.fields['from_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control', 'required': True}))
-        self.fields['to_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control', 'required': True}))
-        self.fields['allowed_groups'] = ModelMultipleChoiceField(queryset=Group.objects.all(), widget=SelectMultiple(attrs={'class': 'form-control', 'required': True, 'multiple': 'multiple'}))
+        self.fields['from_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control'}))
+        self.fields['to_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control'}))
+        self.fields['allowed_groups'] = ModelMultipleChoiceField(queryset=Group.objects.all(), widget=SelectMultiple(attrs={'class': 'form-control', 'multiple': 'multiple'}))
