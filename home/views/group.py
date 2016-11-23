@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 
-from home.forms import CreateGroupForm, EditGroupForm
+from home.forms import GroupForm
 
 
 # Group Management
@@ -15,7 +15,7 @@ def group_index(request):
 @login_required
 def group_new(request):
     if request.method == 'POST':
-        form = CreateGroupForm(data=request.POST)
+        form = GroupForm(data=request.POST)
         if form.is_valid():
             if form.save():
                 messages.success(request,'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
@@ -23,7 +23,7 @@ def group_new(request):
                 messages.error(request, 'Some error occured!')
             return redirect('home:group-index')
     else:
-        form = CreateGroupForm()
+        form = GroupForm()
     context = {'form' : form}
     return render(request, "home/groups/new.html", context)
 
@@ -42,7 +42,7 @@ def group_edit(request, group_id):
     group = get_object_or_404(Group, id=group_id)
     old_name = group.name
     if request.method == 'POST':
-        form = EditGroupForm(request.POST, instance=group)
+        form = GroupForm(request.POST, instance=group)
         if form.is_valid():
             if form.save():
                 messages.success(request, 'Group name successfully changed form \'' + old_name + '\' to \'' + group.name + '\'.')
@@ -50,7 +50,7 @@ def group_edit(request, group_id):
                 messages.error(request, 'Some error occured!')
             return redirect('home:group-show', group_id)
     else:
-        form = EditGroupForm(instance=group)
+        form = GroupForm(instance=group)
 
     context = {
             'change_name_form' : form,
