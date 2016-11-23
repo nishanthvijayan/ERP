@@ -22,7 +22,7 @@
                 <tr class="row">
                     <td>{{ response.creator.username }}</td>
                     <td>{{ response.current_state.name }}</td>
-                    {% for element in response.formelementinstance_set.all %}
+                    {% for element in response.formelemententry_set.all %}
                         <td>
                             {% if element.value %}
                                 {{ element.value }}
