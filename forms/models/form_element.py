@@ -4,7 +4,7 @@ from workflow import Workflow
 from positions.fields import PositionField
 
 class FormElement(models.Model):
-    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
+    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE, related_name="form_elements")
     caption = models.CharField(max_length=200)
     hint = models.CharField(max_length=500, blank=True)
     AVAILABLE_ELEMENT_TYPES = (

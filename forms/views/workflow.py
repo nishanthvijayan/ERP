@@ -14,7 +14,7 @@ def workflow_show(request, workflow_id):
     context = {'workflow': workflow,
      'states': workflow.state_set.all(),
       'transitions': workflow.transition_set.all(),
-      'form_elements': workflow.formelement_set.all()}
+      'form_elements': workflow.form_elements.all()}
     return render(request, 'forms/workflows/show.html', context)
 
 @login_required
