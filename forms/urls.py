@@ -22,6 +22,6 @@ urlpatterns = [
     url(r'^workflows/(?P<workflow_id>[0-9]+)/transitions/(?P<transition_id>[0-9]+)/edit$', views.transition_edit, name='transition-edit'),
     url(r'^workflows/(?P<workflow_id>[0-9]+)/transitions/(?P<transition_id>[0-9]+)/delete$', views.transition_delete, name='transition-delete'),
 
-    url(r'^workflows/(?P<workflow_id>[0-9]+)/responses/$', views.workflow_instance_index, name='workflow-instance-index'),
-    url(r'^workflows/(?P<workflow_id>[0-9]+)/responses/new$', views.workflow_instance_new, name='workflow-instance-new'),
+    url(r'^workflows/(?P<workflow_id>[0-9]+)/responses/$', views.workflow_entry_index, name='workflow-entry-index'),
+    url(r'^workflows/(?P<workflow_id>[0-9]+)/responses/new$', views.workflow_entry_new, name='workflow-entry-new'),
 ]
