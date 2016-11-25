@@ -23,10 +23,11 @@ class FormElementForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(FormElementForm, self).__init__(*args, **kwargs)
         AVAILABLE_ELEMENT_TYPES = (
-        ('text_input', 'Text Input'),
-        ('number_input', 'Number Input'),
-        ('option_group', 'Option Group'),
-        ('text_area', 'Text Area'))
+            ('text_input', 'Text Input'),
+            ('number_input', 'Number Input'),
+            ('option_group', 'Option Group'),
+            ('text_area', 'Text Area')
+        )
         self.fields['caption'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['hint'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['hint'].required = False
@@ -41,10 +42,11 @@ class StateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(StateForm, self).__init__(*args, **kwargs)
         AVAILABLE_KINDS = (
-        ('Initial', 'Initial'),
-        ('Intermediate', 'Intermediate'),
-        ('Accepted', 'Accepted'),
-        ('Rejected', 'Rejected'))
+            ('Initial', 'Initial'),
+            ('Intermediate', 'Intermediate'),
+            ('Accepted', 'Accepted'),
+            ('Rejected', 'Rejected')
+        )
         self.fields['name'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['kind'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_KINDS)
 
