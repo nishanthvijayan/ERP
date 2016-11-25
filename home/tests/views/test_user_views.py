@@ -28,7 +28,7 @@ class UserViewTests(TestCase):
 
     def test_delete_view(self):
         user_count_before = User.objects.count()
-        response = self.client.get(reverse('home:user-delete', kwargs={"user_id": self.user.id}))
+        self.client.get(reverse('home:user-delete', kwargs={"user_id": self.user.id}))
         self.assertEqual(User.objects.count(), user_count_before - 1)
         # TODO: self.assertRedirects(response, reverse('home:user-index'))
 

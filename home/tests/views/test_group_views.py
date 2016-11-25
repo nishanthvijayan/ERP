@@ -44,6 +44,6 @@ class GroupViewTests(TestCase):
 
     def test_toggle_view(self):
         data = {"username": self.user.username}
-        response = self.client.post(reverse('home:group-user-toggle', kwargs={"group_id": self.group.id}), data)
+        self.client.post(reverse('home:group-user-toggle', kwargs={"group_id": self.group.id}), data)
         check_user_exists = Group.objects.filter(id=self.user.id).exists()
         self.assertEqual(check_user_exists, True)
