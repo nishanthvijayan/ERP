@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import Group
+
 from workflow import Workflow
 
 
@@ -12,6 +14,7 @@ class State(models.Model):
         ('Rejected', 'Rejected')
     )
     kind = models.CharField(max_length=500, choices=AVAILABLE_KINDS)
+    allowed_groups = models.ManyToManyField(Group)
 
     def __str__(self):
         return self.name

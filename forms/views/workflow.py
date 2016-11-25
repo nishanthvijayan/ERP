@@ -27,8 +27,7 @@ def workflow_new(request):
     if request.method == 'POST':
         form = WorkflowForm(request.POST)
         if form.is_valid():
-            workflow = Workflow(name=form.cleaned_data['name'], description=form.cleaned_data['description'])
-            workflow.save()
+            form.save()
             return redirect('forms:workflow-index')
     else:
         form = WorkflowForm()
@@ -40,11 +39,9 @@ def workflow_new(request):
 def workflow_edit(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
     if request.method == 'POST':
-        form = WorkflowForm(request.POST)
+        form = WorkflowForm(request.POST, instance=workflow)
         if form.is_valid():
-            workflow.name = form.cleaned_data['name']
-            workflow.description = form.cleaned_data['description']
-            workflow.save()
+            form.save()
             return redirect('forms:workflow-index')
     else:
         form = WorkflowForm({"name": workflow.name, "description": workflow.description})

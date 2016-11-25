@@ -13,6 +13,8 @@
         </div>
         <div class="text-muted">
             {{ workflow.description }}
+            <br>
+            Can be submitted by {{ workflow.allowed_groups.all|values_list:"name"|join:", "|truncatewords:7 }}
         </div>
     </div>
 
@@ -112,8 +114,9 @@
                     <thead>
                         <tr class="row">
                             <th class="col-md-1">#</th>
-                            <th class="col-md-5">Name</th>
-                            <th class="col-md-4">Type</th>
+                            <th class="col-md-3">Name</th>
+                            <th class="col-md-2">Type</th>
+                            <th class="col-md-4">Groups allowed to work in this state</th>
                             <th class="col-md-2">Actions</th>
                         </tr>
                     </thead>
@@ -123,6 +126,7 @@
                             <td>{{ forloop.counter }}</td>
                             <td>{{ state.name }}</td>
                             <td>{{ state.kind }}</td>
+                            <td>{{ state.allowed_groups.all|values_list:"name"|join:", "|truncatewords:3 }}</td>
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="...">
                                     <a href="{% url 'forms:state-edit' workflow.id state.id %}" class="btn btn-success btn-sm">Edit</a>
@@ -148,9 +152,9 @@
                     <thead>
                         <tr class="row">
                             <th class="col-md-1">#</th>
+                            <th class="col-md-3">Name</th>
                             <th class="col-md-3">From</th>
                             <th class="col-md-3">To</th>
-                            <th class="col-md-3">Groups allowed to make this transition</th>
                             <th class="col-md-2">Actions</th>
                         </tr>
                     </thead>
@@ -158,9 +162,9 @@
                     {% for transition in transitions %}
                         <tr class="row">
                             <td>{{ forloop.counter }}</td>
+                            <td>{{ transition.name }}</td>
                             <td>{{ transition.from_state.name }}</td>
                             <td>{{ transition.to_state.name }}</td>
-                            <td>{{ transition.allowed_groups.all|values_list:"name"|join:", "|truncatewords:3 }}</td>
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="...">
                                     <a href="{% url 'forms:transition-edit' workflow.id transition.id %}" class="btn btn-success btn-sm">Edit</a>
