@@ -47,7 +47,8 @@ def group_edit(request, group_id):
         form = GroupForm(request.POST, instance=group)
         if form.is_valid():
             if form.save():
-                messages.success(request, 'Group name successfully changed form \'' + old_name + '\' to \'' + group.name + '\'.')
+                messages.success(request, 'Group name successfully changed form \'' +
+                                 old_name + '\' to \'' + group.name + '\'.')
             else:
                 messages.error(request, 'Some error occured!')
             return redirect('home:group-show', group_id)
@@ -79,8 +80,10 @@ def group_user_toggle(request, group_id):
         group = get_object_or_404(Group, id=group_id)
         if user.groups.filter(name=group.name).count():
             user.groups.remove(group)
-            messages.success(request, 'User \'' + user.username + '\' successfully removed from the group \'' + group.name + '\'.')
+            messages.success(request, 'User \'' + user.username +
+                             '\' successfully removed from the group \'' + group.name + '\'.')
         else:
             group.user_set.add(user)
-            messages.success(request, 'User \'' + user.username + '\' added to the group \'' + group.name + '\' successfully.')
+            messages.success(request, 'User \'' + user.username +
+                             '\' added to the group \'' + group.name + '\' successfully.')
     return redirect('home:group-show', group_id)

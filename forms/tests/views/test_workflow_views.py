@@ -24,7 +24,8 @@ class WorkflowViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
         workflow_count_before = Workflow.objects.count()
-        response = self.client.post(reverse('forms:workflow-new'), {'name': 'New Workflow', 'description': 'Test Workflow Description'})
+        response = self.client.post(reverse('forms:workflow-new'),
+                                    {'name': 'New Workflow', 'description': 'Test Workflow Description'})
         self.assertRedirects(response, reverse('forms:workflow-index'))
         self.assertEqual(Workflow.objects.count(), workflow_count_before + 1)
 
@@ -32,7 +33,8 @@ class WorkflowViewTests(TestCase):
         response = self.client.get(reverse('forms:workflow-edit', kwargs={"workflow_id": self.workflow.id}))
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.post(reverse('forms:workflow-edit', kwargs={"workflow_id": self.workflow.id}), {'name': 'Leave Workflow', 'description': 'Updated Workflow'})
+        response = self.client.post(reverse('forms:workflow-edit', kwargs={"workflow_id": self.workflow.id}), {
+                                    'name': 'Leave Workflow', 'description': 'Updated Workflow'})
         self.assertRedirects(response, reverse('forms:workflow-index'))
         updated_workflow = Workflow.objects.get(pk=self.workflow.id)
         self.assertEqual(updated_workflow.description, 'Updated Workflow')

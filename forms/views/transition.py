@@ -31,7 +31,8 @@ def transition_edit(request, workflow_id, transition_id):
     else:
         form = TransitionForm(instance=transition, workflow_id=workflow_id)
 
-    return render(request, 'forms/transitions/edit.html', {'form': form, 'workflow_id': workflow_id, 'transition_id': transition_id})
+    return render(request, 'forms/transitions/edit.html',
+                  {'form': form, 'workflow_id': workflow_id, 'transition_id': transition_id})
 
 
 @login_required

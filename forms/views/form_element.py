@@ -31,7 +31,8 @@ def form_element_edit(request, workflow_id, element_id):
     else:
         form = FormElementForm(instance=element)
 
-    return render(request, 'forms/form_elements/edit.html', {'form': form, 'workflow_id': workflow_id, 'element_id': element_id})
+    return render(request, 'forms/form_elements/edit.html',
+                  {'form': form, 'workflow_id': workflow_id, 'element_id': element_id})
 
 
 @login_required

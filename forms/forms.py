@@ -62,6 +62,9 @@ class TransitionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         workflow = get_object_or_404(Workflow, pk=int(kwargs.pop('workflow_id')))
         super(TransitionForm, self).__init__(*args, **kwargs)
-        self.fields['from_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control'}))
-        self.fields['to_state'] = ModelChoiceField(queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control'}))
-        self.fields['allowed_groups'] = ModelMultipleChoiceField(queryset=Group.objects.all(), widget=SelectMultiple(attrs={'class': 'form-control', 'multiple': 'multiple'}))
+        self.fields['from_state'] = ModelChoiceField(
+            queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control'}))
+        self.fields['to_state'] = ModelChoiceField(
+            queryset=workflow.state_set.all(), widget=Select(attrs={'class': 'form-control'}))
+        self.fields['allowed_groups'] = ModelMultipleChoiceField(queryset=Group.objects.all(
+            ), widget=SelectMultiple(attrs={'class': 'form-control', 'multiple': 'multiple'}))
