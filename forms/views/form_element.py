@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from forms.models import FormElement
 from forms.forms import FormElementForm
 
+
 @login_required
 def form_element_new(request, workflow_id):
     if request.method == 'POST':
@@ -18,6 +19,7 @@ def form_element_new(request, workflow_id):
 
     return render(request, 'forms/form_elements/new.html', {'form': form, 'workflow_id': workflow_id})
 
+
 @login_required
 def form_element_edit(request, workflow_id, element_id):
     element = get_object_or_404(FormElement, pk=element_id)
@@ -29,7 +31,9 @@ def form_element_edit(request, workflow_id, element_id):
     else:
         form = FormElementForm(instance=element)
 
-    return render(request, 'forms/form_elements/edit.html', {'form': form, 'workflow_id': workflow_id, 'element_id': element_id})
+    return render(request, 'forms/form_elements/edit.html',
+                  {'form': form, 'workflow_id': workflow_id, 'element_id': element_id})
+
 
 @login_required
 def form_element_delete(request, workflow_id, element_id):

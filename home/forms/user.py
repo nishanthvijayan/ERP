@@ -3,8 +3,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-class RegisterUserForm(UserCreationForm):
 
+class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -30,18 +30,17 @@ class RegisterUserForm(UserCreationForm):
 
 
 class EditUserForm(UserCreationForm):
-
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
-        fields = ['email','username', 'first_name', 'last_name']
+        fields = ['email', 'username', 'first_name', 'last_name']
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control'})
-        self.fields['email'].widget = forms.TextInput(attrs={'class': 'form-control','readonly':'true'},)
+        self.fields['email'].widget = forms.TextInput(attrs={'class': 'form-control', 'readonly': 'true'},)
         self.fields.pop('password1')
         self.fields.pop('password2')
 
@@ -50,7 +49,7 @@ class EditUserForm(UserCreationForm):
         email = self.cleaned_data.get('email')
         if username and User.objects.filter(username=username).exclude(email=email).count():
             raise forms.ValidationError('This username is already in use. Please supply a different username.')
-        else: 
+        else:
             return username
 
     def save(self, commit=True):

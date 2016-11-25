@@ -4,6 +4,7 @@ python:
 
 install:
   - "pip install -r requirements.txt"
+  - "pip install flake8"
 
 notifications:
   email:
@@ -15,3 +16,4 @@ before_script:
 
 script:
   - 'python manage.py test'
+  - 'flake8'

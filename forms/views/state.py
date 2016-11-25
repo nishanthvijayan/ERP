@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from forms.models import State
 from forms.forms import StateForm
 
+
 @login_required
 def state_new(request, workflow_id):
     if request.method == 'POST':
@@ -18,6 +19,7 @@ def state_new(request, workflow_id):
 
     return render(request, 'forms/states/new.html', {'form': form, 'workflow_id': workflow_id})
 
+
 @login_required
 def state_edit(request, workflow_id, state_id):
     state = get_object_or_404(State, pk=state_id)
@@ -30,6 +32,7 @@ def state_edit(request, workflow_id, state_id):
         form = StateForm(instance=state)
 
     return render(request, 'forms/states/edit.html', {'form': form, 'workflow_id': workflow_id, 'state_id': state_id})
+
 
 @login_required
 def state_delete(request, workflow_id, state_id):

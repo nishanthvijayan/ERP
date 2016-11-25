@@ -4,18 +4,23 @@ from django.contrib.auth.decorators import login_required
 from forms.models import Workflow
 from forms.forms import WorkflowForm
 
+
 @login_required
 def workflow_index(request):
     return render(request, 'forms/workflows/index.html', {'workflows': Workflow.objects.all()})
 
+
 @login_required
 def workflow_show(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
-    context = {'workflow': workflow,
-     'states': workflow.state_set.all(),
-      'transitions': workflow.transition_set.all(),
-      'form_elements': workflow.formelement_set.all()}
+    context = {
+        'workflow': workflow,
+        'states': workflow.state_set.all(),
+        'transitions': workflow.transition_set.all(),
+        'form_elements': workflow.formelement_set.all()
+    }
     return render(request, 'forms/workflows/show.html', context)
+
 
 @login_required
 def workflow_new(request):
@@ -29,6 +34,7 @@ def workflow_new(request):
         form = WorkflowForm()
 
     return render(request, 'forms/workflows/new.html', {'form': form})
+
 
 @login_required
 def workflow_edit(request, workflow_id):
@@ -44,6 +50,7 @@ def workflow_edit(request, workflow_id):
         form = WorkflowForm({"name": workflow.name, "description": workflow.description})
 
     return render(request, 'forms/workflows/edit.html', {'form': form, 'workflow': workflow})
+
 
 @login_required
 def workflow_delete(request, workflow_id):

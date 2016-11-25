@@ -1,7 +1,7 @@
 from django.conf.urls import url
 import views
 
-app_name='home'
+app_name = 'home'
 
 urlpatterns = [
     url(r'^$', views.LoginView.as_view(), name='login'),

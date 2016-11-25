@@ -5,13 +5,13 @@ from django.contrib.auth.decorators import login_required
 
 from home.forms import RegisterUserForm, EditUserForm
 
-# After Login
+
 @login_required
 def user_index(request):
     users = User.objects.all()
     return render(request, 'home/users/index.html', {'users': users})
 
-# User - Management
+
 @login_required
 def user_new(request):
     if request.method == 'POST':
@@ -24,8 +24,9 @@ def user_new(request):
             return redirect('home:user-index')
     else:
         form = RegisterUserForm()
-    context = {'form' : form}
+    context = {'form': form}
     return render(request, "home/users/new.html", context)
+
 
 @login_required
 def user_edit(request, user_id):
@@ -34,7 +35,7 @@ def user_edit(request, user_id):
         form = EditUserForm(request.POST, instance=user)
         if form.is_valid():
             if form.save():
-                messages.success(request,'User \'' + user.username + '\' info successfully updated!')
+                messages.success(request, 'User \'' + user.username + '\' info successfully updated!')
             else:
                 messages.error(request, 'Some error occured!')
             # TODO: Once a user profile page is implemented, the redirect should lead there
@@ -42,11 +43,12 @@ def user_edit(request, user_id):
     else:
         form = EditUserForm(instance=user)
     context = {
-            'form' : form,
-            'user_id' : user.id,
-            'username' : user.username
+            'form': form,
+            'user_id': user.id,
+            'username': user.username
         }
     return render(request, 'home/users/edit.html', context)
+
 
 @login_required
 def user_delete(request, user_id):
