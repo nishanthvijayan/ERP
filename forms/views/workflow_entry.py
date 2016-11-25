@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from forms.models import WorkflowEntry, Workflow
 
+
 @login_required
 def workflow_entry_index(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
@@ -10,6 +11,7 @@ def workflow_entry_index(request, workflow_id):
     responses = workflow.workflowentry_set.all()
     context = {'workflow': workflow, 'form_elements': form_elements, "responses": responses}
     return render(request, 'forms/workflow_entries/index.html', context)
+
 
 @login_required
 def workflow_entry_new(request, workflow_id):

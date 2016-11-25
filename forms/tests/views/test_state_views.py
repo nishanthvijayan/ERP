@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 
 from forms.models import State, Workflow
 
+
 class StateViewTests(TestCase):
     def setUp(self):
         self.workflow = Workflow.objects.create(name="Example Workflow", description="This is a test workflow")
         self.state = State.objects.create(workflow=self.workflow, name="Example State", kind="Initial")
         self.user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         self.client.post(reverse('home:login'), {'username': 'john', 'password': 'johnpassword'})
-
 
     def test_new_view(self):
         state_count_before = State.objects.count()

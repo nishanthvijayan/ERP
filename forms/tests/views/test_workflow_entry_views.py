@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from forms.models import Workflow
 
+
 class WorkflowEntryViewTests(TestCase):
     def setUp(self):
         self.workflow = Workflow.objects.create(name="Example Workflow", description="This is a test workflow")

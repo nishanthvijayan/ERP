@@ -3,6 +3,7 @@ from workflow import Workflow
 
 from positions.fields import PositionField
 
+
 class FormElement(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     caption = models.CharField(max_length=200)

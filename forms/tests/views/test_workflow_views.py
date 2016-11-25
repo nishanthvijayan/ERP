@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from forms.models import Workflow
 
+
 class WorkflowViewTests(TestCase):
     def setUp(self):
         self.workflow = Workflow.objects.create(name="Leave Application", description="Testing a Leave Application")

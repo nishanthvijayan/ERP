@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.views import View
 
-# LoginView
+
 class LoginView(View):
     def post(self, request):
         username = request.POST['username']
@@ -21,6 +21,7 @@ class LoginView(View):
         if request.user.is_authenticated():
             return redirect('home:user-index')
         return render(request, 'home/login.html')
+
 
 class LogoutView(View):
     def get(self, request):

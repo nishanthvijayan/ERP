@@ -3,8 +3,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-class RegisterUserForm(UserCreationForm):
 
+class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -30,7 +30,6 @@ class RegisterUserForm(UserCreationForm):
 
 
 class EditUserForm(UserCreationForm):
-
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 

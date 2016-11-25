@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 from workflow import Workflow
 from state import State
 
+
 class Transition(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     from_state = models.ForeignKey(State, on_delete=models.CASCADE)

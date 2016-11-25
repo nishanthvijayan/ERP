@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required
 from home.forms import GroupForm
 
 
-# Group Management
 @login_required
 def group_index(request):
     groups = Group.objects.all()
     return render(request, 'home/groups/index.html', {'groups': groups})
+
 
 @login_required
 def group_new(request):
@@ -27,6 +27,7 @@ def group_new(request):
     context = {'form': form}
     return render(request, "home/groups/new.html", context)
 
+
 @login_required
 def group_show(request, group_id):
     group = get_object_or_404(Group, id=group_id)
@@ -36,6 +37,7 @@ def group_show(request, group_id):
             'group': group
         }
     return render(request, 'home/groups/show.html', context)
+
 
 @login_required
 def group_edit(request, group_id):
@@ -58,6 +60,7 @@ def group_edit(request, group_id):
         }
     return render(request, 'home/groups/edit.html', context)
 
+
 @login_required
 def group_delete(request, group_id):
     group = get_object_or_404(Group, id=group_id)
@@ -66,6 +69,7 @@ def group_delete(request, group_id):
     else:
         messages.error(request, 'Some error occured!')
     return redirect('home:group-index')
+
 
 @login_required
 def group_user_toggle(request, group_id):

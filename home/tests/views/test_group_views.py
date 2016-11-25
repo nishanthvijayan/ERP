@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User, Group
 
+
 class GroupViewTests(TestCase):
     def setUp(self):
         self.group = Group.objects.create(name="HOD")

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Workflow, FormElement, State, Transition
 
+
 class WorkflowForm(ModelForm):
     class Meta:
         model = Workflow
@@ -14,6 +15,7 @@ class WorkflowForm(ModelForm):
         self.fields['name'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['description'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['description'].required = False
+
 
 class FormElementForm(ModelForm):
     class Meta:
@@ -34,6 +36,7 @@ class FormElementForm(ModelForm):
         self.fields['element_type'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_ELEMENT_TYPES)
         self.fields['position'].widget = TextInput(attrs={'type': 'number', 'class': 'form-control'})
 
+
 class StateForm(ModelForm):
     class Meta:
         model = State
@@ -49,6 +52,7 @@ class StateForm(ModelForm):
         )
         self.fields['name'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['kind'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_KINDS)
+
 
 class TransitionForm(ModelForm):
     class Meta:

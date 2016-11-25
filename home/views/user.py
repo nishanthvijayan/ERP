@@ -5,13 +5,13 @@ from django.contrib.auth.decorators import login_required
 
 from home.forms import RegisterUserForm, EditUserForm
 
-# After Login
+
 @login_required
 def user_index(request):
     users = User.objects.all()
     return render(request, 'home/users/index.html', {'users': users})
 
-# User - Management
+
 @login_required
 def user_new(request):
     if request.method == 'POST':
@@ -26,6 +26,7 @@ def user_new(request):
         form = RegisterUserForm()
     context = {'form': form}
     return render(request, "home/users/new.html", context)
+
 
 @login_required
 def user_edit(request, user_id):
@@ -47,6 +48,7 @@ def user_edit(request, user_id):
             'username': user.username
         }
     return render(request, 'home/users/edit.html', context)
+
 
 @login_required
 def user_delete(request, user_id):

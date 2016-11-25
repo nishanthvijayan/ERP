@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+
 class UserViewTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
