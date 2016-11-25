@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from forms.models import WorkflowEntry, Workflow
+from forms.models import Workflow
 
 class WorkflowEntryViewTests(TestCase):
     def setUp(self):

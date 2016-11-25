@@ -1,4 +1,4 @@
-from django.forms import Form, ModelForm, TextInput, Select, ModelChoiceField, ModelMultipleChoiceField, SelectMultiple
+from django.forms import ModelForm, TextInput, Select, ModelChoiceField, ModelMultipleChoiceField, SelectMultiple
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 

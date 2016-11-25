@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
-from forms.models import WorkflowEntry, FormElementEntry, Workflow
+from forms.models import WorkflowEntry, Workflow
 
 @login_required
 def workflow_entry_index(request, workflow_id):
