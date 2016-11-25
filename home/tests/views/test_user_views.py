@@ -12,7 +12,7 @@ class UserViewTests(TestCase):
         response = self.client.get(reverse('home:user-new'))
         self.assertEqual(response.status_code, 200)
 
-        data = {'username' : 'mary', 'first_name' : 'mary', 'last_name' : 'jane', 'email' : 'maryjane@spider.com', 'password1' : 'maryjane123', 'password2' : 'maryjane123'}
+        data = {'username': 'mary', 'first_name': 'mary', 'last_name': 'jane', 'email': 'maryjane@spider.com', 'password1': 'maryjane123', 'password2': 'maryjane123'}
         response = self.client.post(reverse('home:user-new'), data)
         self.assertEqual(User.objects.count(), user_count_before + 1)
         self.assertRedirects(response, reverse('home:user-index'))

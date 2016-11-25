@@ -13,7 +13,7 @@ class GroupViewTests(TestCase):
         response = self.client.get(reverse('home:group-new'))
         self.assertEqual(response.status_code, 200)
 
-        data = {'name' : 'mary jane'}
+        data = {'name': 'mary jane'}
         response = self.client.post(reverse('home:group-new'), data)
         self.assertEqual(Group.objects.count(), group_count_before + 1)
         self.assertRedirects(response, reverse('home:group-index'))
@@ -21,9 +21,9 @@ class GroupViewTests(TestCase):
     def test_edit_view(self):
         response = self.client.get(reverse('home:group-edit', kwargs={"group_id": self.group.id}))
         self.assertEqual(response.status_code, 200)
-        new_data = {'name' : 'mary jane'}
+        new_data = {'name': 'mary jane'}
         response = self.client.post(reverse('home:group-edit', kwargs={"group_id": self.group.id}), new_data)
-        
+
         updated_group_element = Group.objects.get(pk=self.group.id)
         self.assertEqual(updated_group_element.name, 'mary jane')
         self.assertRedirects(response, reverse('home:group-show', kwargs={"group_id": self.group.id}))
@@ -43,7 +43,7 @@ class GroupViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_toggle_view(self):
-        data = {"username" : self.user.username}
+        data = {"username": self.user.username}
         response = self.client.post(reverse('home:group-user-toggle', kwargs={"group_id": self.group.id}), data)
         check_user_exists = Group.objects.filter(id=self.user.id).exists()
-        self.assertEqual(check_user_exists, True)        
+        self.assertEqual(check_user_exists, True)

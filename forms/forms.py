@@ -31,7 +31,7 @@ class FormElementForm(ModelForm):
         self.fields['hint'].widget = TextInput(attrs={'class': 'form-control'})
         self.fields['hint'].required = False
         self.fields['element_type'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_ELEMENT_TYPES)
-        self.fields['position'].widget = TextInput(attrs={'type':'number','class': 'form-control' })
+        self.fields['position'].widget = TextInput(attrs={'type': 'number', 'class': 'form-control'})
 
 class StateForm(ModelForm):
     class Meta:
