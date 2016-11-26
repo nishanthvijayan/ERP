@@ -1,5 +1,6 @@
 {% extends "forms/app_base.html" %}
 
+{% load static %}
 {% block content %}
 {% load form_extras %}
 
@@ -47,6 +48,30 @@
                             <input type="number" class="form-control">
                     {% elif form_element.element_type == 'text_area' %}
                             <textarea class="form-control"> </textarea>
+                    {% elif form_element.element_type == 'date_input' %}
+                                  <div id="date-picker" class="input-append">
+                                    <input data-format="dd/MM/yyyy" type="text"></input>
+                                    <span class="add-on">
+                                      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                      </i>
+                                    </span>
+                                  </div>
+                        {% elif form_element.element_type == 'time_input' %}
+                                  <div id="time-picker" class="input-append">
+                                    <input data-format="HH:mm:ss PP" type="text"></input>
+                                    <span class="add-on">
+                                      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                      </i>
+                                    </span>
+                                  </div>
+                        {% elif form_element.element_type == 'date_time_input' %}
+                                  <div id="datetime-picker" class="input-append">
+                                    <input data-format="dd/MM/yyyy HH:mm:ss PP" type="text"></input>
+                                    <span class="add-on">
+                                      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                      </i>
+                                    </span>
+                                  </div>
                     {% endif %}
                     </td>
                 </tr>
@@ -179,4 +204,24 @@
             </div>
     </div>
 </div>
+{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap-datetimepicker.min.css' %}">
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="{% static 'home/js/bootstrap-datetimepicker.min.js' %}"></script>
+<script type="text/javascript">
+  $(function() {
+    $('#datetime-picker').datetimepicker({
+      language: 'en',
+      pick12HourFormat: true
+    });
+    $('#time-picker').datetimepicker({
+      pickDate: false
+    });
+    $('#date-picker').datetimepicker({
+      pickTime: false
+    });
+  });
+</script>
 {% endblock %}
