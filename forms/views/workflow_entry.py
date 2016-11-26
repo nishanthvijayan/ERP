@@ -16,6 +16,10 @@ def workflow_entry_index(request, workflow_id):
 @login_required
 def workflow_entry_new(request, workflow_id):
     workflow = get_object_or_404(Workflow, pk=workflow_id)
+    if len(request.user.groups.filter(name=workflow.allowed_groups.values_list('name'))) == 0:
+        return redirect('forms:workflow-index')
+
+    workflow = get_object_or_404(Workflow, pk=workflow_id)
     form_elements = workflow.formelement_set.all()
     if request.method == 'POST':
         submission = WorkflowEntry(workflow_id=workflow_id, creator=request.user,
