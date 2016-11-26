@@ -1,23 +1,23 @@
 .fa-big {
-  font-size: 6em !important;
-}
+  font-size: 2.5em !important;
+} 
 
 #header {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 1.7em;
+  font-size: 1.5em;
   color: #fff;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
   padding-left: 40px;
   &:hover {
-  color: #eee;
-  text-decoration:none;
+    color: #eee;
+    text-decoration:none;
   }
 }
 
@@ -29,12 +29,11 @@
 
 #user-dropdown > a {
   color: #fff;
-  font-size: 1.2em;
   font-weight: bold;
 }
 
 #content {
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
 #apps > div {
@@ -50,9 +49,9 @@
 }
 
 .app-logo {
-  height: 150px;
-  width:150px;
-  border-radius: 50%;
+  height: 90px;
+  width: 90px;
+  border-radius: 20%;
 
   -webkit-transition: box-shadow .3s ease;
   -moz-transition: box-shadow .3s ease;
@@ -68,18 +67,19 @@
 }
 
 .app-logo > i {
-  padding: 33px 0;
+  padding: 27.5px 0;
 }
 
 .app-label > h4 {
+  font-size: .9em;
   font-weight: 600;
-  -webkit-text-shadow: 2px 2px 3px rgba(0,0,0,0.77);
-  -moz-text-shadow: 2px 2px 3px rgba(0,0,0,0.77);
-  text-shadow: 2px 2px 3px rgba(0,0,0,0.77);
+  -webkit-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+  -moz-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+  text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
 }
 
 #user-management > a > div.app-logo {
-  background-color: #2285ff;
+  background-color: #2285ff
 }
 
 #forms > a > div.app-logo {
@@ -92,4 +92,71 @@
 
 #settings > a > div.app-logo {
   background-color: #7F8C8E;
+}
+
+/* col-xs */
+@media(max-width:767px){
+  #header {
+    margin-top: 10px;
+  }
+
+  #content {
+    margin-top: 40px;
+  }
+}
+
+/* col-sm */
+@media(min-width:768px){
+  #header {
+    margin-top: 10px;
+  }
+
+  #content {
+    margin-top: 45px;
+  }
+}
+
+/* col-md */
+@media(min-width:992px){
+  #header {
+    margin-top: 10px;
+  }
+
+  #content {
+    margin-top: 50px;
+  }
+}
+
+/* col-lg */
+@media(min-width:1200px){
+  #header {
+    margin-top: 20px;
+  }
+
+  #content {
+    margin-top: 80px;
+  }
+
+  #logo {
+    float: left;
+    margin-right: 10px;
+    font-size: 1.6em;
+    color: #fff;
+    letter-spacing: -1px;
+    padding-top: 9px;
+    font-weight: bold;
+    padding-left: 40px;
+    &:hover {
+      color: #eee;
+      text-decoration:none;
+    }
+  }
+
+  .app-label > h4 {
+    font-size: 1em;
+    font-weight: 600;
+    -webkit-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+    -moz-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+    text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+  }
 }
