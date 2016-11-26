@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from forms.models import Workflow
 
@@ -8,6 +8,7 @@ from forms.models import Workflow
 class WorkflowViewTests(TestCase):
     def setUp(self):
         self.workflow = Workflow.objects.create(name="Leave Application", description="Testing a Leave Application")
+        self.group = Group.objects.create(name="HOD")
         self.user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         self.client.post(reverse('home:login'), {'username': 'john', 'password': 'johnpassword'})
 
@@ -25,7 +26,8 @@ class WorkflowViewTests(TestCase):
 
         workflow_count_before = Workflow.objects.count()
         response = self.client.post(reverse('forms:workflow-new'),
-                                    {'name': 'New Workflow', 'description': 'Test Workflow Description'})
+                                    {'name': 'New Workflow', 'description': 'Test Workflow Description',
+                                        'allowed_groups': [self.group.id]})
         self.assertRedirects(response, reverse('forms:workflow-index'))
         self.assertEqual(Workflow.objects.count(), workflow_count_before + 1)
 
@@ -34,7 +36,8 @@ class WorkflowViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post(reverse('forms:workflow-edit', kwargs={"workflow_id": self.workflow.id}), {
-                                    'name': 'Leave Workflow', 'description': 'Updated Workflow'})
+                                    'name': 'Leave Workflow', 'description': 'Updated Workflow',
+                                    'allowed_groups': [self.group.id]})
         self.assertRedirects(response, reverse('forms:workflow-index'))
         updated_workflow = Workflow.objects.get(pk=self.workflow.id)
         self.assertEqual(updated_workflow.description, 'Updated Workflow')

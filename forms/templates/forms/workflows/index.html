@@ -1,6 +1,7 @@
 {% extends "home/base.html" %}
 
 {% block content %}
+{% load form_extras %}
 <div class="row">
     <div class="col-md-12 page-header">
         <h2>Forms</h2>
@@ -15,18 +16,19 @@
     <table class="table table-hover table-bordered table-responsive">
     <thead>
         <tr class="row">
-            <th>Name</th>
-            <th>Description</th>
-            <!-- if current user can perform any of these actions -->
-            <th>Actions</th>
+            <th class="col-md-2">Name</th>
+            <th class="col-md-4">Description</th>
+            <th class="col-md-3">Allowed Groups</th>
+            <th class="col-md-3">Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for workflow in workflows %}
         <tr class="row">
-            <td class="col-md-3"><a href="{% url 'forms:workflow-entry-new' workflow.id %}">{{ workflow.name }}</a></td>
-            <td class="col-md-6">{{workflow.description }}</td>
-            <td class="col-md-3 text-center">
+            <td><a href="{% url 'forms:workflow-entry-new' workflow.id %}">{{ workflow.name }}</a></td>
+            <td>{{workflow.description }}</td>
+            <td>{{ workflow.allowed_groups.all|values_list:"name"|join:", "|truncatewords:3 }}</td>
+            <td>
                 <div class="btn-group" role="group" aria-label="...">
                     <a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">Details</a>
                     <a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
