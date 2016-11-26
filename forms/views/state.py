@@ -7,6 +7,11 @@ from forms.forms import StateForm
 
 @login_required
 def state_new(request, workflow_id):
+
+    '''
+    Generates view for creating a new State.
+    '''
+
     if request.method == 'POST':
         form = StateForm(request.POST)
         if form.is_valid():
@@ -22,6 +27,11 @@ def state_new(request, workflow_id):
 
 @login_required
 def state_edit(request, workflow_id, state_id):
+
+    '''
+    Generates view for editing a State.
+    '''
+
     state = get_object_or_404(State, pk=state_id)
     if request.method == 'POST':
         form = StateForm(request.POST, instance=state)
@@ -36,6 +46,11 @@ def state_edit(request, workflow_id, state_id):
 
 @login_required
 def state_delete(request, workflow_id, state_id):
+
+    '''
+    Generates view for deleting a State.
+    '''
+
     state = get_object_or_404(State, pk=state_id)
     state.delete()
     return redirect('forms:workflow-show', workflow_id)

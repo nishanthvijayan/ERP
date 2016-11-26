@@ -5,6 +5,11 @@ from workflow import Workflow
 
 
 class State(models.Model):
+
+    '''
+    Store the current State of the form.
+    '''
+
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     AVAILABLE_KINDS = (

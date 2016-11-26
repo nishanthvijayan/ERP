@@ -4,6 +4,11 @@ from state import State
 
 
 class Transition(models.Model):
+
+    '''
+    Store a Transition between two states.
+    '''
+
     name = models.CharField(max_length=50)
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     from_state = models.ForeignKey(State, on_delete=models.CASCADE)

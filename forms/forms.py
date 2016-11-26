@@ -6,6 +6,11 @@ from .models import Workflow, FormElement, State, Transition
 
 
 class WorkflowForm(ModelForm):
+
+    '''
+    Generates ModelForm View for storing WorkflowForm data.
+    '''
+
     class Meta:
         model = Workflow
         fields = '__all__'
@@ -20,6 +25,11 @@ class WorkflowForm(ModelForm):
 
 
 class FormElementForm(ModelForm):
+
+    '''
+    Generates ModelForm View for storing FormElementForm data.
+    '''
+
     class Meta:
         model = FormElement
         exclude = ['workflow']
@@ -40,6 +50,11 @@ class FormElementForm(ModelForm):
 
 
 class StateForm(ModelForm):
+
+    '''
+    Generates ModelForm View for storing StateForm data.
+    '''
+
     class Meta:
         model = State
         exclude = ['workflow']
@@ -59,6 +74,11 @@ class StateForm(ModelForm):
 
 
 class TransitionForm(ModelForm):
+
+    '''
+    Generates ModelForm View for storing TransitionForm data.
+    '''
+
     class Meta:
         model = Transition
         exclude = ['workflow']
