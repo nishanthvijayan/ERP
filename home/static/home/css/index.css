@@ -1,0 +1,95 @@
+.fa-big {
+  font-size: 6em !important;
+}
+
+#header {
+  margin-top: 10px;
+}
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  padding-left: 40px;
+  &:hover {
+  color: #eee;
+  text-decoration:none;
+  }
+}
+
+#user-dropdown {
+  float: right; 
+  margin-right: 30px;
+  padding-top: 9px;
+}
+
+#user-dropdown > a {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+#content {
+  margin-top: 50px;
+}
+
+#apps > div {
+  margin-bottom: 30px;
+}
+
+#apps > div > a:hover {
+  text-decoration:none;
+}
+
+.app-logo, .app-label {
+  color: white;
+}
+
+.app-logo {
+  height: 150px;
+  width:150px;
+  border-radius: 50%;
+
+  -webkit-transition: box-shadow .3s ease;
+  -moz-transition: box-shadow .3s ease;
+  -o-transition: box-shadow .3s ease;
+  -ms-transition: box-shadow .3s ease;
+  transition: box-shadow .3s ease;
+}
+
+.app-logo:hover {
+  -webkit-box-shadow: 2px 2px 30px 0px rgba(64,146,235,0.77);
+  -moz-box-shadow: 2px 2px 30px 0px rgba(64,146,235,0.77);
+  box-shadow: 2px 2px 30px 0px rgba(64,146,235,0.77);
+}
+
+.app-logo > i {
+  padding: 33px 0;
+}
+
+.app-label > h4 {
+  font-weight: 600;
+  -webkit-text-shadow: 2px 2px 3px rgba(0,0,0,0.77);
+  -moz-text-shadow: 2px 2px 3px rgba(0,0,0,0.77);
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.77);
+}
+
+#user-management > a > div.app-logo {
+  background-color: #2285ff;
+}
+
+#forms > a > div.app-logo {
+  background-color: #F59D00;
+}
+
+#academics > a > div.app-logo {
+  background-color: #00BD9B;
+}
+
+#settings > a > div.app-logo {
+  background-color: #7F8C8E;
+}

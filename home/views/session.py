@@ -3,6 +3,8 @@ from django.contrib import auth
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 class LoginView(View):
@@ -14,7 +16,7 @@ class LoginView(View):
 
         redirect_to = request.POST.get('next', request.GET.get('next', ''))
         if not is_safe_url(url=redirect_to, host=request.get_host()):
-            redirect_to = resolve_url('/users/')
+            redirect_to = resolve_url('/home/')
 
         if user is not None:
             auth.login(request, user)
@@ -25,9 +27,15 @@ class LoginView(View):
 
     def get(self, request):
         if request.user.is_authenticated():
-            return redirect('home:user-index')
+            return redirect('home:home')
         redirect_to = request.POST.get('next', request.GET.get('next', ''))
         return render(request, 'home/login.html', {'next': redirect_to})
+
+
+class HomeView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, 'home/index.html')
 
 
 class LogoutView(View):
