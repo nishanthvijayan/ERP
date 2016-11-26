@@ -1,0 +1,162 @@
+.fa-big {
+  font-size: 2.5em !important;
+} 
+
+#header {
+  margin-top: 20px;
+}
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.5em;
+  color: #fff;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  padding-left: 40px;
+  &:hover {
+    color: #eee;
+    text-decoration:none;
+  }
+}
+
+#user-dropdown {
+  float: right; 
+  margin-right: 30px;
+  padding-top: 9px;
+}
+
+#user-dropdown > a {
+  color: #fff;
+  font-weight: bold;
+}
+
+#content {
+  margin-top: 100px;
+}
+
+#apps > div {
+  margin-bottom: 30px;
+}
+
+#apps > div > a:hover {
+  text-decoration:none;
+}
+
+.app-logo, .app-label {
+  color: white;
+}
+
+.app-logo {
+  height: 90px;
+  width: 90px;
+  border-radius: 20%;
+
+  -webkit-transition: box-shadow .3s ease;
+  -moz-transition: box-shadow .3s ease;
+  -o-transition: box-shadow .3s ease;
+  -ms-transition: box-shadow .3s ease;
+  transition: box-shadow .3s ease;
+}
+
+.app-logo:hover {
+  -webkit-box-shadow: 2px 2px 30px 0px rgba(64,146,235,0.77);
+  -moz-box-shadow: 2px 2px 30px 0px rgba(64,146,235,0.77);
+  box-shadow: 2px 2px 30px 0px rgba(64,146,235,0.77);
+}
+
+.app-logo > i {
+  padding: 27.5px 0;
+}
+
+.app-label > h4 {
+  font-size: .9em;
+  font-weight: 600;
+  -webkit-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+  -moz-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+  text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+}
+
+#user-management > a > div.app-logo {
+  background-color: #2285ff
+}
+
+#forms > a > div.app-logo {
+  background-color: #F59D00;
+}
+
+#academics > a > div.app-logo {
+  background-color: #00BD9B;
+}
+
+#settings > a > div.app-logo {
+  background-color: #7F8C8E;
+}
+
+/* col-xs */
+@media(max-width:767px){
+  #header {
+    margin-top: 10px;
+  }
+
+  #content {
+    margin-top: 40px;
+  }
+}
+
+/* col-sm */
+@media(min-width:768px){
+  #header {
+    margin-top: 10px;
+  }
+
+  #content {
+    margin-top: 45px;
+  }
+}
+
+/* col-md */
+@media(min-width:992px){
+  #header {
+    margin-top: 10px;
+  }
+
+  #content {
+    margin-top: 50px;
+  }
+}
+
+/* col-lg */
+@media(min-width:1200px){
+  #header {
+    margin-top: 20px;
+  }
+
+  #content {
+    margin-top: 80px;
+  }
+
+  #logo {
+    float: left;
+    margin-right: 10px;
+    font-size: 1.6em;
+    color: #fff;
+    letter-spacing: -1px;
+    padding-top: 9px;
+    font-weight: bold;
+    padding-left: 40px;
+    &:hover {
+      color: #eee;
+      text-decoration:none;
+    }
+  }
+
+  .app-label > h4 {
+    font-size: 1em;
+    font-weight: 600;
+    -webkit-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+    -moz-text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+    text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
+  }
+}
