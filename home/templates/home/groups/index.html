@@ -31,7 +31,7 @@
                         <div class="btn-group" role="group" aria-label="...">
                             <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
                             <a href="{% url 'home:group-show' group.id %}" class="btn btn-sm btn-primary">Show Group</a>
-                            <a href="{% url 'home:group-delete' group.id %}"  class="btn btn-sm btn-danger">Delete</a>
+                            <a href="{% url 'home:group-delete' group.id %}" class="btn btn-sm btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
                         </div>
                     </td>
                 </tr>

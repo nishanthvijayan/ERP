@@ -7,7 +7,7 @@
         <h2>{{ group.name }}</h2>
         <div class="btn-group pull-right" role="group" aria-label="...">
             <a href="{% url 'home:group-edit' group.id %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'home:group-delete' group.id %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'home:group-delete' group.id %}" class="btn btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
         </div>
         <div class="text-muted">
             <!-- {{ group.description }} -->
@@ -56,7 +56,7 @@
                             <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
                             <form action="{% url 'home:group-user-toggle' group.id %}" method="post">{% csrf_token %}
                                 <input type="hidden" name="username" value="{{ user.username }}">
-                                <input type="submit" name="submit" value="Remove" class="btn btn-sm btn-danger">
+                                <input type="submit" name="submit" value="Remove" class="btn btn-sm btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">
                             </form>
                         </div>
                     </td>

@@ -91,7 +91,7 @@
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="...">
                                     <a href="{% url 'forms:form-element-edit' workflow.id form_element.id %}" class="btn btn-success btn-sm">Edit</a>
-                                    <a href="{% url 'forms:form-element-delete' workflow.id form_element.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="{% url 'forms:form-element-delete' workflow.id form_element.id %}" class="btn btn-danger btn-sm" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -126,7 +126,7 @@
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="...">
                                     <a href="{% url 'forms:state-edit' workflow.id state.id %}" class="btn btn-success btn-sm">Edit</a>
-                                    <a href="{% url 'forms:state-delete' workflow.id state.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="{% url 'forms:state-delete' workflow.id state.id %}" class="btn btn-danger btn-sm" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -164,7 +164,7 @@
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="...">
                                     <a href="{% url 'forms:transition-edit' workflow.id transition.id %}" class="btn btn-success btn-sm">Edit</a>
-                                    <a href="{% url 'forms:transition-delete' workflow.id transition.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="{% url 'forms:transition-delete' workflow.id transition.id %}" class="btn btn-danger btn-sm" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
                                 </div>
                             </td>
                         </tr>
