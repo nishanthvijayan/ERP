@@ -32,7 +32,7 @@
                 <div class="btn-group" role="group" aria-label="...">
                     <a href="{% url 'forms:workflow-show' workflow.id %}" class="btn btn-sm btn-primary">Details</a>
                     <a href="{% url 'forms:workflow-edit' workflow.id %}" class="btn btn-sm btn-success">Edit</a>
-                    <a href="{% url 'forms:workflow-delete' workflow.id %}"  class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'forms:workflow-delete' workflow.id %}"  class="btn btn-sm btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
                     <a href="{% url 'forms:workflow-entry-index' workflow.id %}" class="btn btn-sm btn-warning">Responses</a>
                 </div>
             </td>
