@@ -49,5 +49,9 @@
         </div>
         <script src="{% static 'home/js/jquery.min.js' %}"></script>
         <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'home/js/bootstrap-confirmation.min.js'%}"></script>
+        <script>
+        $('[data-toggle="confirmation"]').confirmation({ btnOkLabel: "Yes", btnCancelLabel: "No" });
+        </script>
     </body>
 </html>
