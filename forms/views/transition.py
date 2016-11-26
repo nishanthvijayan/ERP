@@ -7,6 +7,10 @@ from forms.forms import TransitionForm
 
 @login_required
 def transition_new(request, workflow_id):
+    '''
+    Generates view for creating a new Transition.
+    '''
+
     if request.method == 'POST':
         form = TransitionForm(request.POST, workflow_id=workflow_id)
         if form.is_valid():
@@ -22,9 +26,14 @@ def transition_new(request, workflow_id):
 
 @login_required
 def transition_edit(request, workflow_id, transition_id):
+    '''
+    Generates view for editing a Transition.
+    '''
+
     transition = get_object_or_404(Transition, pk=transition_id)
     if request.method == 'POST':
-        form = TransitionForm(request.POST, instance=transition, workflow_id=workflow_id)
+        form = TransitionForm(
+            request.POST, instance=transition, workflow_id=workflow_id)
         if form.is_valid():
             form.save()
             return redirect('forms:workflow-show', workflow_id)
@@ -37,6 +46,10 @@ def transition_edit(request, workflow_id, transition_id):
 
 @login_required
 def transition_delete(request, workflow_id, transition_id):
+    '''
+    Generates view for deleting a Transition.
+    '''
+
     transition = get_object_or_404(Transition, pk=transition_id)
     transition.delete()
     return redirect('forms:workflow-show', workflow_id)

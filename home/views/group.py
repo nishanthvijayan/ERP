@@ -8,17 +8,26 @@ from home.forms import GroupForm
 
 @login_required
 def group_index(request):
+    '''
+    View fuction for displaying list of all Group.
+    '''
+
     groups = Group.objects.all()
     return render(request, 'home/groups/index.html', {'groups': groups})
 
 
 @login_required
 def group_new(request):
+    '''
+    View fuction for creating a new Group.
+    '''
+
     if request.method == 'POST':
         form = GroupForm(data=request.POST)
         if form.is_valid():
             if form.save():
-                messages.success(request, 'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
+                messages.success(
+                    request, 'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
             else:
                 messages.error(request, 'Some error occured!')
             return redirect('home:group-index')
@@ -30,17 +39,25 @@ def group_new(request):
 
 @login_required
 def group_show(request, group_id):
+    '''
+    View fuction for displaying details of a Group.
+    '''
+
     group = get_object_or_404(Group, id=group_id)
     users = group.user_set.all()
     context = {
-            'users': users,
-            'group': group
-        }
+        'users': users,
+        'group': group
+    }
     return render(request, 'home/groups/show.html', context)
 
 
 @login_required
 def group_edit(request, group_id):
+    '''
+    View fuction for editing a Group.
+    '''
+
     group = get_object_or_404(Group, id=group_id)
     old_name = group.name
     if request.method == 'POST':
@@ -56,17 +73,22 @@ def group_edit(request, group_id):
         form = GroupForm(instance=group)
 
     context = {
-            'change_name_form': form,
-            'group_id': group.id
-        }
+        'change_name_form': form,
+        'group_id': group.id
+    }
     return render(request, 'home/groups/edit.html', context)
 
 
 @login_required
 def group_delete(request, group_id):
+    '''
+    View fuction for deleting a Group.
+    '''
+
     group = get_object_or_404(Group, id=group_id)
     if group.delete():
-        messages.success(request, 'Group \'' + group.name + '\' successfull deleted!')
+        messages.success(request, 'Group \'' + group.name +
+                         '\' successfull deleted!')
     else:
         messages.error(request, 'Some error occured!')
     return redirect('home:group-index')
@@ -74,6 +96,10 @@ def group_delete(request, group_id):
 
 @login_required
 def group_user_toggle(request, group_id):
+    '''
+    View fuction for toggling the user in the Group.
+    '''
+
     if request.method == 'POST':
         username = request.POST.get('username')
         user = get_object_or_404(User, username=username)

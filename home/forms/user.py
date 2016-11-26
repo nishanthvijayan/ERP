@@ -5,21 +5,37 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class RegisterUserForm(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    '''
+    Generates form to register the user and save user data in the database.
+    '''
+
+    email = forms.EmailField(required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+    first_name = forms.CharField(
+        required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(
+        required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name',
+                  'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super(RegisterUserForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control'})
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
-        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
+        self.fields['username'].widget = forms.TextInput(
+            attrs={'class': 'form-control'})
+        self.fields['password1'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control'})
+        self.fields['password2'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control'})
 
     def save(self, commit=True):
+        '''
+        Function to save user data collected by form in the database.
+        '''
+
         user = super(RegisterUserForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         user.first_name = self.cleaned_data['first_name']
@@ -30,8 +46,15 @@ class RegisterUserForm(UserCreationForm):
 
 
 class EditUserForm(UserCreationForm):
-    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    '''
+    Class to edit the user data and save it in the database.
+    '''
+
+    first_name = forms.CharField(
+        required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(
+        required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
@@ -39,20 +62,31 @@ class EditUserForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control'})
-        self.fields['email'].widget = forms.TextInput(attrs={'class': 'form-control', 'readonly': 'true'},)
+        self.fields['username'].widget = forms.TextInput(
+            attrs={'class': 'form-control'})
+        self.fields['email'].widget = forms.TextInput(
+            attrs={'class': 'form-control', 'readonly': 'true'},)
         self.fields.pop('password1')
         self.fields.pop('password2')
 
     def clean_username(self):
+        '''
+        Function to check username validation.
+        '''
+
         username = self.cleaned_data.get('username')
         email = self.cleaned_data.get('email')
         if username and User.objects.filter(username=username).exclude(email=email).count():
-            raise forms.ValidationError('This username is already in use. Please supply a different username.')
+            raise forms.ValidationError(
+                'This username is already in use. Please supply a different username.')
         else:
             return username
 
     def save(self, commit=True):
+        '''
+        Function to save user data collected by form in the database.
+        '''
+
         user = super(UserCreationForm, self).save(commit=False)
         user.username = self.cleaned_data['username']
         user.first_name = self.cleaned_data['first_name']

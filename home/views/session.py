@@ -8,7 +8,16 @@ from django.utils.decorators import method_decorator
 
 
 class LoginView(View):
+
+    '''
+    Class to generate the login view.
+    '''
+
     def post(self, request):
+        '''
+        View fuction for logging in the user.
+        '''
+
         username = request.POST['username']
         password = request.POST['password']
 
@@ -22,10 +31,15 @@ class LoginView(View):
             auth.login(request, user)
             return HttpResponseRedirect(redirect_to)
         else:
-            context = {'message': 'Invalid Credentials. Please try again', 'next': redirect_to}
+            context = {
+                'message': 'Invalid Credentials. Please try again', 'next': redirect_to}
             return render(request, 'home/login.html', context)
 
     def get(self, request):
+        '''
+        View fuction for displaying the dashboard of the user.
+        '''
+
         if request.user.is_authenticated():
             return redirect('home:home')
         redirect_to = request.POST.get('next', request.GET.get('next', ''))
@@ -33,13 +47,23 @@ class LoginView(View):
 
 
 class HomeView(View):
+
     @method_decorator(login_required)
     def get(self, request):
         return render(request, 'home/index.html')
 
 
 class LogoutView(View):
+
+    '''
+    Class to generate the logout view.
+    '''
+
     def get(self, request):
+        '''
+        View fuction for logging out the user.
+        '''
+
         auth.logout(request)
         context = {'message': 'You have successfully logged out.'}
         return render(request, 'home/login.html', context)

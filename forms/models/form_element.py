@@ -5,6 +5,11 @@ from positions.fields import PositionField
 
 
 class FormElement(models.Model):
+
+    '''
+    Store a FormElement.
+    '''
+
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     caption = models.CharField(max_length=200)
     hint = models.CharField(max_length=500, blank=True)

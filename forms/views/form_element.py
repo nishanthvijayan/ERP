@@ -7,6 +7,11 @@ from forms.forms import FormElementForm
 
 @login_required
 def form_element_new(request, workflow_id):
+
+    '''
+    Generates view for creating a new FormElement.
+    '''
+
     if request.method == 'POST':
         form = FormElementForm(request.POST)
         if form.is_valid():
@@ -22,6 +27,11 @@ def form_element_new(request, workflow_id):
 
 @login_required
 def form_element_edit(request, workflow_id, element_id):
+
+    '''
+    Generates view for editing a FormElement.
+    '''
+
     element = get_object_or_404(FormElement, pk=element_id)
     if request.method == 'POST':
         form = FormElementForm(request.POST, instance=element)
@@ -37,6 +47,11 @@ def form_element_edit(request, workflow_id, element_id):
 
 @login_required
 def form_element_delete(request, workflow_id, element_id):
+
+    '''
+    Generates view for deleting a FormElement.
+    '''
+
     element = get_object_or_404(FormElement, pk=element_id)
     element.delete()
     return redirect('forms:workflow-show', workflow_id)

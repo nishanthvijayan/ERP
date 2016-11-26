@@ -5,6 +5,11 @@ from state import State
 
 
 class WorkflowEntry(models.Model):
+
+    '''
+    Store the instance of the Workflow.
+    '''
+
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     current_state = models.ForeignKey(State, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
