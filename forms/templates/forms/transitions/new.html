@@ -1,4 +1,12 @@
-{% extends "home/base.html" %}
+{% extends "home/container.html" %}
+
+{% block navbar-side-tabs %}
+<ul class="nav navbar-nav">
+    <li class="">
+        <a href="{% url 'forms:workflow-index' %}">Home</a>
+    </li>
+</ul>
+{% endblock %}
 
 {% block content %}
 <div class="row">

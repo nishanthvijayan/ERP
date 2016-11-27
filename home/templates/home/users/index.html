@@ -1,7 +1,20 @@
-{% extends "home/base.html" %}
+{% extends "home/container.html" %}
+
+{% block navbar-side-tabs %}
+<ul class="nav navbar-nav">
+    <li class="">
+        <a href="{% url 'home:user-index' %}">Home</a>
+    </li>
+    <li class="">
+        <a href="{% url 'home:user-index' %}">Users</a>
+    </li>
+    <li class="">
+        <a href="{% url 'home:group-index' %}">Groups</a>
+    </li>
+</ul>
+{% endblock %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-md-12 page-header">
         <h2>Users</h2>
@@ -44,5 +57,4 @@
         </table>
     </div>
 </div>
-
 {% endblock %}

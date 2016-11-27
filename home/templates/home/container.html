@@ -1,0 +1,61 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/css/navbar-fixed-side.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'home/css/container.css' %}" />
+{% endblock %}
+
+{% block container %}
+<div id="container" class="container-fluid">
+	<div class="row">
+	    <div id="navbar-side" class="col-sm-2 col-lg-2">
+	      	<nav class="navbar navbar-default navbar-fixed-side">
+		        <div class="container">
+		          <div class="navbar-header">
+		            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+		              <span class="sr-only">Toggle navigation</span>
+		              <span class="icon-bar"></span>
+		              <span class="icon-bar"></span>
+		              <span class="icon-bar"></span>
+		            </button>
+		            <a href="{% url 'home:login' %}" class="logo visible-xs-block ">IIT Ropar - ERP</a>
+		          </div>
+		          <div class="collapse navbar-collapse">
+
+		          	{% block navbar-side-tabs %}
+	        		{% endblock %}
+
+		            <ul class="nav navbar-nav navbar-right visible-xs">
+		                <li class="dropdown">
+		                	<a href="#" class="dropdown-toggle nav-links" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+		                        {{ request.user.username }}
+		                        <b class="caret"></b>
+		                    </a>
+		                    <ul class="dropdown-menu">
+		                        <li><a href="#">Settings</a></li>
+		                        <li><a href="{% url 'home:logout' %}">Log Out</a></li>
+		                    </ul>
+		                </li>
+		              </ul>
+		          </div>
+		        </div>
+	      	</nav>
+	    </div>
+	    <div id="content" class="col-sm-10 col-lg-10">
+	    	{% if messages %}
+	            {% for message in messages %}
+	                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                    {{ message }}
+	                </div>
+	            {% endfor %}
+	        {% endif %}
+
+			{% block content %}
+	        {% endblock %}
+	    </div>
+	</div>
+</div>
+{% endblock %}

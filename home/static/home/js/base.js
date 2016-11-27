@@ -1,0 +1,1 @@
+$('[data-toggle="confirmation"]').confirmation({ btnOkLabel: "Yes", btnCancelLabel: "No" });
