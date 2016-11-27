@@ -29,7 +29,9 @@ class FormElementForm(ModelForm):
         AVAILABLE_ELEMENT_TYPES = (
             ('text_input', 'Text Input'),
             ('number_input', 'Number Input'),
-            ('option_group', 'Option Group'),
+            ('date_input', 'Date Input'),
+            ('time_input', 'Time Input'),
+            ('date_time_input', 'Date Time Input'),
             ('text_area', 'Text Area')
         )
         self.fields['caption'].widget = TextInput(attrs={'class': 'form-control'})
