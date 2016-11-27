@@ -3,13 +3,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from home.forms import RegisterUserForm, EditUserForm
+from user_management.forms import RegisterUserForm, EditUserForm
 
 
 @login_required
 def user_index(request):
     users = User.objects.all()
-    return render(request, 'home/users/index.html', {'users': users})
+    return render(request, 'user_management/users/index.html', {'users': users})
 
 
 @login_required
@@ -21,11 +21,11 @@ def user_new(request):
                 messages.success(request, 'User \'' + form.cleaned_data['username'] + '\' successfully registered!')
             else:
                 messages.error(request, 'Some error occured')
-            return redirect('home:user-index')
+            return redirect('user-management:user-index')
     else:
         form = RegisterUserForm()
     context = {'form': form}
-    return render(request, "home/users/new.html", context)
+    return render(request, "user_management/users/new.html", context)
 
 
 @login_required
@@ -39,7 +39,7 @@ def user_edit(request, user_id):
             else:
                 messages.error(request, 'Some error occured!')
             # TODO: Once a user profile page is implemented, the redirect should lead there
-            return redirect('home:user-index')
+            return redirect('user-management:user-index')
     else:
         form = EditUserForm(instance=user)
     context = {
@@ -47,7 +47,7 @@ def user_edit(request, user_id):
             'user_id': user.id,
             'username': user.username
         }
-    return render(request, 'home/users/edit.html', context)
+    return render(request, 'user_management/users/edit.html', context)
 
 
 @login_required
@@ -57,4 +57,4 @@ def user_delete(request, user_id):
         messages.success(request, 'User \'' + user.username + '\' successfully removed!')
     else:
         messages.error(request, 'Some error occured!')
-    return redirect('home:user-index')
+    return redirect('user-management:user-index')

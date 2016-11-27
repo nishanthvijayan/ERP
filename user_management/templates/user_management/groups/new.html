@@ -3,13 +3,13 @@
 {% block navbar-side-tabs %}
 <ul class="nav navbar-nav">
     <li class="">
-        <a href="{% url 'home:user-index' %}">Home</a>
+        <a href="{% url 'user-management:user-index' %}">Home</a>
     </li>
     <li class="">
-        <a href="{% url 'home:user-index' %}">Users</a>
+        <a href="{% url 'user-management:user-index' %}">Users</a>
     </li>
     <li class="">
-        <a href="{% url 'home:group-index' %}">Groups</a>
+        <a href="{% url 'user-management:group-index' %}">Groups</a>
     </li>
 </ul>
 {% endblock %}
@@ -18,7 +18,7 @@
 
 <div class="row">
     <div class="col-md-12 page-header">
-        <form action="{% url 'home:group-new' %}" method="post">
+        <form action="{% url 'user-management:group-new' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" class="btn btn-primary" value="Create Group"/> 

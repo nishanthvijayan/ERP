@@ -3,13 +3,13 @@ from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 
-from home.forms import GroupForm
+from user_management.forms import GroupForm
 
 
 @login_required
 def group_index(request):
     groups = Group.objects.all()
-    return render(request, 'home/groups/index.html', {'groups': groups})
+    return render(request, 'user_management/groups/index.html', {'groups': groups})
 
 
 @login_required
@@ -21,11 +21,11 @@ def group_new(request):
                 messages.success(request, 'Group \'' + form.cleaned_data['name'] + '\' successfully created!')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:group-index')
+            return redirect('user-management:group-index')
     else:
         form = GroupForm()
     context = {'form': form}
-    return render(request, "home/groups/new.html", context)
+    return render(request, "user_management/groups/new.html", context)
 
 
 @login_required
@@ -36,7 +36,7 @@ def group_show(request, group_id):
             'users': users,
             'group': group
         }
-    return render(request, 'home/groups/show.html', context)
+    return render(request, 'user_management/groups/show.html', context)
 
 
 @login_required
@@ -51,7 +51,7 @@ def group_edit(request, group_id):
                                  old_name + '\' to \'' + group.name + '\'.')
             else:
                 messages.error(request, 'Some error occured!')
-            return redirect('home:group-show', group_id)
+            return redirect('user-management:group-show', group_id)
     else:
         form = GroupForm(instance=group)
 
@@ -59,7 +59,7 @@ def group_edit(request, group_id):
             'change_name_form': form,
             'group_id': group.id
         }
-    return render(request, 'home/groups/edit.html', context)
+    return render(request, 'user_management/groups/edit.html', context)
 
 
 @login_required
@@ -69,7 +69,7 @@ def group_delete(request, group_id):
         messages.success(request, 'Group \'' + group.name + '\' successfull deleted!')
     else:
         messages.error(request, 'Some error occured!')
-    return redirect('home:group-index')
+    return redirect('user-management:group-index')
 
 
 @login_required
@@ -86,4 +86,4 @@ def group_user_toggle(request, group_id):
             group.user_set.add(user)
             messages.success(request, 'User \'' + user.username +
                              '\' added to the group \'' + group.name + '\' successfully.')
-    return redirect('home:group-show', group_id)
+    return redirect('user-management:group-show', group_id)
