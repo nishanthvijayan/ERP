@@ -1,15 +1,18 @@
 {% extends "user_management/app_base.html" %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-md-12 page-header">
+        <h2>New Group</h2>
+    </div>
+
+    <div class="col-md-12">
         <form action="{% url 'user-management:group-new' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Create Group"/> 
+            <br>
+            <input type="submit" class="btn btn-primary" value="Create"/>
         </form>
     </div>
 </div>
-
 {% endblock %}

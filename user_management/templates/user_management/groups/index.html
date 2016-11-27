@@ -24,13 +24,13 @@
             <tbody>
             {% for group in groups %}
                 <tr class="row">
-                    <td><a href="#">{{ group.name }}</a></td>
+                    <td><a href="{% url 'user-management:group-show' group.id %}">{{ group.name }}</a></td>
                     <td>{{ group.user_set.all.count }}</td>
                     <td>{{ group.user_set.all|join:", "|truncatewords:"4" }}</td>
                     <td class="text-center">
                         <div class="btn-group" role="group" aria-label="...">
-                            <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-                            <a href="{% url 'user-management:group-show' group.id %}" class="btn btn-sm btn-primary">Show Group</a>
+                            <a href="{% url 'user-management:group-show' group.id %}" class="btn btn-sm btn-primary">Users</a>
+                            <a href="{% url 'user-management:group-edit' group.id %}" class="btn btn-sm btn-success">Edit</a>
                             <a href="{% url 'user-management:group-delete' group.id %}" class="btn btn-sm btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
                         </div>
                     </td>
