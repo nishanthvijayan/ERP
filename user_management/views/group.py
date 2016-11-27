@@ -2,13 +2,23 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from user_management.forms import GroupForm
 
 
 @login_required
 def group_index(request):
-    groups = Group.objects.all()
+    group_list = Group.objects.all()
+    page = request.GET.get('page')
+    paginator = Paginator(group_list, 10)
+    try:
+        groups = paginator.page(page)
+    except PageNotAnInteger:
+        groups = paginator.page(1)
+    except EmptyPage:
+        groups = paginator.page(paginator.num_pages)
+
     return render(request, 'user_management/groups/index.html', {'groups': groups})
 
 
@@ -31,7 +41,16 @@ def group_new(request):
 @login_required
 def group_show(request, group_id):
     group = get_object_or_404(Group, id=group_id)
-    users = group.user_set.all()
+    user_list = group.user_set.all()
+    page = request.GET.get('page')
+    paginator = Paginator(user_list, 10)
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+
     context = {
             'users': users,
             'group': group

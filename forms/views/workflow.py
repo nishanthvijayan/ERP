@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from forms.models import Workflow
 from forms.forms import WorkflowForm
@@ -7,7 +8,17 @@ from forms.forms import WorkflowForm
 
 @login_required
 def workflow_index(request):
-    return render(request, 'forms/workflows/index.html', {'workflows': Workflow.objects.all()})
+    workflow_list = Workflow.objects.all()
+    page = request.GET.get('page')
+    paginator = Paginator(workflow_list, 10)
+    try:
+        workflows = paginator.page(page)
+    except PageNotAnInteger:
+        workflows = paginator.page(1)
+    except EmptyPage:
+        workflows = paginator.page(paginator.num_pages)
+
+    return render(request, 'forms/workflows/index.html', {'workflows': workflows})
 
 
 @login_required

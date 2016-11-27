@@ -2,13 +2,23 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from user_management.forms import RegisterUserForm, EditUserForm
 
 
 @login_required
 def user_index(request):
-    users = User.objects.all()
+    user_list = User.objects.all()
+    page = request.GET.get('page')
+    paginator = Paginator(user_list, 10)
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+
     return render(request, 'user_management/users/index.html', {'users': users})
 
 

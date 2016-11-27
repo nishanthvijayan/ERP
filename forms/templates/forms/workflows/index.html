@@ -2,6 +2,8 @@
 
 {% block content %}
 {% load form_extras %}
+{% load bootstrap_pagination %}
+
 <div class="row">
     <div class="col-md-12 page-header">
         <h2>Forms</h2>
@@ -40,6 +42,10 @@
     {% endfor %}
     </tbody>
     </table>
+
+    <div class="text-center">
+        {% bootstrap_paginate workflows %}
+    </div>
     </div>
 </div>
 {% endblock %}
