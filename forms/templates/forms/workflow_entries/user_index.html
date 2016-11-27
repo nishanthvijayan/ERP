@@ -1,9 +1,11 @@
 {% extends "forms/app_base.html" %}
 
 {% block content %}
+{% load bootstrap_pagination %}
+
 <div class="row">
     <div class="col-md-12 page-header">
-        <h2>Forms submitted by you ({{ responses.count }})</h2>
+        <h2>Forms submitted by you ({{ responses_count }})</h2>
         <div class="text-muted">
             List of forms that you submitted
         </div>
@@ -43,5 +45,9 @@
         </div>
     </div>
     {% endfor %}
+
+    <div class="text-center">
+        {% bootstrap_paginate responses %}
+    </div>
 </div>
 {% endblock %}

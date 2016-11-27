@@ -28,8 +28,17 @@ def workflow_entry_admin_index(request, workflow_id):
 
 @login_required
 def workflow_entry_user_index(request):
-    responses = WorkflowEntry.objects.filter(creator=request.user)
-    context = {"responses": responses}
+    response_list = WorkflowEntry.objects.filter(creator=request.user)
+    page = request.GET.get('page')
+    paginator = Paginator(response_list, 5)
+    try:
+        responses = paginator.page(page)
+    except PageNotAnInteger:
+        responses = paginator.page(1)
+    except EmptyPage:
+        responses = paginator.page(paginator.num_pages)
+
+    context = {"responses": responses, "responses_count": paginator.count}
     return render(request, 'forms/workflow_entries/user_index.html', context)
 
 
@@ -58,12 +67,25 @@ def workflow_entry_new(request, workflow_id):
 @login_required
 def workflow_entry_pending_index(request):
     current_user_groups = request.user.groups.values_list('id', flat=True)
+
+    # names of groups current user is not in
     bad_group_names = list(Group.objects.exclude(id__in=current_user_groups).values_list("name", flat=True))
+
+    # States accessible by current user
     good_states = State.objects.exclude(
         allowed_groups__name__in=bad_group_names).filter(kind__in=['Initial', 'Intermediate'])
-    responses = WorkflowEntry.objects.filter(current_state__in=good_states)
 
-    context = {"responses": responses}
+    response_list = WorkflowEntry.objects.filter(current_state__in=good_states)
+    page = request.GET.get('page')
+    paginator = Paginator(response_list, 5)
+    try:
+        responses = paginator.page(page)
+    except PageNotAnInteger:
+        responses = paginator.page(1)
+    except EmptyPage:
+        responses = paginator.page(paginator.num_pages)
+
+    context = {"responses": responses, "responses_count": paginator.count}
     return render(request, 'forms/workflow_entries/pending_index.html', context)
 
 
@@ -76,11 +98,11 @@ def workflow_entry_change_state(request):
 
         if len(workflow_entry.current_state.allowed_groups.filter(name__in=users_groups)) == 0:
             messages.error(request, 'You are not authorized to perform this action')
-            return redirect('forms:pending')
+            return redirect('forms:workflow-entry-pending-index')
 
         transition_id = request.POST['transition_id']
         transition = get_object_or_404(Transition, pk=transition_id)
         workflow_entry.current_state = transition.to_state
         workflow_entry.save()
 
-    return redirect('forms:pending')
+    return redirect('forms:workflow-entry-pending-index')
