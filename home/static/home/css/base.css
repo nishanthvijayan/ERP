@@ -7,10 +7,10 @@
 	padding-top: 9px;
 	font-weight: bold;
 	padding-left: 40px;
-	&:hover {
-	color: #eee;
-	text-decoration:none;
-	}
+}
+
+.logo:hover {
+	color: white;
 }
 
 #navbar-top {
