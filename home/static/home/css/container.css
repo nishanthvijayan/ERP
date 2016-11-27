@@ -6,6 +6,21 @@
 	padding: 0 30px; 
 }
 
+.navbar-side-logo {
+	float: left;
+	margin-right: 10px;
+	font-size: 1.7em;
+	color: #fff;
+	letter-spacing: -1px;
+	padding-top: 9px;
+	font-weight: bold;
+	padding-left: 40px;
+}
+
+.navbar-side-logo:hover {
+	color: white;
+}
+
 @media(max-width:767px){
   #container {
     margin-top: 0px;
