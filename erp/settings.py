@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'forms.apps.FormsConfig',
     'home.apps.HomeConfig',
+    'user_management.apps.UserManagementConfig',
+    'forms.apps.FormsConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,12 @@
+{% extends "home/container.html" %}
+
+{% block navbar-side-tabs %}
+<ul class="nav navbar-nav">
+    <li class="">
+        <a href="{% url 'user-management:user-index' %}">Users</a>
+    </li>
+    <li class="">
+        <a href="{% url 'user-management:group-index' %}">Groups</a>
+    </li>
+</ul>
+{% endblock %}

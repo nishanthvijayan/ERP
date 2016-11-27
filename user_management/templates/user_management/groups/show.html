@@ -1,18 +1,4 @@
-{% extends "home/container.html" %}
-
-{% block navbar-side-tabs %}
-<ul class="nav navbar-nav">
-    <li class="">
-        <a href="{% url 'home:user-index' %}">Home</a>
-    </li>
-    <li class="">
-        <a href="{% url 'home:user-index' %}">Users</a>
-    </li>
-    <li class="">
-        <a href="{% url 'home:group-index' %}">Groups</a>
-    </li>
-</ul>
-{% endblock %}
+{% extends "user_management/app_base.html" %}
 
 {% block content %}
 
@@ -20,8 +6,8 @@
     <div class="col-md-12 page-header">
         <h2>{{ group.name }}</h2>
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <a href="{% url 'home:group-edit' group.id %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'home:group-delete' group.id %}" class="btn btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
+            <a href="{% url 'user-management:group-edit' group.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'user-management:group-delete' group.id %}" class="btn btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
         </div>
         <div class="text-muted">
             <!-- {{ group.description }} -->
@@ -32,7 +18,7 @@
 
 <div class="row">
     <div class="col-md-12 pull-left">
-        <form action="{% url 'home:group-user-toggle' group.id %}" method="post">{% csrf_token %}
+        <form action="{% url 'user-management:group-user-toggle' group.id %}" method="post">{% csrf_token %}
             <div class="input-group col-md-6 pull-left">
                 <span class="input-group-addon" id="sizing-addon2">@</span>
                 <input type="text" class="form-control" name="username" placeholder="Username" aria-describedby="sizing-addon2">
@@ -68,7 +54,7 @@
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <!-- <a href="#" class="btn btn-sm btn-primary">View</a> TODO -->
-                            <form action="{% url 'home:group-user-toggle' group.id %}" method="post">{% csrf_token %}
+                            <form action="{% url 'user-management:group-user-toggle' group.id %}" method="post">{% csrf_token %}
                                 <input type="hidden" name="username" value="{{ user.username }}">
                                 <input type="submit" name="submit" value="Remove" class="btn btn-sm btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">
                             </form>

@@ -38,8 +38,6 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#">Settings</a></li>
-                        <li class="divider"></li>
                         <li><a href="{% url 'home:logout' %}">Log Out</a></li>
                     </ul>
                 </div>
@@ -48,7 +46,7 @@
         <div id="content" class="container">
             <div id="apps" class="row">
                 <div id="user-management" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center">
-                    <a href="{% url 'home:user-index' %}">
+                    <a href="{% url 'user-management:user-index' %}">
                         <div class="app-logo center-block">
                             <i class="fa fa-users fa-big" aria-hidden="true"></i><br>
                         </div>
