@@ -1,15 +1,18 @@
 {% extends "user_management/app_base.html" %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-md-12 page-header">
+        <h2>Edit User</h2>
+    </div>
+
+    <div class="col-md-12">
         <form action="{% url 'user-management:user-edit' user_id %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Save"/> 
+            <br>
+            <input type="submit" class="btn btn-primary" value="Save"/>
         </form>
     </div>
 </div>
-
 {% endblock %}

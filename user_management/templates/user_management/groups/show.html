@@ -7,7 +7,7 @@
     <div class="col-md-12 page-header">
         <h2>{{ group.name }}</h2>
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <a href="{% url 'user-management:group-edit' group.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'user-management:group-edit' group.id %}" class="btn btn-success">Edit</a>
             <a href="{% url 'user-management:group-delete' group.id %}" class="btn btn-danger" data-toggle="confirmation" data-singleton="true" data-placement="left" data-popout="true">Delete</a>
         </div>
         <div class="text-muted">
