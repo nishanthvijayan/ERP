@@ -14,8 +14,17 @@ class WorkflowEntryViewTests(TestCase):
         self.user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
         self.client.post(reverse('home:login'), {'username': 'john', 'password': 'johnpassword'})
 
-    def test_index_view(self):
-        response = self.client.get(reverse('forms:workflow-entry-index', kwargs={"workflow_id": self.workflow.id}))
+    def test_admin_index_view(self):
+        response = self.client.get(
+            reverse('forms:workflow-entry-admin-index', kwargs={"workflow_id": self.workflow.id}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_index_view(self):
+        response = self.client.get(reverse('forms:workflow-entry-user-index'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_workflow_entry_pending_index_view(self):
+        response = self.client.get(reverse('forms:workflow-entry-pending-index'))
         self.assertEqual(response.status_code, 200)
 
     def test_new_view_without_permisison(self):

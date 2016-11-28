@@ -2,8 +2,14 @@
 
 {% block navbar-side-tabs %}
 <ul class="nav navbar-nav">
-    <li class="">
+    <li>
         <a href="{% url 'forms:workflow-index' %}">Forms</a>
+    </li>
+    <li>
+        <a href="{% url 'forms:workflow-entry-pending-index' %}">Pending Forms</a>
+    </li>
+    <li>
+        <a href="{% url 'forms:workflow-entry-user-index' %}">My Forms</a>
     </li>
 </ul>
 {% endblock %}
