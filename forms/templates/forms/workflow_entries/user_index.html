@@ -1,6 +1,7 @@
 {% extends "forms/app_base.html" %}
 
 {% block content %}
+{% load static %}
 {% load bootstrap_pagination %}
 
 <div class="row">
@@ -37,6 +38,33 @@
                                         <input type="number" name='{{ element.form_element.caption }}' value='{{ element.value }}' class='form-control' disabled>
                                 {% elif element.form_element.element_type == 'text_area' %}
                                         <textarea name='{{ element.form_element.caption }}' value='{{ element.value }}' class='form-control' disabled></textarea>
+                                {% elif element.form_element.element_type == 'date_input' %}
+                                    <div class="form-group">
+                                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                    <input class="form-control" name='{{ element.form_element.caption }}' size="16" type="text" value='{{ element.value }}' readonly>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input2" value="" /><br/>
+                                    </div>
+                                {% elif element.form_element.element_type == 'time_input' %}
+                                    <div class="form-group">
+                                    <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                                    <input class="form-control" name='{{ element.form_element.caption }}' size="16" type="text" value='{{ element.value }}' readonly>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input3" value="" /><br/>
+                                    </div>
+                                {% elif element.form_element.element_type == 'date_time_input' %}
+                                    <div class="form-group">
+                                    <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                                    <input class="form-control" name='{{ element.form_element.caption }}' size="16" type="text" value='{{ element.value }}' readonly>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input1" value="" /><br/>
+                                    </div>
                                 {% endif %}
                             </div>
                     {% endfor %}
@@ -50,4 +78,44 @@
         {% bootstrap_paginate responses %}
     </div>
 </div>
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap-datetimepicker.min.css' %}">
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'home/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script type="text/javascript">
+        $('.form_datetime').datetimepicker({
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+        $('.form_date').datetimepicker({
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+        $('.form_time').datetimepicker({
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 1,
+            minView: 0,
+            maxView: 1,
+            forceParse: 0
+        });
+    </script>
 {% endblock %}
