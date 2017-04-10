@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'erp_core.apps.ErpCoreConfig',
     'home.apps.HomeConfig',
     'user_management.apps.UserManagementConfig',
     'forms.apps.FormsConfig',
-    'bootstrap_pagination'
+
+    'bootstrap_pagination',
 ]
 
 MIDDLEWARE = [
