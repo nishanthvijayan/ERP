@@ -39,8 +39,11 @@ class Address(BaseModel):
     )
 
     def __str__(self):
-        return str(self.address) + ', ' +  str(self.town_city) + ', ' + str(self.district) + ', ' + str(self.state) + ', ' + str(self.country) + ', ' + str(self.zipcode)
+        return str(self.address) + ', ' + str(self.town_city)\
+               + ', ' + str(self.district) + ', ' + str(self.state)\
+               + ', ' + str(self.country) + ', ' + str(self.zipcode)
 
     def __unicode__(self):
-        return str(self.address) + ', ' + str(self.town_city) + ', ' + str(self.district) + ', ' + str(self.state) + ', ' + str(self.country) + ', ' + str(
-            self.zipcode)
+        return str(self.address) + ', ' + str(self.town_city) \
+               + ', ' + str(self.district) + ', ' + str(self.state) \
+               + ', ' + str(self.country) + ', ' + str(self.zipcode)

@@ -35,8 +35,8 @@ class Employee(BaseModel):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        null = False,
-        blank = False,
+        null=False,
+        blank=False,
     )
     department = models.ForeignKey(
         Department,
