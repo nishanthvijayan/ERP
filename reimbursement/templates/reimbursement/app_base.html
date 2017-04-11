@@ -1,0 +1,15 @@
+{% extends "home/container.html" %}
+
+{% block navbar-side-tabs %}
+<ul class="nav navbar-nav">
+    <li>
+        <a href="{% url 'reimbursement:reimbursement-index' %}">Home - Reimbursement</a>
+    </li>
+    <li>
+        <a href="{% url 'reimbursement:reimbursement-tracking' %}">Track Requests</a>
+    </li>
+    <li>
+        <a href="{% url 'reimbursement:reimbursement-history' %}">History</a>
+    </li>
+</ul>
+{% endblock %}
