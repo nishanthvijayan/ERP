@@ -5,8 +5,8 @@ def reimbursement_index(request):
     return render(request, 'reimbursement/index.html')
 
 
-def reimbursement_tracking(request):
-    return render(request, 'reimbursement/tracking.html')
+def reimbursement_track(request):
+    return render(request, 'reimbursement/track.html')
 
 
 def reimbursement_history(request):
