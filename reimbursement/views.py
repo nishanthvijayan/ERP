@@ -9,5 +9,5 @@ def reimbursement_track(request):
     return render(request, 'reimbursement/track.html')
 
 
-def reimbursement_history(request):
-    return render(request, 'reimbursement/history.html')
+def reimbursement_approvals(request):
+    return render(request, 'reimbursement/approvals.html')
