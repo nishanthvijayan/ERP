@@ -5,8 +5,8 @@ def reimbursement_index(request):
     return render(request, 'reimbursement/index.html')
 
 
-def reimbursement_track(request):
-    return render(request, 'reimbursement/track.html')
+def reimbursement_submissions(request):
+    return render(request, 'reimbursement/submissions.html')
 
 
 def reimbursement_requests_pending(request):
