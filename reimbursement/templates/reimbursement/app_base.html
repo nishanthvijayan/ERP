@@ -6,10 +6,13 @@
         <a href="{% url 'reimbursement:reimbursement-index' %}">Home - Reimbursement</a>
     </li>
     <li>
-        <a href="{% url 'reimbursement:reimbursement-track' %}">Submissions</a>
+        <a href="{% url 'reimbursement:reimbursement-track' %}">My Submissions</a>
     </li>
     <li>
-        <a href="{% url 'reimbursement:reimbursement-approvals' %}">Approvals</a>
+        <a href="{% url 'reimbursement:reimbursement-requests-pending' %}">Pending Requests</a>
+    </li>
+    <li>
+        <a href="{% url 'reimbursement:reimbursement-requests-previous' %}">Previous Requests</a>
     </li>
 </ul>
 {% endblock %}
