@@ -1,0 +1,6 @@
+from consultation import Consultation
+from specialist_consultation import SpecialistConsultation
+from injection import Injection
+from medicine import Medicine
+from medicine_bill import MedicineBill
+from medical_detail import MedicalDetail
