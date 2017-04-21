@@ -1,8 +1,13 @@
 from django.db import models
 
+from django_fsm import FSMField
+
 from erp_core.models import BaseModel
 
 from general_detail import GeneralDetail
+
+from state import STATE
+from state import STATE_CHOICES
 
 
 class Medical(BaseModel):
@@ -12,6 +17,12 @@ class Medical(BaseModel):
     general_detail = models.ForeignKey(
         GeneralDetail,
         help_text='General details ID of the GeneralDetail'
+    )
+    state = FSMField(
+        blank=True,
+        protected=True,
+        default=STATE.SUBMITTED,
+        state_choices=STATE_CHOICES,
     )
 
     def __str__(self):
