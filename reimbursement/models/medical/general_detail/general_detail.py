@@ -24,7 +24,7 @@ class GeneralDetail(BaseModel):
     )
 
     def __str__(self):
-        return str(self.employee.user.first_name) + ' ' + str(self.employee.user.last_name)
+        return str(self.employee)
 
     def __unicode__(self):
-        return str(self.employee.user.first_name) + ' ' + str(self.employee.user.last_name)
+        return str(self.employee)
