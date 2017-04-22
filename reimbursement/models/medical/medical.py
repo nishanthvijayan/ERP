@@ -1,4 +1,5 @@
 from django.db import models
+from erp import settings
 
 from django_fsm import FSMField
 
@@ -20,7 +21,7 @@ class Medical(BaseModel):
     )
     state = FSMField(
         blank=True,
-        protected=True,
+        protected=not settings.DEBUG,
         default=STATE.SUBMITTED,
         state_choices=STATE_CHOICES,
     )
