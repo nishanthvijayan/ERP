@@ -1,5 +1,7 @@
 {% extends "reimbursement/app_base.html" %}
 
+{% load bootstrap_pagination %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-12 page-header">
@@ -67,6 +69,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="text-center">
+            {% bootstrap_paginate medicals %}
+        </div>
         {% endif %}
     </div>
 </div>
