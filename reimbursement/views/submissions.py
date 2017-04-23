@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from reimbursement.models.medical import Medical
+from reimbursement.models.medical.state import STATE
 
 
 def reimbursement_submissions(request):
