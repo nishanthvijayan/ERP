@@ -9,6 +9,7 @@ class STATE:
     APPROVED_BY_SrAO = 'Approved by Senior Audit Officer.'
     APPROVED_BY_R = 'Approved by Registrar'
     AMOUNT_TRANSFERRED = 'Reimbursed'
+    REJECT = 'Rejected'
 
     def __init__(self):
         pass
@@ -21,6 +22,7 @@ STATE_CHOICES = (
     (STATE.APPROVED_BY_SrAO, 'Approved by Senior Audit Officer', 'Medical'),
     (STATE.APPROVED_BY_R, 'Approved by Registrar', 'Medical'),
     (STATE.AMOUNT_TRANSFERRED, 'Amount transferred by Accounts Department', 'Medical'),
+    (STATE.REJECT, 'Reject', 'Medical'),
 )
 
 # STATE_CHOICES = (
