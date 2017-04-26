@@ -1,0 +1,18 @@
+{% extends "home/container.html" %}
+
+{% block navbar-side-tabs %}
+<ul class="nav navbar-nav">
+    <li>
+        <a href="{% url 'purchase:purchase-index' %}">Home - Purchase</a>
+    </li>
+    <li>
+        <a href="{% url 'purchase:purchase-submissions' %}">My Submissions</a>
+    </li>
+    <li>
+        <a href="{% url 'purchase:purchase-requests-pending' %}">Pending Requests</a>
+    </li>
+    <li>
+        <a href="{% url 'purchase:purchase-requests-previous' %}">Previous Requests</a>
+    </li>
+</ul>
+{% endblock %}

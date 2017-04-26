@@ -1,0 +1,45 @@
+{% extends "purchase/app_base.html" %}
+
+{% load bootstrap_pagination %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Submissions</h2>
+        <div class="text-muted">
+            Track all your submitted purchase indents
+        </div>
+    </div>
+
+    <div class="col-md-12 table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Type</th>
+                    <th>Date Submitted</th>
+                    <th>State</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.id }}</td>
+                    <td>Indent form</td>
+                    <td>{{ submission.created_at }}</td>
+                    <td>{{ submission.state }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{% url 'purchase:purchase-indent-show' submission.id %}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {% bootstrap_paginate submissions %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^user-management/', include('user_management.urls')),
     url(r'^forms/', include('forms.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^purchase/', include('purchase.urls'))
 ]
 
 if settings.DEBUG:

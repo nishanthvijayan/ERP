@@ -1,0 +1,47 @@
+{% extends "purchase/app_base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 page-header">
+      <h2>Purchase Forms</h2>
+      <div class="text-muted">
+          The purchase indent forms that can be submitted
+      </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="medical">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-medical" aria-expanded="false" aria-controls="collapse-medical">
+                Purchase indent
+              </a>
+            </h4>
+          </div>
+          <div id="collapse-medical" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="medical">
+            <div class="panel-body">
+              <table class="table table-bordered">
+                <tr>
+                  <td><b>Brief</b></td>
+                  <td>Purchase indent form for purchases below ##############</td>
+                </tr>
+                <tr>
+                  <td><b>Documents Required</b></td>
+                  <td>Director's approval / Project approval / Budgetary approval as applicable</td>
+                </tr>
+              </table>
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="button" class="btn btn-primary">Help</button>
+                  <a class="btn btn-primary" href="{% url 'purchase:purchase-indent-new' %}">Apply</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
