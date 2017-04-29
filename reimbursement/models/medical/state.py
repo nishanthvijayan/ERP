@@ -14,6 +14,7 @@ class STATE:
     def __init__(self):
         pass
 
+
 STATE_CHOICES = (
     (STATE.SUBMITTED, 'Submitted by employee', 'Medical'),
     (STATE.VERIFIED_BY_DA, 'Verified by Dealing Assistant', 'Medical'),

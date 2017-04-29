@@ -29,7 +29,7 @@
                     <td>Medical Reimbursement</td>
                     <td>{{ medical.created_at }}</td>
                     <td>{{ medical.state }}</td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:medical-show' medical.id %}" role="button">View Full details</a></td>
                 </tr>
             {% endfor %}
 {#                <tr>#}
