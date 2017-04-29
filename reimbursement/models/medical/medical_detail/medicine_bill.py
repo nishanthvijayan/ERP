@@ -23,5 +23,6 @@ class MedicineBill(BaseModel):
     medical_detail = models.ForeignKey(
         MedicalDetail,
         on_delete=models.CASCADE,
+        related_name='medicine_bill',
         help_text='Medical detail id'
     )

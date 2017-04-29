@@ -103,6 +103,7 @@ class AmountDetail(BaseModel):
     # One to One relationship with Main Model i.e Medical
     medical = models.OneToOneField(
         Medical,
+        related_name='amount_detail',
         help_text='Refers to Medical Model'
     )
 

@@ -1,0 +1,260 @@
+{% extends "reimbursement/app_base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Medical Reimbursement ID : {{ medical.id }}</h2>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <strong>Current Status : </strong>{{ medical.state }} <br>
+                        <strong>Submission Date : </strong>{{ medical.created_at }}
+                    </p>
+                </blockquote>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <button type="button" class="btn btn-primary">Respond to Request</button>
+                    </p>
+                </blockquote>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li role="presentation" class="active"><a href="#general-details" aria-controls="general-details" role="tab" data-toggle="tab">General Details</a></li>
+                    <li role="presentation"><a href="#medical-details" aria-controls="medical-details" role="tab" data-toggle="tab">Medical Details</a></li>
+                    <li role="presentation"><a href="#amount-details" aria-controls="amount-details" role="tab" data-toggle="tab">Amount Details</a></li>
+                </ul>
+{#                <br>#}
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane table-responsive active" id="general-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Name of the Employee</b></td>
+                                <td>{{ medical.general_detail.employee.user.first_name }} {{ medical.general_detail.employee.user.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Designation of the Employee</b></td>
+                                <td>{{ medical.general_detail.employee.department.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Employee Code</b></td>
+                                <td>{{ medical.general_detail.employee.employee_id }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Band Pay</b></td>
+                                <td>{{ medical.general_detail.employee.pay.band }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Grade Pay</b></td>
+                                <td>{{ medical.general_detail.employee.pay.grade }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Residential Address</b></td>
+                                <td>{{ medical.general_detail.employee.current_address}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Employee Code</b></td>
+                                <td>{{ medical.general_detail.employee.employee_id }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Patient Name</b></td>
+                                <td>{{ medical.general_detail.patient_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Patient's age</b></td>
+                                <td>{{ medical.general_detail.patient_age }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Employee's relationship with patient</b></td>
+                                <td>{{ medical.general_detail.employee_relationship }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="medical-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Place at which patient fell ill</b></td>
+                                <td>{{ medical.medical_detail.place_at_which_patient_fell_ill }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Name of the Medical Officer consulted</b></td>
+                                <td>{{ medical.medical_detail.consultant_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Designation of the Medical Officer consulted</b></td>
+                                <td>{{ medical.medical_detail.consultant_designation }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Hospital of the Medical Officer consulted</b></td>
+                                <td>{{ medical.medical_detail.consultant_hospital }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Place of consultation</b></td>
+                                <td>{{ medical.medical_detail.consultation_place }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Consultation date and fee</b></td>
+                                <td>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Date</th>
+                                                <th>Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for consultation in medical.medical_detail.consultation.all  %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ consultation.date }}</td>
+                                                <td>{{ consultation.fee }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Place of injection</b></td>
+                                <td>{{ medical.medical_detail.injection_place }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Injection date and fee</b></td>
+                                <td>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Date</th>
+                                                <th>Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for injection in medical.medical_detail.injection.all  %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ injection.date }}</td>
+                                                <td>{{ injection.fee }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Name of the hospital or laboratory where diagnosis under taken</b></td>
+                                <td>{{ medical.medical_detail.diagnosis_place }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Certificate for diagnosis</b></td>
+                                <td><a target="_blank" href="{{ medical.medical_detail.diagnosis_advised_certificate.url }}">Click here to view</a></td>
+                            </tr>
+                            <tr>
+                                <td><b>Cost of medicines purchased from the market</b></td>
+                                <td>Rs. {{ medical.medical_detail.cost_of_medicines_market }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Cash memos and bills of medicines</b></td>
+                                <td>
+                                    <ul style="list-style-type:circle">
+                                        {% for medicine_bill in medical.medical_detail.medicine_bill.all  %}
+                                            <li><a target="_blank" href="{{ medicine_bill.image_file.url }}">Bill #{{ forloop.counter }}</a></li>
+                                        {% empty %}
+                                            <li>No bills attached</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Name of the Specialist consulted</b></td>
+                                <td>{{ medical.medical_detail.specialist_consultant_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Designation of the Specialist consulted</b></td>
+                                <td>{{ medical.medical_detail.specialist_consultant_designation }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Hospital of the Specialist consulted</b></td>
+                                <td>{{ medical.medical_detail.specialist_consultant_hospital }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Place of consultation with the specialist</b></td>
+                                <td>{{ medical.medical_detail.specialist_consultation_place }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Consultation date and fee</b></td>
+                                <td>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Date</th>
+                                                <th>Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for specialist_consultation in medical.medical_detail.specialist_consultation.all  %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ specialist_consultation.date }}</td>
+                                                <td>{{ specialist_consultation.fee }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane " id="amount-details">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Items</th>
+                                    <th>Amount Claimed (in Rupees)</th>
+                                    <th>Amount Passed (in Rupees)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Medicine</b></td>
+                                    <td>{{ medical.amount_detail.amount_claimed_medicine }}</td>
+                                    <td>{{ medical.amount_detail.amount_passed_medicine }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Tests</b></td>
+                                    <td>{{ medical.amount_detail.amount_claimed_test }}</td>
+                                    <td>{{ medical.amount_detail.amount_passed_test }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Room Rent</b></td>
+                                    <td>{{ medical.amount_detail.amount_claimed_room_rent }}</td>
+                                    <td>{{ medical.amount_detail.amount_passed_room_rent }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Operation, Procedure, ICU / CCU / Consultation / Others</b></td>
+                                    <td>{{ medical.amount_detail.amount_claimed_other }}</td>
+                                    <td>{{ medical.amount_detail.amount_passed_other }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total</b></td>
+                                    <td><b>{{ medical.amount_detail.total_amount_claimed }}</b></td>
+                                    <td><b>{{ medical.amount_detail.total_amount_passed }}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

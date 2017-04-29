@@ -21,5 +21,12 @@ class Medicine(BaseModel):
     medical_detail = models.ForeignKey(
         MedicalDetail,
         on_delete=models.CASCADE,
+        related_name='medicine',
         help_text='Model detail id'
     )
+
+    def __str__(self):
+        return str(self.name)
+
+    def __unicode__(self):
+        return str(self.name)
