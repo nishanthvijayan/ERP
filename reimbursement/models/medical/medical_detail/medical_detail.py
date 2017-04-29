@@ -121,6 +121,7 @@ class MedicalDetail(BaseModel):
     # One to One relationship with Main Model i.e Medical
     medical = models.OneToOneField(
         Medical,
+        related_name='medical_detail',
         help_text='Refers to Medical Model'
     )
 
@@ -133,7 +134,7 @@ class MedicalDetail(BaseModel):
     def clean(self):
         """
         This method overrides the default clean method of BaseModel.Model.
-        This fuction add extra functionality that checks
+        This function add extra functionality that checks
          > if diagnosis_advised is true than certificate image must be uploaded
         :return:
         """

@@ -18,6 +18,7 @@ class SpecialistConsultation(BaseModel):
     medical_detail = models.ForeignKey(
         MedicalDetail,
         on_delete=models.CASCADE,
+        related_name='specialist_consultation',
         help_text='Medical detail id'
     )
 

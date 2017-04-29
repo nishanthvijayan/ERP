@@ -18,6 +18,7 @@ class Injection(BaseModel):
     medical_detail = models.ForeignKey(
         MedicalDetail,
         on_delete=models.CASCADE,
+        related_name='injection',
         help_text='Medical detail id'
     )
 
