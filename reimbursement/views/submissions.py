@@ -6,7 +6,7 @@ from reimbursement.models.medical import Medical
 
 
 def reimbursement_submissions(request):
-    medical_list = Medical.objects.all()
+    medical_list = Medical.objects.filter(general_detail__employee__user_id=request.user.id)
     page = request.GET.get('page')
     paginator = Paginator(medical_list, 10)
     try:
@@ -19,3 +19,4 @@ def reimbursement_submissions(request):
         'medicals': medicals
     }
     return render(request, 'reimbursement/submissions.html', context)
+
