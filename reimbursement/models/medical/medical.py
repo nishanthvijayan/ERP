@@ -8,7 +8,6 @@ from erp_core.models import BaseModel
 from general_detail import GeneralDetail
 
 from state import STATE
-from state import STATE_CHOICES
 
 
 class Medical(BaseModel):
@@ -17,19 +16,20 @@ class Medical(BaseModel):
     """
     general_detail = models.ForeignKey(
         GeneralDetail,
-        help_text='General details ID of the GeneralDetail'
+        help_text='General Detail'
     )
     state = FSMField(
         blank=True,
         protected=not settings.DEBUG,
         default=STATE.SUBMITTED,
-        state_choices=STATE_CHOICES,
     )
 
     def __str__(self):
         return str(self.general_detail.employee.user.first_name) + ' ' \
-               + str(self.general_detail.employee.user.last_name)
+               + str(self.general_detail.employee.user.last_name) \
+               + " - " + str(self.id)
 
     def __unicode__(self):
         return str(self.general_detail.employee.user.first_name) + ' ' \
-               + str(self.general_detail.employee.user.last_name)
+               + str(self.general_detail.employee.user.last_name) \
+               + " - " + str(self.id)

@@ -1,19 +1,22 @@
 {% extends "reimbursement/app_base.html" %}
 
+{% load bootstrap_pagination %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-12 page-header">
-        <h2>Pending Approvals</h2>
+        <h2>Previously Approved</h2>
         <div class="text-muted">
-            All reimbursement requests for approval
+            All reimbursement requests approved previously
         </div>
     </div>
 
     <div class="col-md-12">
+        {% if medicals %}
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>ID</th>
                     <th>Type</th>
                     <th>Date Submitted</th>
                     <th>Date Approved</th>
@@ -22,53 +25,35 @@
                 </tr>
             </thead>
             <tbody>
+            {% for medical in medicals %}
                 <tr>
-                    <td>1</td>
+                    <td>{{ medical.id }}</td>
                     <td>Medical Reimbursement</td>
-                    <td>12th April 2017 04:30 PM</td>
-                    <td>13th April 2017 02:00 PM</td>
-                    <td>Dr. Jitin Madhu</td>
-                    <td>Submitted, yet to be verified</td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                    <td>{{ medical.created_at }}</td>
+                    <td>
+                        {% with medical.transition_history_medical.all|first as transition_history_medical %}
+                            {{ transition_history_medical.created_at }}
+                        {% endwith %}
+                    </td>
+                    <td>{{ medical.general_detail.employee.user.first_name }} {{ medical.general_detail.employee.user.last_name }}</td>
+                    {% if medical.state == "Reimbursed" %}
+                        <td class="text-success"><b>{{ medical.state }}</b></td>
+                    {% elif medical.state == "Rejected" %}
+                        <td class="text-danger"><b>{{ medical.state }}</b></td>
+                    {% else %}
+                        <td>{{ medical.state }}</td>
+                    {% endif %}
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:medical-show' medical.id %}" role="button">View Full details</a></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Children Education Expenses Reimbursement</td>
-                    <td>15th March 2017 12:30 PM</td>
-                    <td>13th April 2017 02:00 PM</td>
-                    <td>Dr. Sanjay Gulati</td>
-                    <td>Approved, Bank transfer remaining</td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Medical Reimbursement</td>
-                    <td>2nd December 2016 05:30 AM</td>
-                    <td>13th April 2017 02:00 PM</td>
-                    <td>Dr. Nishanth Vijayan</td>
-                    <td class="text-success"><b>Reimbursed</b></td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Travel Expenses Reimbursement for External Members called for Official Work</td>
-                    <td>30th March 2017 09:30 AM</td>
-                    <td>13th April 2017 02:00 PM</td>
-                    <td>Dr. Shankar Meena</td>
-                    <td class="text-success"><b>Reimbursed</b></td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Telephone Expenses Reimbursement</td>
-                    <td>30th December 2016 11:23 AM</td>
-                    <td>13th April 2017 02:00 PM</td>
-                    <td>Dr. Anshul</td>
-                    <td class="text-danger"><b>Rejected</b></td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
+            {% endfor %}
             </tbody>
         </table>
+        <div class="text-center">
+            {% bootstrap_paginate medicals %}
+        </div>
+        {% else %}
+            <p>You haven't approved any requests yet.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

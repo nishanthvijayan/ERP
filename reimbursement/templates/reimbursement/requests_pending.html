@@ -1,5 +1,7 @@
 {% extends "reimbursement/app_base.html" %}
 
+{% load bootstrap_pagination %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-12 page-header">
@@ -10,10 +12,11 @@
     </div>
 
     <div class="col-md-12">
+        {% if medicals %}
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>ID</th>
                     <th>Type</th>
                     <th>Date Submitted</th>
                     <th>Submitted by</th>
@@ -21,48 +24,32 @@
                 </tr>
             </thead>
             <tbody>
+                {% for medical in medicals %}
                 <tr>
-                    <td>1</td>
+                    <td>{{ medical.id }}</td>
                     <td>Medical Reimbursement</td>
-                    <td>12th April 2017 04:30 PM</td>
-                    <td>Dr. Jitin Madhu</td>
-                    <td>Bill is a bit damaged, Inform me if you cant make out of it</td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                    <td>{{ medical.created_at }}</td>
+                    <td>{{ medical.general_detail.employee.user.first_name }} {{ medical.general_detail.employee.user.last_name }}</td>
+                    <td>
+                        {% with medical.transition_history_medical.all|first as transition_history_medical %}
+                            {% if transition_history_medical.remarks %}
+                                {{ transition_history_medical.remarks }}
+                            {% else %}
+                                None
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:medical-show' medical.id %}" role="button">View Full details</a></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Children Education Expenses Reimbursement</td>
-                    <td>15th March 2017 12:30 PM</td>
-                    <td>Dr. Sanjay Gulati</td>
-                    <td><i>---No remarks---</i></td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Medical Reimbursement</td>
-                    <td>2nd December 2016 05:30 AM</td>
-                    <td>Dr. Nishanth Vijayan</td>
-                    <td><i>---No remarks---</i></td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Travel Expenses Reimbursement for External Members called for Official Work</td>
-                    <td>30th March 2017 09:30 AM</td>
-                    <td>Dr. Shankar Meena</td>
-                    <td><i>---No remarks---</i></td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Telephone Expenses Reimbursement</td>
-                    <td>30th December 2016 11:23 AM</td>
-                    <td>Dr. Anshul</td>
-                    <td><i>---No remarks---</i></td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
+        <div class="text-center">
+            {% bootstrap_paginate medicals %}
+        </div>
+        {% else %}
+            <p>You have no pending requests.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
