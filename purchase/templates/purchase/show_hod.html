@@ -69,7 +69,8 @@
                 </td>
                 <td>
                     {% if purchase_indent_request.directors_approval %}
-                    <img src="{{ purchase_indent_request.directors_approval.url }}"/>
+                    <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{{ purchase_indent_request.directors_approval.url }}">View</a>
                     {% else %}
                     None
                     {% endif %}
@@ -81,7 +82,8 @@
                 </td>
                 <td>
                     {% if purchase_indent_request.project_approval %}
-                    <img src="{{ purchase_indent_request.project_approval.url }}"/>
+                    <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{{ purchase_indent_request.project_approval.url }}">View</a>
                     {% else %}
                     None
                     {% endif %}
@@ -93,7 +95,8 @@
                 </td>
                 <td>
                     {% if purchase_indent_request.budgetary_approval %}
-                    <img src="{{ purchase_indent_request.budgetary_approval.url }}"/>
+                    <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{{ purchase_indent_request.budgetary_approval.url }}">View</a>
                     {% else %}
                     None
                     {% endif %}
