@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^medical/(?P<medical_id>[0-9]+)/$', views.medical.show, name='medical-show'),
 ]
 # url(r'^form/new/$', views.new, name='medical-new'),
-# url(r'^form/(?P<workflow_id>[0-9]+)/state/change$', views.state_change, name='medical-state-change'),
+# url(r'^form/(?P<workflow_id>[0-9]+)/state/change$', views.state_change, name='medical-state_change'),
 # ]
