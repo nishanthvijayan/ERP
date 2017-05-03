@@ -7,5 +7,5 @@ from reimbursement.models.medical import Medical
 from reimbursement.models.medical.state import STATE
 
 
-def generate_state_change_employee(request):
-    return render(request, 'reimbursement/medical/state-change/role-based/employee.html')
+def generate_state_change_dealing_assistant(request, medical_id):
+    return render(request, 'reimbursement/medical/state_change/role_based/dealing_assistant.html')
