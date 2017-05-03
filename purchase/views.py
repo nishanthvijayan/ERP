@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django_fsm import can_proceed
 
+from erp_core.models import Department
 from purchase.models import PurchaseIndentRequest
 from purchase.forms import PurchaseIndentRequestForm, PurchaseIndentBudgetDetailsForm
 
@@ -14,7 +15,9 @@ def index(request):
 
 def submissions(request):
     """View function that renders current users purchase related form submissions."""
-    submissions_list = PurchaseIndentRequest.objects.all()
+    current_employee = request.user.employee_set.all()[0]
+    submissions_list = PurchaseIndentRequest.objects.filter(indenter=current_employee)
+
     page = request.GET.get('page')
     paginator = Paginator(submissions_list, 10)
     try:
@@ -29,7 +32,18 @@ def submissions(request):
 
 def requests_pending(request):
     """View function that renders list of purchase forms pending current user's approval."""
-    pending_requests_list = PurchaseIndentRequest.objects.all()
+    current_employee = request.user.employee_set.all()[0]
+
+    if Department.objects.filter(hod=current_employee).exists():
+        subordinates = current_employee.department.employee_set.values_list('id', flat=True)
+        pending_requests_list = PurchaseIndentRequest.objects.filter(state='Submitted', indenter_id__in=subordinates)
+    elif request.user.groups.filter(name='JAO_AccountsDepartment'):
+        pending_requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Head of Department')
+    elif request.user.groups.filter(name='DR_AccountsDepartment'):
+        pending_requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Junior Accounts Officer')
+    else:
+        pending_requests_list = PurchaseIndentRequest.objects.none()
+
     page = request.GET.get('page')
     paginator = Paginator(pending_requests_list, 10)
     try:
@@ -44,7 +58,29 @@ def requests_pending(request):
 
 def requests_previous(request):
     """View function that renders list of purchase forms previously approved by current user."""
-    previous_requests_list = PurchaseIndentRequest.objects.all()
+    current_employee = request.user.employee_set.all()[0]
+
+    if Department.objects.filter(hod=current_employee).exists():
+        subordinates = current_employee.department.employee_set.values_list('id', flat=True)
+        previous_requests_list = PurchaseIndentRequest.objects.filter(
+            state__in=['Approved by Head of Department',
+                       'Approved by Junior Accounts Officer',
+                       'Approved by Deputy Registrar'],
+            indenter_id__in=subordinates
+        )
+
+    elif request.user.groups.filter(name='JAO_AccountsDepartment'):
+        previous_requests_list = PurchaseIndentRequest.objects.filter(
+            state__in=['Approved by Junior Accounts Officer',
+                       'Approved by Deputy Registrar']
+        )
+
+    elif request.user.groups.filter(name='DR_AccountsDepartment'):
+        previous_requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Deputy Registrar')
+
+    else:
+        previous_requests_list = PurchaseIndentRequest.objects.none()
+
     page = request.GET.get('page')
     paginator = Paginator(previous_requests_list, 10)
     try:
@@ -87,7 +123,7 @@ def purchase_indent_approve(request, request_id):
 
     elif purchase_indent_request.state == 'Approved by Head of Department':
         form = PurchaseIndentBudgetDetailsForm()
-        print form.as_p()
+
         return render(request, 'purchase/show_jao.html',
                       {'purchase_indent_request': purchase_indent_request, 'form': form})
 
@@ -113,7 +149,11 @@ def purchase_indent_reject(request, request_id):
 
 def purchase_indent_hod_approve(request, request_id):
     """View function that handles approving a form instance by HOD."""
+    current_employee = request.user.employee_set.all()[0]
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
+    if purchase_indent_request.indenter.department.hod_id != current_employee.id:
+        raise PermissionDenied
+
     if not can_proceed(purchase_indent_request.hod_approve):
         raise PermissionDenied
     purchase_indent_request.hod_approve()
@@ -123,8 +163,13 @@ def purchase_indent_hod_approve(request, request_id):
 
 def purchase_indent_jao_approve(request, request_id):
     """View function that handles approving a form instance by JAO."""
+    # Check if logged in user is JAO
+    if not request.user.groups.filter(name='JAO_AccountsDepartment').exists():
+        raise PermissionDenied
+
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
     form = PurchaseIndentBudgetDetailsForm(request.POST, instance=purchase_indent_request)
+
     if form.is_valid():
         if not can_proceed(purchase_indent_request.jao_approve):
             raise PermissionDenied
@@ -138,9 +183,14 @@ def purchase_indent_jao_approve(request, request_id):
 
 def purchase_indent_dr_approve(request, request_id):
     """View function that handles approving a form instance by DR."""
+    if not request.user.groups.filter(name='DR_AccountsDepartment').exists():
+        raise PermissionDenied
+
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
+
     if not can_proceed(purchase_indent_request.dr_approve):
         raise PermissionDenied
+
     purchase_indent_request.dr_approve()
     purchase_indent_request.save()
     return redirect('purchase:purchase-requests-pending')
