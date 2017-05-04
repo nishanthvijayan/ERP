@@ -1,5 +1,7 @@
 {% extends "reimbursement/app_base.html" %}
 
+{% load has_group %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-12 page-header">
@@ -13,13 +15,15 @@
                     </p>
                 </blockquote>
             </div>
+            {% if request.user|has_group:"Reimbursement_Medical_Change_State" %}
             <div class="col-sm-12 col-md-6">
                 <blockquote>
                     <p>
-                        <button type="button" class="btn btn-primary">Respond to Request</button>
+                        <a href="{% url 'reimbursement:medical-state-change' medical.id %}" type="button" class="btn btn-primary">Respond to Request</a>
                     </p>
                 </blockquote>
             </div>
+            {% endif %}
         </div>
         <div class="row">
             <div class="col-md-12">
