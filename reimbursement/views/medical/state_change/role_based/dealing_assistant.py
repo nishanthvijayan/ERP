@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.http import Http404
 from django.core.exceptions import PermissionDenied
 
 from django_fsm import can_proceed
 
 from reimbursement.models.medical import Medical
+from reimbursement.models.medical.state import STATE
+from reimbursement.models.medical.transition_history import TransitionHistory
 
 from reimbursement.forms.medical.amount_detail.amount_detail import AmountDetailForm
 
@@ -19,6 +20,14 @@ def generate_state_change_dealing_assistant(request, medical_id):
                 if form.save():
                     if not can_proceed(medical.verify_by_da):
                         raise PermissionDenied
+                    transition = TransitionHistory.objects.create(
+                        state_from=STATE.SUBMITTED,
+                        state_to=STATE.VERIFIED_BY_DA,
+                        remarks=request.POST.get('state-change-remarks', ''),
+                        approved_by=request.user,
+                        medical=medical
+                    )
+                    transition.save()
                     medical.verify_by_da()
                     medical.save()
                     messages.success(request, 'Request for medical reimbursement #' + str(medical_id)
@@ -29,6 +38,14 @@ def generate_state_change_dealing_assistant(request, medical_id):
             if request.POST.get('REJECTED_BY_DA', False):
                 if not can_proceed(medical.reject_by_da):
                     raise PermissionDenied
+                transition = TransitionHistory.objects.create(
+                    state_from=STATE.SUBMITTED,
+                    state_to=STATE.REJECTED_BY_DA,
+                    remarks=request.POST.get('state-change-remarks', ''),
+                    approved_by=request.user,
+                    medical=medical
+                )
+                transition.save()
                 medical.reject_by_da()
                 medical.save()
                 messages.success(request, 'Request for medical reimbursement #' + str(medical_id)
