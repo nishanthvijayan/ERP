@@ -18,17 +18,17 @@ def generate_state_change_dealing_assistant(request, medical_id):
         if form.is_valid():
             if request.POST.get('VERIFIED_BY_DA', False):
                 if form.save():
-                    if not can_proceed(medical.verify_by_da):
+                    if not can_proceed(medical.approve_by_da):
                         raise PermissionDenied
                     transition = TransitionHistory.objects.create(
                         state_from=STATE.SUBMITTED,
-                        state_to=STATE.VERIFIED_BY_DA,
+                        state_to=STATE.APPROVED_BY_DA,
                         remarks=request.POST.get('state-change-remarks', ''),
                         approved_by=request.user,
                         medical=medical
                     )
                     transition.save()
-                    medical.verify_by_da()
+                    medical.approve_by_da()
                     medical.save()
                     messages.success(request, 'Request for medical reimbursement #' + str(medical_id)
                                      + ' successfully approved!')

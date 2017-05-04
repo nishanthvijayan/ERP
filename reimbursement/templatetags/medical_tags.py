@@ -18,7 +18,7 @@ def has_state_change_permission(user, medical_id):
             and Medical.objects.filter(id=medical_id).filter(state=STATE.SUBMITTED).exists():
         return True
     elif user.groups.filter(name='MS_HealthCareDepartment').exists() \
-            and Medical.objects.filter(id=medical_id).filter(state=STATE.VERIFIED_BY_DA).exists():
+            and Medical.objects.filter(id=medical_id).filter(state=STATE.APPROVED_BY_DA).exists():
         return True
     elif user.groups.filter(name='DR_AccountsDepartment').exists() \
             and Medical.objects.filter(id=medical_id).filter(state=STATE.APPROVED_BY_MS).exists():

@@ -15,7 +15,6 @@ def generate_state_change_junior_accounting_officer(request, medical_id):
     if request.method == 'POST':
         if request.POST.get('AMOUNT_TRANSFERRED', False):
             if not can_proceed(medical.approve_by_jr_ao):
-                print "JASS"
                 raise PermissionDenied
             transition = TransitionHistory.objects.create(
                 state_from=STATE.APPROVED_BY_R,
