@@ -1,12 +1,16 @@
 {% extends "reimbursement/medical/state_change/state_change.html" %}
 
 {% block state-change-fields %}
-<div class="row">
-    <div class="col">
-        <form action="{% url 'reimbursement:medical-state-change' %}">
-
+<div class="col-md-12">
+        <form action="{% url 'reimbursement:medical-state-change' medical.id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <label for="state-change-remarks">Remarks</label>
+            <input class="form-control" type="text" name="state-change-remarks">
+            <input type="REJECTED_BY_DA" class="btn btn-danger" value="Reject"/>
+            <input name="VERIFIED_BY_DA" type="submit" class="btn btn-primary" value="Verified"/>
         </form>
     </div>
-</div>
 {% endblock %}
 
