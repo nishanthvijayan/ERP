@@ -110,7 +110,7 @@ class AmountDetail(BaseModel):
     def clean(self):
         """
         This method overrides the default clean method of BaseModel.Model.
-        This fuction add extra functionality that checks
+        This function add extra functionality that checks
          > if at least one claim amount is mentioned
         :return:
         """
@@ -118,7 +118,7 @@ class AmountDetail(BaseModel):
                 and not self.amount_claimed_test \
                 and not self.amount_claimed_room_rent \
                 and not self.amount_claimed_other:
-            raise forms.ValidationError('Please fill atleast one claim amount')
+            raise forms.ValidationError('Please fill at least one claim amount')
 
     def save(self, *args, **kwargs):
         """
