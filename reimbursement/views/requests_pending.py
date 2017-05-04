@@ -30,7 +30,7 @@ def get_medical_list(request):
     if request.user.groups.filter(name='AAO_AccountsDepartment').exists():
         medical_list = Medical.objects.filter(state=STATE.SUBMITTED)
     elif request.user.groups.filter(name='MS_HealthCareDepartment').exists():
-        medical_list = Medical.objects.filter(state=STATE.VERIFIED_BY_DA)
+        medical_list = Medical.objects.filter(state=STATE.VERIFIED_BY_DA    )
     elif request.user.groups.filter(name='DR_AccountsDepartment').exists():
         medical_list = Medical.objects.filter(state=STATE.APPROVED_BY_MS)
     elif request.user.groups.filter(name='SrAO_AuditDepartment').exists():
