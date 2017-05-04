@@ -44,11 +44,6 @@ class TransitionHistory(BaseModel):
         help_text='Employee',
         related_name='transition_history_user'
     )
-    approved_by_group = models.ForeignKey(
-        Group,
-        help_text='Employee Group',
-        related_name='transition_history_group'
-    )
     remarks = models.CharField(
         null=True,
         blank=True,
