@@ -30,7 +30,7 @@
                     <td>{{ medical.modified_at }}</td>
                     {% if medical.state == "Reimbursed" %}
                         <td class="text-success"><b>{{ medical.state }}</b></td>
-                    {% elif medical.state == "Rejected" %}
+                    {% elif medical.state|slice:":8" == "Rejected" %}
                         <td class="text-danger"><b>{{ medical.state }}</b></td>
                     {% else %}
                         <td>{{ medical.state }}</td>

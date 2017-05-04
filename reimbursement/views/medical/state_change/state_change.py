@@ -18,7 +18,7 @@ def state_change(request, medical_id):
                 and Medical.objects.filter(id=medical_id).filter(state=STATE.SUBMITTED).exists():
             return generate_state_change_dealing_assistant(request, medical_id)
         elif request.user.groups.filter(name='MS_HealthCareDepartment').exists() \
-                and Medical.objects.filter(id=medical_id).filter(state=STATE.VERIFIED_BY_DA).exists():
+                and Medical.objects.filter(id=medical_id).filter(state=STATE.APPROVED_BY_DA).exists():
             return generate_state_change_medical_superintendent(request, medical_id)
         elif request.user.groups.filter(name='DR_AccountsDepartment').exists() \
                 and Medical.objects.filter(id=medical_id).filter(state=STATE.APPROVED_BY_MS).exists():

@@ -15,7 +15,7 @@ def reimbursement_requests_previous(request):
             )
         elif request.user.groups.filter(name='MS_HealthCareDepartment').exists():
             medical_list = Medical.objects.filter(
-                transition_history_medical__state_from=STATE.VERIFIED_BY_DA
+                transition_history_medical__state_from=STATE.APPROVED_BY_DA
             )
         elif request.user.groups.filter(name='DR_AccountsDepartment').exists():
             medical_list = Medical.objects.filter(

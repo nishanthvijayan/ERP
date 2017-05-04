@@ -24,8 +24,8 @@ class Medical(BaseModel):
         default=STATE.SUBMITTED,
     )
 
-    @transition(field=state, source=STATE.SUBMITTED, target=STATE.VERIFIED_BY_DA)
-    def verify_by_da(self):
+    @transition(field=state, source=STATE.SUBMITTED, target=STATE.APPROVED_BY_DA)
+    def approve_by_da(self):
         """
         Transition function for django-fsm which changes the state of the model upon call
         Look into the django-fsm documentation for more
@@ -35,7 +35,7 @@ class Medical(BaseModel):
         """
         pass
 
-    @transition(field=state, source=STATE.VERIFIED_BY_DA, target=STATE.APPROVED_BY_MS)
+    @transition(field=state, source=STATE.APPROVED_BY_DA, target=STATE.APPROVED_BY_MS)
     def approve_by_ms(self):
         """
         Transition function for django-fsm which changes the state of the model upon call
@@ -101,7 +101,7 @@ class Medical(BaseModel):
         """
         pass
 
-    @transition(field=state, source=STATE.VERIFIED_BY_DA, target=STATE.REJECTED_BY_MS)
+    @transition(field=state, source=STATE.APPROVED_BY_DA, target=STATE.REJECTED_BY_MS)
     def reject_by_ms(self):
         """
         Transition function for django-fsm which changes the state of the model upon call

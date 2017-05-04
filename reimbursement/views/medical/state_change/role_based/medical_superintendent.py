@@ -17,7 +17,7 @@ def generate_state_change_medical_superintendent(request, medical_id):
             if not can_proceed(medical.approve_by_ms):
                 raise PermissionDenied
             transition = TransitionHistory.objects.create(
-                state_from=STATE.VERIFIED_BY_DA,
+                state_from=STATE.APPROVED_BY_DA,
                 state_to=STATE.APPROVED_BY_MS,
                 remarks=request.POST.get('state-change-remarks', ''),
                 approved_by=request.user,
@@ -34,7 +34,7 @@ def generate_state_change_medical_superintendent(request, medical_id):
             if not can_proceed(medical.reject_by_ms):
                 raise PermissionDenied
             transition = TransitionHistory.objects.create(
-                state_from=STATE.VERIFIED_BY_DA,
+                state_from=STATE.APPROVED_BY_DA,
                 state_to=STATE.REJECTED_BY_MS,
                 remarks=request.POST.get('state-change-remarks', ''),
                 approve_by=request.user,
