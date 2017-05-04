@@ -1,9 +1,12 @@
+from reimbursement.models.medical.medical import Medical
+from reimbursement.models.medical.state import STATE
+
 from django import template
 
 register = template.Library()
 
 
-@register.filter(name='has_group')
+@register.filter
 def has_group(user, group_name):
     """
     Function to check if a user is in group or not
