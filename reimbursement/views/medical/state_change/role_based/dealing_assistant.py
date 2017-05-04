@@ -10,13 +10,15 @@ from reimbursement.forms.medical.amount_detail.amount_detail import AmountDetail
 def generate_state_change_dealing_assistant(request, medical_id):
     medical = get_object_or_404(Medical, id=medical_id)
     if request.method == 'POST':
-        form = AmountDetailForm(data=request.POST)
+        form = AmountDetailForm(data=request.POST, instance=medical.amount_detail)
         if form.is_valid():
             if form.save():
-                messages.success(request, 'Response for medical reimbursement #<ID> \'' + '\' successfully registered!')
+                messages.success(request, 'Response for medical reimbursement #' + str(medical_id)
+                                 + ' successfully registered!')
+                return redirect('reimbursement:medical-show', medical_id)
             else:
-                messages.error(request, 'Some error occurred')
-            return redirect('reimbursement:medical-show',2)
+                messages.error(request, 'Please resolve the errors below and try again')
+                return redirect('reimbursement:medical-state-change', medical_id)
     else:
         form = AmountDetailForm()
     context = {
