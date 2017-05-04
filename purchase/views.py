@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django_fsm import can_proceed
 
 from erp_core.models import Department
-from purchase.models import PurchaseIndentRequest
+from purchase.models import PurchaseIndentRequest, TransitionHistory, STATE
 from purchase.forms import PurchaseIndentRequestForm, PurchaseIndentBudgetDetailsForm
 
 
@@ -65,18 +65,26 @@ def requests_previous(request):
         previous_requests_list = PurchaseIndentRequest.objects.filter(
             state__in=['Approved by Head of Department',
                        'Approved by Junior Accounts Officer',
-                       'Approved by Deputy Registrar'],
+                       'Approved by Deputy Registrar',
+                       'Rejected'],
             indenter_id__in=subordinates
         )
 
     elif request.user.groups.filter(name='JAO_AccountsDepartment'):
+        previous_approved_ids = TransitionHistory.objects.filter(
+            from_state='Approved by Head of Department'
+        ).values_list('form_id', flat=True)
         previous_requests_list = PurchaseIndentRequest.objects.filter(
-            state__in=['Approved by Junior Accounts Officer',
-                       'Approved by Deputy Registrar']
+            id__in=previous_approved_ids
         )
 
     elif request.user.groups.filter(name='DR_AccountsDepartment'):
-        previous_requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Deputy Registrar')
+        previous_approved_ids = TransitionHistory.objects.filter(
+            from_state='Approved by Junior Accounts Officer'
+        ).values_list('form_id', flat=True)
+        previous_requests_list = PurchaseIndentRequest.objects.filter(
+            id__in=previous_approved_ids
+        )
 
     else:
         previous_requests_list = PurchaseIndentRequest.objects.none()
@@ -137,16 +145,6 @@ def purchase_indent_approve(request, request_id):
         return render(request, 'purchase/show.html', {'purchase_indent_request': purchase_indent_request})
 
 
-def purchase_indent_reject(request, request_id):
-    """View function that handles rejecting a form."""
-    purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
-    if not can_proceed(purchase_indent_request.hod_approve):
-        raise PermissionDenied
-    purchase_indent_request.hod_approve()
-    purchase_indent_request.save()
-    return redirect('purchase:purchase-requests-pending')
-
-
 def purchase_indent_hod_approve(request, request_id):
     """View function that handles approving a form instance by HOD."""
     current_employee = request.user.employee_set.all()[0]
@@ -154,10 +152,40 @@ def purchase_indent_hod_approve(request, request_id):
     if purchase_indent_request.indenter.department.hod_id != current_employee.id:
         raise PermissionDenied
 
-    if not can_proceed(purchase_indent_request.hod_approve):
-        raise PermissionDenied
-    purchase_indent_request.hod_approve()
-    purchase_indent_request.save()
+    if request.POST.get('Approve'):
+        if not can_proceed(purchase_indent_request.hod_approve):
+            raise PermissionDenied
+
+        purchase_indent_request.hod_approve()
+        purchase_indent_request.save()
+
+        remark = request.POST.get('remark')
+        transition_record = TransitionHistory(
+            approver=current_employee,
+            form=purchase_indent_request,
+            from_state=STATE.SUBMITTED,
+            to_state=STATE.APPROVED_BY_HOD,
+            remark=remark
+        )
+        transition_record.save()
+
+    elif request.POST.get('Reject'):
+        if not can_proceed(purchase_indent_request.reject):
+            raise PermissionDenied
+
+        purchase_indent_request.reject()
+        purchase_indent_request.save()
+
+        remark = request.POST.get('remark')
+        transition_record = TransitionHistory(
+            approver=current_employee,
+            form=purchase_indent_request,
+            from_state=STATE.SUBMITTED,
+            to_state=STATE.REJECT,
+            remark=remark
+        )
+        transition_record.save()
+
     return redirect('purchase:purchase-requests-pending')
 
 
@@ -167,14 +195,45 @@ def purchase_indent_jao_approve(request, request_id):
     if not request.user.groups.filter(name='JAO_AccountsDepartment').exists():
         raise PermissionDenied
 
+    current_employee = request.user.employee_set.all()[0]
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
     form = PurchaseIndentBudgetDetailsForm(request.POST, instance=purchase_indent_request)
 
     if form.is_valid():
-        if not can_proceed(purchase_indent_request.jao_approve):
-            raise PermissionDenied
-        purchase_indent_request.jao_approve()
-        purchase_indent_request.save()
+        if request.POST.get('Approve'):
+            if not can_proceed(purchase_indent_request.jao_approve):
+                raise PermissionDenied
+
+            purchase_indent_request.jao_approve()
+            purchase_indent_request.save()
+
+            remark = request.POST.get('remark')
+            transition_record = TransitionHistory(
+                approver=current_employee,
+                form=purchase_indent_request,
+                from_state=STATE.APPROVED_BY_HOD,
+                to_state=STATE.APPROVED_BY_JAO,
+                remark=remark
+            )
+            transition_record.save()
+
+        elif request.POST.get('Reject'):
+            if not can_proceed(purchase_indent_request.reject):
+                raise PermissionDenied
+
+            purchase_indent_request.reject()
+            purchase_indent_request.save()
+
+            remark = request.POST.get('remark')
+            transition_record = TransitionHistory(
+                approver=current_employee,
+                form=purchase_indent_request,
+                from_state=STATE.APPROVED_BY_HOD,
+                to_state=STATE.REJECT,
+                remark=remark
+            )
+            transition_record.save()
+
         return redirect('purchase:purchase-requests-pending')
     else:
         return render(request, 'purchase/show_jao.html',
@@ -186,11 +245,41 @@ def purchase_indent_dr_approve(request, request_id):
     if not request.user.groups.filter(name='DR_AccountsDepartment').exists():
         raise PermissionDenied
 
+    current_employee = request.user.employee_set.all()[0]
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
 
-    if not can_proceed(purchase_indent_request.dr_approve):
-        raise PermissionDenied
+    if request.POST.get('Approve'):
+        if not can_proceed(purchase_indent_request.dr_approve):
+            raise PermissionDenied
 
-    purchase_indent_request.dr_approve()
-    purchase_indent_request.save()
+        purchase_indent_request.dr_approve()
+        purchase_indent_request.save()
+
+        remark = request.POST.get('remark')
+        transition_record = TransitionHistory(
+            approver=current_employee,
+            form=purchase_indent_request,
+            from_state=STATE.APPROVED_BY_JAO,
+            to_state=STATE.APPROVED_BY_DR,
+            remark=remark
+        )
+        transition_record.save()
+
+    elif request.POST.get('Reject'):
+        if not can_proceed(purchase_indent_request.reject):
+            raise PermissionDenied
+
+        purchase_indent_request.reject()
+        purchase_indent_request.save()
+
+        remark = request.POST.get('remark')
+        transition_record = TransitionHistory(
+            approver=current_employee,
+            form=purchase_indent_request,
+            from_state=STATE.APPROVED_BY_JAO,
+            to_state=STATE.REJECT,
+            remark=remark
+        )
+        transition_record.save()
+
     return redirect('purchase:purchase-requests-pending')

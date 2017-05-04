@@ -104,10 +104,21 @@
             </tr>
             </tbody>
         </table>
-        <div class="btn-group" role="group" aria-label="...">
-            <a href="{% url 'purchase:purchase-indent-hod-approve' purchase_indent_request.id %}" class="btn btn-success">Approve</a>
-            <a href="{% url 'purchase:purchase-indent-reject' purchase_indent_request.id %}" class="btn btn-danger">Reject</a>
-        </div>
+    </div>
+
+    <div class="col-md-12">
+        <form action="{% url purchase:purchase-indent-hod-approve' purchase_indent_request.id %}" method="post">
+            {% csrf_token %}
+            <p>
+                <label for="id_remark">Remarks:</label>
+                <textarea class="form-control" cols="40" id="id_remark" name="remark" rows="5"></textarea>
+            </p>
+            <br>
+            <div class="btn-group" role="group" aria-label="...">
+                <input type="submit" value="Approve" name="Approve" class="btn btn-success" />
+                <input type="submit" value="Reject" name="Reject" class="btn btn-danger" />
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}
