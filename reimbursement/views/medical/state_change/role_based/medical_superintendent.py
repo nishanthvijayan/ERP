@@ -30,7 +30,7 @@ def generate_state_change_medical_superintendent(request, medical_id):
                              + str(medical_id)
                              + ' successfully approved!')
             return redirect('reimbursement:medical-show', medical_id)
-        elif request.POST.get('REJECTED_BY_DA', False):
+        elif request.POST.get('REJECTED_BY_MS', False):
             if not can_proceed(medical.reject_by_ms):
                 raise PermissionDenied
             transition = TransitionHistory.objects.create(
