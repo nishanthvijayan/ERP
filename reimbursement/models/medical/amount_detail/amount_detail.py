@@ -94,10 +94,13 @@ class AmountDetail(BaseModel):
         help_text='Total amount rejected'
     )
     medical_reimbursement_register_page_no = models.PositiveIntegerField(
+        null=True,
+        blank=True,
         help_text='Medical reimbursement register page number'
     )
     medical_reimbursement_register_sr_no = models.PositiveIntegerField(
-        unique=True,
+        null=True,
+        blank=True,
         help_text='Medical reimbursement register serial number'
     )
     # One to One relationship with Main Model i.e Medical
