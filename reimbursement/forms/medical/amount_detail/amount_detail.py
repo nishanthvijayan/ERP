@@ -16,12 +16,10 @@ class AmountDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AmountDetailForm, self).__init__(*args, **kwargs)
         for field in self.Meta.fields:
-            self.fields[field].widget = forms.TextInput(
-                attrs={
+            self.fields[field].widget.attrs = {
                     'class': 'form-control',
                     'placeholder': self.fields[field].help_text
                 }
-            )
 
     def save(self, commit=True):
         amount_detail = super(AmountDetailForm, self).save(commit=False)
