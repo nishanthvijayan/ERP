@@ -22,13 +22,6 @@ class TransitionHistory(BaseModel):
         help_text='Medical',
         related_name='transition_history_medical'
     )
-    # transition = models.ForeignKey(
-    #     Transition,
-    #     null=True,
-    #     on_delete=models.CASCADE,
-    #     help_text='Transition',
-    #     related_name='transition_history_transition'
-    # )
     state_from = FSMField(
         blank=True,
         protected=not settings.DEBUG,
