@@ -1,0 +1,149 @@
+{% extends "booking/app_base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Booking Forms</h2>
+        <div class="text-muted">
+            The various booking forms that can be submitted are as follows:-
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="medical">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-medical" aria-expanded="false" aria-controls="collapse-medical">
+                  Request for reservation of MP Hall
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-medical" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="medical">
+              <div class="panel-body">
+                  <table class="table table-bordered">
+                      <tr>
+                          <td><b>Brief</b></td>
+                          <td>Form for booking MP Hall</td>
+                      </tr>
+                      <tr>
+                          <td><b>Applicable for</b></td>
+                          <td>Students and Employees</td>
+                      </tr>
+                      <tr>
+                          <td><b>Documents Required</b></td>
+                          <td>None</td>
+                      </tr>
+                  </table>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <button type="button" class="btn btn-primary">Help</button>
+                          <button type="button" class="btn btn-primary">Apply</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+            <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="children-education">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-children-education" aria-expanded="false" aria-controls="collapse-children-education">
+                  Children Education Expenses Reimbursement
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-children-education" class="panel-collapse collapse" role="tabpanel" aria-labelledby="children-education">
+              <div class="panel-body">
+                <table class="table table-bordered">
+                      <tr>
+                          <td><b>Brief</b></td>
+                          <td>Reimbursements for the medical expenses such as for consultation, operation, surgery, medicines, therapy</td>
+                      </tr>
+                      <tr>
+                          <td><b>Applicable for</b></td>
+                          <td>Employee or his dependents (Wife/Father/Mother/Children)</td>
+                      </tr>
+                      <tr>
+                          <td><b>Documents Required</b></td>
+                          <td>Medical bills, Essentiality Certificate signed by competent medical authority</td>
+                      </tr>
+                  </table>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <button type="button" class="btn btn-primary">Help</button>
+                          <button type="button" class="btn btn-primary">Apply</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+            <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="telephone">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-telephone" aria-expanded="false" aria-controls="collapse-telephone">
+                  Telephone Expenses Reimbursement
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-telephone" class="panel-collapse collapse" role="tabpanel" aria-labelledby="telephone">
+              <div class="panel-body">
+                <table class="table table-bordered">
+                      <tr>
+                          <td><b>Brief</b></td>
+                          <td>Reimbursements for the medical expenses such as for consultation, operation, surgery, medicines, therapy</td>
+                      </tr>
+                      <tr>
+                          <td><b>Applicable for</b></td>
+                          <td>Employee or his dependents (Wife/Father/Mother/Children)</td>
+                      </tr>
+                      <tr>
+                          <td><b>Documents Required</b></td>
+                          <td>Medical bills, Essentiality Certificate signed by competent medical authority</td>
+                      </tr>
+                  </table>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <button type="button" class="btn btn-primary">Help</button>
+                          <button type="button" class="btn btn-primary">Apply</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+            <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="travel">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-travel" aria-expanded="false" aria-controls="collapse-travel">
+                  Travel Expenses Reimbursement for External Members called for Official Work
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-travel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="travel">
+              <div class="panel-body">
+                <table class="table table-bordered">
+                      <tr>
+                          <td><b>Brief</b></td>
+                          <td>Reimbursements for the medical expenses such as for consultation, operation, surgery, medicines, therapy</td>
+                      </tr>
+                      <tr>
+                          <td><b>Applicable for</b></td>
+                          <td>Employee or his dependents (Wife/Father/Mother/Children)</td>
+                      </tr>
+                      <tr>
+                          <td><b>Documents Required</b></td>
+                          <td>Medical bills, Essentiality Certificate signed by competent medical authority</td>
+                      </tr>
+                  </table>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <button type="button" class="btn btn-primary">Help</button>
+                          <button type="button" class="btn btn-primary">Apply</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

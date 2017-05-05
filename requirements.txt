@@ -1,3 +1,8 @@
-Django==1.10.3
-django-positions==0.5.4
+Django==1.11
 django-bootstrap-pagination==1.6.2
+django-positions==0.5.4
+olefile==0.44
+Pillow==4.1.0
+pyflakes==1.5.0
+pytz==2017.2
+virtualenv==15.1.0

@@ -1,0 +1,18 @@
+{% extends "home/container.html" %}
+
+{% block navbar-side-tabs %}
+<ul class="nav navbar-nav">
+    <li>
+        <a href="{% url 'booking:booking-index' %}">Home - Booking</a>
+    </li>
+    <li>
+        <a href="{% url 'booking:booking-submissions' %}">My Submissions</a>
+    </li>
+    <li>
+        <a href="{% url 'booking:booking-requests-pending' %}">Pending Requests</a>
+    </li>
+    <li>
+        <a href="{% url 'booking:booking-requests-previous' %}">Previous Requests</a>
+    </li>
+</ul>
+{% endblock %}
