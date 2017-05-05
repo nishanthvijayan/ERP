@@ -44,6 +44,8 @@ class MedicalDetail(BaseModel):
     )
     # Consultation dates with fee in Consultation model
     injection_place = models.CharField(
+        null=True,
+        blank=True,
         max_length=150,
         help_text='Mention the place where injection held, for multiple places use commas'
     )
@@ -52,6 +54,8 @@ class MedicalDetail(BaseModel):
     # Charges for pathological, bacteriological, Radiological
     # or other similar tests under taken during diagnosis
     diagnosis_place = models.CharField(
+        null=True,
+        blank=True,
         max_length=150,
         help_text='Mention the hospital or laboratory where diagnosis held'
     )
@@ -104,17 +108,17 @@ class MedicalDetail(BaseModel):
     total_amount_claimed = models.DecimalField(
         max_digits=12,
         decimal_places=2,
-        help_text='Total claim amount'
+        help_text='Mention total claim amount'
     )
-    less_amount_taken = models.DecimalField(
+    less_advance_taken = models.DecimalField(
         max_digits=12,
         decimal_places=2,
-        help_text='Less advance taken'
+        help_text='Mention Less advance taken before'
     )
     net_amount_taken = models.DecimalField(
         max_digits=12,
         decimal_places=2,
-        help_text='Net amount'
+        help_text='Enter net amount, ie Total - Less Amount'
     )
     # List of Medicines
     # ----
