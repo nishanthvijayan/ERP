@@ -156,10 +156,12 @@
                                 <td><b>Name of the hospital or laboratory where diagnosis under taken</b></td>
                                 <td>{{ medical.medical_detail.diagnosis_place }}</td>
                             </tr>
-                            <tr>
-                                <td><b>Certificate for diagnosis</b></td>
-                                <td><a target="_blank" href="{{ medical.medical_detail.diagnosis_advised_certificate.url }}">Click here to view</a></td>
-                            </tr>
+                            {% if medical.medical_detail.diagnosis_advised_certificate %}
+                                <tr>
+                                    <td><b>Certificate for diagnosis</b></td>
+                                    <td><a target="_blank" href="{{ medical.medical_detail.diagnosis_advised_certificate.url }}">Click here to view</a></td>
+                                </tr>
+                            {% endif %}
                             <tr>
                                 <td><b>Cost of medicines purchased from the market</b></td>
                                 <td>Rs. {{ medical.medical_detail.cost_of_medicines_market }}</td>
