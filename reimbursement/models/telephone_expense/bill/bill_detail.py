@@ -12,8 +12,6 @@ class BillDetail(BaseModel):
     """
     telephone_expense = models.ForeignKey(
         TelephoneExpense,
-        null=True,
-        blank=True,
         help_text='Telephone Expense',
         related_name='bill_detail_set'
     )
