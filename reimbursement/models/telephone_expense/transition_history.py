@@ -8,7 +8,7 @@ from erp import settings
 
 from erp_core.models import BaseModel
 
-from .telephone_expense import TelephoneExpenses
+from .telephone_expense import TelephoneExpense
 from .state import STATE
 
 
@@ -17,7 +17,7 @@ class TransitionHistory(BaseModel):
     Stores transition that took place on a medical reimbursement model
     """
     telephone_expense = models.ForeignKey(
-        TelephoneExpenses,
+        TelephoneExpense,
         on_delete=models.CASCADE,
         help_text='Telephone Expense',
         related_name='telephone_expense_transition_history'

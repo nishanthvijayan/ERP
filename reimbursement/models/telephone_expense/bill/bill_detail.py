@@ -3,11 +3,20 @@ from django.core.validators import RegexValidator
 
 from erp_core.models import BaseModel
 
+from reimbursement.models.telephone_expense.telephone_expense import TelephoneExpense
+
 
 class BillDetail(BaseModel):
     """
     This stores details of the bills of the telephone expenses to be reimbursed
     """
+    telephone_expense = models.ForeignKey(
+        TelephoneExpense,
+        null=True,
+        blank=True,
+        help_text='Telephone Expense',
+        related_name='bill_detail_set'
+    )
     bill_number = models.CharField(
         max_length=10,
         help_text='Enter bill number mentioned on the bill'
