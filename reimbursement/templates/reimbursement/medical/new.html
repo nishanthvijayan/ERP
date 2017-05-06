@@ -82,8 +82,8 @@
                             {{ consultation_formset.management_form }}
                             <label class="col-sm-2 control-label">Consultation Date and Fee</label>
                             <div class="col-sm-10">
-                            {% for consultation_form in consultation_formset %}
-                                <div class="row date-fee-formset">
+                            {% for consultation_form in consultation_formset.forms %}
+                                <div class="row consultation-formset">
                                     <div class="col-lg-6">
                                     {{ consultation_form.date.errors }}
                                         <div class="input-group">
@@ -117,7 +117,7 @@
                             <label class="col-sm-2 control-label">Injection Date and Fee</label>
                             <div class="col-sm-10">
                             {% for injection_form in injection_formset %}
-                                <div class="row date-fee-formset">
+                                <div class="row injection-formset">
                                     <div class="col-lg-6">
                                     {{ injection_form.date.errors }}
                                         <div class="input-group">
@@ -201,11 +201,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ specialist_consultation_formset.management_form }}
                             <label class="col-sm-2 control-label">Specialist Consultation Date and Fee</label>
+                            {{ specialist_consultation_formset.management_form }}
                             <div class="col-sm-10">
                             {% for specialist_consultation_form in specialist_consultation_formset %}
-                                <div class="row date-fee-formset">
+                                <div class="row specialist-consultation-formset">
                                     <div class="col-lg-6">
                                     {{ specialist_consultation_form.date.errors }}
                                         <div class="input-group">
@@ -256,7 +256,7 @@
                     <label class="col-sm-2 control-label">Respond</label>
                     <div class="col-sm-10 btn-group" role="group">
                         <input name="SUBMITTED" type="submit" class="btn btn-primary" value="Submit"/>
-                        <input name="CANCEL" type="submit" class="btn btn-danger" value="Cancel"/>
+                        <a href="{% url 'reimbursement:reimbursement-index' %}" class="btn btn-danger" role="button">Cancel</a>
                     </div>
                 </div>
                 <br>
@@ -269,5 +269,5 @@
 
 {% block js %}
     <script src="{% static 'home/js/jquery.formset.min.js' %}"></script>
-    <script src="{% static 'home/js/new.js' %}"></script>
+    <script src="{% static 'reimbursement/js/medical/new.js' %}"></script>
 {% endblock %}

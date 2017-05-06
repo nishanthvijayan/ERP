@@ -39,6 +39,9 @@ def new(request):
 
         if request.method == 'POST':
 
+            if not request.POST['SUBMIT']:
+                return redirect('reimbursement:reimbursement-index')
+
             general_detail_form = GeneralDetailForm(data=request.POST, prefix="general_detail_form")
             medical_detail_form = MedicalDetailForm(data=request.POST, prefix="medical_detail_form")
             consultation_formset = ConsultationFormSet(
