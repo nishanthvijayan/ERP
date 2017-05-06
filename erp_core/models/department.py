@@ -23,6 +23,13 @@ class Department(BaseModel):
         blank=False,
         max_length=500
     )
+    hod = models.ForeignKey(
+        'erp_core.Employee',
+        null=True,
+        blank=True,
+        related_name='department_set',
+        help_text='Head of the Department'
+    )
 
     def __str__(self):
         return str(self.name)
