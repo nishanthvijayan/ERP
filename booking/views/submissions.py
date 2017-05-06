@@ -7,6 +7,7 @@ from booking.models.mp_hall.mp_hall import MpHall
 def booking_submissions(request):
     mp_hall_list = MpHall.objects.filter(employee__user_id=request.user.id)
     page = request.GET.get('page')
+    # print request.user.employee_set.all()
     paginator = Paginator(mp_hall_list, 10)
     try:
         mp_halls = paginator.page(page)
