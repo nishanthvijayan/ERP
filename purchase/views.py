@@ -119,36 +119,51 @@ def purchase_indent_new(request):
 def purchase_indent_show(request, request_id):
     """View function that displays current state of a form instance for viewing."""
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
-    return render(request, 'purchase/show.html', {'purchase_indent_request': purchase_indent_request})
+    current_employee = request.user.employee_set.all()[0]
+
+    # Check if logged in user is indenter, indenter's HOD, JAO or DR
+    if purchase_indent_request.indenter == current_employee or \
+       purchase_indent_request.indenter.department.hod_id == current_employee.id or \
+       request.user.groups.filter(name__in=['JAO_AccountsDepartment', 'DR_AccountsDepartment']).exists():
+        return render(request, 'purchase/show.html', {'purchase_indent_request': purchase_indent_request})
+
+    else:
+        return PermissionDenied
 
 
 def purchase_indent_approve(request, request_id):
     """View function that displays current state of a form instance for approval."""
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
+    current_employee = request.user.employee_set.all()[0]
 
     if purchase_indent_request.state == 'Submitted':
+        if purchase_indent_request.indenter.department.hod_id != current_employee.id:
+            raise PermissionDenied
         return render(request, 'purchase/show_hod.html', {'purchase_indent_request': purchase_indent_request})
 
     elif purchase_indent_request.state == 'Approved by Head of Department':
+        if not request.user.groups.filter(name='JAO_AccountsDepartment').exists():
+            raise PermissionDenied
         form = PurchaseIndentBudgetDetailsForm()
 
         return render(request, 'purchase/show_jao.html',
                       {'purchase_indent_request': purchase_indent_request, 'form': form})
 
     elif purchase_indent_request.state == 'Approved by Junior Accounts Officer':
+        if not request.user.groups.filter(name='DR_AccountsDepartment').exists():
+            raise PermissionDenied
         return render(request, 'purchase/show_dr.html', {'purchase_indent_request': purchase_indent_request})
 
-    elif purchase_indent_request.state == 'Approved by Deputy Registrar':
-        return render(request, 'purchase/show.html', {'purchase_indent_request': purchase_indent_request})
-
-    elif purchase_indent_request.state == 'Rejected':
-        return render(request, 'purchase/show.html', {'purchase_indent_request': purchase_indent_request})
+    else:
+        return PermissionDenied
 
 
 def purchase_indent_hod_approve(request, request_id):
     """View function that handles approving a form instance by HOD."""
     current_employee = request.user.employee_set.all()[0]
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
+
+    # Check if logged in user is indenter's HOD
     if purchase_indent_request.indenter.department.hod_id != current_employee.id:
         raise PermissionDenied
 
@@ -242,6 +257,7 @@ def purchase_indent_jao_approve(request, request_id):
 
 def purchase_indent_dr_approve(request, request_id):
     """View function that handles approving a form instance by DR."""
+    # Check if logged in user is DR
     if not request.user.groups.filter(name='DR_AccountsDepartment').exists():
         raise PermissionDenied
 
