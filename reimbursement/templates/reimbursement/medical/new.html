@@ -1,5 +1,7 @@
 {% extends "reimbursement/app_base.html" %}
 
+{% load static %}
+
 {% block content %}
 <div class="row">
     <div class="row">
@@ -81,7 +83,7 @@
                             <label class="col-sm-2 control-label">Consultation Date and Fee</label>
                             <div class="col-sm-10">
                             {% for consultation_form in consultation_formset %}
-                                <div class="row">
+                                <div class="row date-fee-formset">
                                     <div class="col-lg-6">
                                     {{ consultation_form.date.errors }}
                                         <div class="input-group">
@@ -115,7 +117,7 @@
                             <label class="col-sm-2 control-label">Injection Date and Fee</label>
                             <div class="col-sm-10">
                             {% for injection_form in injection_formset %}
-                                <div class="row">
+                                <div class="row date-fee-formset">
                                     <div class="col-lg-6">
                                     {{ injection_form.date.errors }}
                                         <div class="input-group">
@@ -203,7 +205,7 @@
                             <label class="col-sm-2 control-label">Specialist Consultation Date and Fee</label>
                             <div class="col-sm-10">
                             {% for specialist_consultation_form in specialist_consultation_formset %}
-                                <div class="row">
+                                <div class="row date-fee-formset">
                                     <div class="col-lg-6">
                                     {{ specialist_consultation_form.date.errors }}
                                         <div class="input-group">
@@ -263,4 +265,9 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'home/js/jquery.formset.min.js' %}"></script>
+    <script src="{% static 'home/js/new.js' %}"></script>
 {% endblock %}
