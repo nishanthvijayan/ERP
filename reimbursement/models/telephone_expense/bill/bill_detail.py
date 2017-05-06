@@ -24,6 +24,7 @@ class BillDetail(BaseModel):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$',
                                  message="Phone number must be entered in the format")
     phone_number = models.CharField(
+        max_length=12,
         validators=[phone_regex],
         help_text='Enter phone number'
     )
