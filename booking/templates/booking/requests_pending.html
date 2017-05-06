@@ -1,0 +1,68 @@
+{% extends "booking/app_base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Pending Approvals</h2>
+        <div class="text-muted">
+            All reimbursement requests for approval
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Type</th>
+                    <th>Date Submitted</th>
+                    <th>Submitted by</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Medical Reimbursement</td>
+                    <td>12th April 2017 04:30 PM</td>
+                    <td>Dr. Jitin Madhu</td>
+                    <td>Bill is a bit damaged, Inform me if you cant make out of it</td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Children Education Expenses Reimbursement</td>
+                    <td>15th March 2017 12:30 PM</td>
+                    <td>Dr. Sanjay Gulati</td>
+                    <td><i>---No remarks---</i></td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Medical Reimbursement</td>
+                    <td>2nd December 2016 05:30 AM</td>
+                    <td>Dr. Nishanth Vijayan</td>
+                    <td><i>---No remarks---</i></td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Travel Expenses Reimbursement for External Members called for Official Work</td>
+                    <td>30th March 2017 09:30 AM</td>
+                    <td>Dr. Shankar Meena</td>
+                    <td><i>---No remarks---</i></td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Telephone Expenses Reimbursement</td>
+                    <td>30th December 2016 11:23 AM</td>
+                    <td>Dr. Anshul</td>
+                    <td><i>---No remarks---</i></td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="http://127.0.0.1:8000/reimbursement" role="button">View Full details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

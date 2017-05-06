@@ -1,0 +1,51 @@
+{% extends "booking/app_base.html" %}
+
+{% load bootstrap_pagination %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Submissions</h2>
+        <div class="text-muted">
+            Track all submitted reimbursements - current status for reimbursement in-progress, previous approved/rejected submissions
+        </div>
+    </div>
+
+    <div class="col-md-12 table-responsive">
+        {% if mp_halls %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Date Submitted</th>
+                    <th>Current Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for mp_hall in mp_halls %}
+                <tr>
+                    <td>{{ mp_hall.id }}</td>
+                    <td>MP Hall Booking</td>
+                    <td>{{ mp_hall.modified_at }}</td>
+                    {% if mp_hall.state == "Approved by Registrar and MP Hall Booked" %}
+                        <td class="text-success"><b>{{ mp_hall.state }}</b></td>
+                    {% elif mp_hall.state|slice:":8" == "Rejected" %}
+                        <td class="text-danger"><b>{{ mp_hall.state }}</b></td>
+                    {% else %}
+                        <td>{{ mp_hall.state }}</td>
+                    {% endif %}
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="#" role="button">View Full details</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {% bootstrap_paginate mp_halls %}
+        </div>
+        {% else %}
+            <p>You have no submissions yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
