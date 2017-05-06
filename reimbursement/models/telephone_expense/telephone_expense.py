@@ -9,7 +9,7 @@ from erp_core.models import BaseModel, Employee
 from state import STATE
 
 
-class TelephoneExpenses(BaseModel):
+class TelephoneExpense(BaseModel):
     """
     This stores details of the telephone expenses to be reimbursed
     """

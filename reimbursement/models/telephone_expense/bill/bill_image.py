@@ -2,7 +2,7 @@ from django.db import models
 
 from erp_core.models import BaseModel
 
-from reimbursement.models.telephone_expense.telephone_expense import TelephoneExpenses
+from reimbursement.models.telephone_expense.telephone_expense import TelephoneExpense
 
 
 def generate_filename(instance, filename):
@@ -24,6 +24,6 @@ class BillImage(BaseModel):
         help_text='Upload Image of bills'
     )
     telephone_expense = models.ForeignKey(
-        TelephoneExpenses,
-        related_name='bill_image'
+        TelephoneExpense,
+        related_name='bill_image_set'
     )

@@ -111,6 +111,8 @@ class MedicalDetail(BaseModel):
         help_text='Mention total claim amount'
     )
     less_advance_taken = models.DecimalField(
+        null=True,
+        blank=True,
         max_digits=12,
         decimal_places=2,
         help_text='Mention Less advance taken before'
