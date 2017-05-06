@@ -15,22 +15,30 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Type</th>
-                    <th>Date Submitted</th>
                     <th>Submitted by</th>
-                    <th>State</th>
-                    <th>Remarks</th>
+                    <th>Date Submitted</th>
+                    <th>Current State</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for request in previous_requests %}
                 <tr>
-                    <td>{{ request.id }}</td>
-                    <td>Indent form</td>
+                    <td>{{ request.indenter.user.first_name }} {{ request.indenter.user.last_name }}</td>
                     <td>{{ request.created_at }}</td>
-                    <td>{{ request.indenter.user.username }}</td>
-                    <td>{{ request.state }}</td>
+                    <td>
+                        {{ request.state }}
+                        {% if request.state == 'Rejected' %}
+                            By
+                            {% if request.transitionhistory_set.last.from_state == 'Submitted' %}
+                                Head of Department
+                            {% elif request.transitionhistory_set.last.from_state == 'Approved by Head of Department' %}
+                                Junior Accounts Officer
+                            {% else %}
+                                Deputy Registrar
+                            {% endif %}
+                        {% endif %}
+                    </td>
                     <td>
                         <a class="btn btn-primary btn-xs" target="_blank"
                         href="{% url 'purchase:purchase-indent-show' request.id %}">View</a>

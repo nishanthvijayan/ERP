@@ -107,7 +107,7 @@
     </div>
 
     <div class="col-md-12">
-        <form action="{% url purchase:purchase-indent-hod-approve' purchase_indent_request.id %}" method="post">
+        <form action="{% url 'purchase:purchase-indent-hod-approve' purchase_indent_request.id %}" method="post">
             {% csrf_token %}
             <p>
                 <label for="id_remark">Remarks:</label>
