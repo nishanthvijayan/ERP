@@ -94,11 +94,14 @@ class NewMedicalReimbursementViewTests(TestCase):
             'injection_formset-MIN_NUM_FORMS': '0',
 
             'specialist_consultation_formset-MAX_NUM_FORMS': '1000',
-            'specialist_consultation_formset-TOTAL_FORMS': '1',
-            'specialist_consultation_formset-0-fee': '',
+            'specialist_consultation_formset-TOTAL_FORMS': '2',
+            'specialist_consultation_formset-MIN_NUM_FORMS': '0',
             'specialist_consultation_formset-INITIAL_FORMS': '0',
-            'specialist_consultation_formset-0-date': '',
-            'specialist_consultation_formset-MIN_NUM_FORMS': '0'
+            'specialist_consultation_formset-0-date': '2017-02-05',
+            'specialist_consultation_formset-0-fee': '500',
+
+            'specialist_consultation_formset-1-date': '2017-02-05',
+            'specialist_consultation_formset-1-fee': '500',
         }
         self.assertTrue(GeneralDetailForm(data=data, prefix="general_detail_form").is_valid())
         self.assertTrue(MedicalDetailForm(data=data, prefix="medical_detail_form").is_valid())
@@ -170,4 +173,4 @@ class NewMedicalReimbursementViewTests(TestCase):
 
         # for sc in specialist_consultation_detail:
         #     self.assertEqual(xstr(sc[0]),sc[1])
-        self.assertEqual(len(medical.medical_detail.specialist_consultation.all()), 0)
+        self.assertEqual(len(medical.medical_detail.specialist_consultation.all()), 2)
