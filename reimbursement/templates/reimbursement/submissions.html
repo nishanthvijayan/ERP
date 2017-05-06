@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-md-12 table-responsive">
-        {% if results %}
+        {% if medicals %}
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -26,7 +26,7 @@
             {% for medical in medicals %}
                 <tr>
                     <td>{{ medical.id }}</td>
-                    <td>Medical Reimbursement</td>
+                    <td>{{ medical.verbose_name }} Reimbursement</td>
                     <td>{{ medical.modified_at }}</td>
                     {% if medical.state == "Reimbursed" %}
                         <td class="text-success"><b>{{ medical.state }}</b></td>
