@@ -20,7 +20,7 @@ class PurchaseViewTests(TestCase):
         self.pay = Pay.objects.create(band=18000, grade=12000, da=24000, hra=12000, ta=6000, nps=2000, lic=2000)
 
         # Define test indenter user
-        self.user = User.objects.create_user('jainendramandavi', 'jainendra.mandavi@iitrpr.ac.in', 'qweasdzxc',
+        self.user = User.objects.create_user('normalemployee', 'jainendra.mandavi@iitrpr.ac.in', 'qweasdzxc',
                                              first_name='Jainendra', last_name='Mandavi')
         self.employee = Employee.objects.create(
             employee_id=30052, nationality='Indian', date_of_joining='2017-04-21',
@@ -29,7 +29,7 @@ class PurchaseViewTests(TestCase):
         )
 
         # Define test HOD user
-        self.user_hod = User.objects.create_user('nishanthvijayan', 'nishanth.vijayan@iitrpr.ac.in', 'qweasdzxc',
+        self.user_hod = User.objects.create_user('hod_employee', 'nishanth.vijayan@iitrpr.ac.in', 'qweasdzxc',
                                                  first_name='Nishanth', last_name='Vijayan')
         self.employee_hod = Employee.objects.create(
             employee_id=30056, nationality='Indian', date_of_joining='2017-04-21',
@@ -37,11 +37,11 @@ class PurchaseViewTests(TestCase):
             department=self.department, current_address=self.address,
             permanent_address=self.address, pay=self.pay
         )
-        self.department.head = self.employee_hod
+        self.department.hod = self.employee_hod
         self.department.save()
 
         # Define JAO user
-        self.user_jao = User.objects.create_user('jitin', 'jitin@iitrpr.ac.in', 'qweasdzxc',
+        self.user_jao = User.objects.create_user('jao_employee', 'jitin@iitrpr.ac.in', 'qweasdzxc',
                                                  first_name='Jitin', last_name='Madhu')
         self.employee_jao = Employee.objects.create(
             employee_id=33046, nationality='Indian', date_of_joining='2017-04-21',
@@ -53,7 +53,7 @@ class PurchaseViewTests(TestCase):
         self.group_jao.user_set.add(self.user_jao)
 
         # Define test DR user
-        self.user_dr = User.objects.create_user('basil', 'basil@iitrpr.ac.in', 'qweasdzxc',
+        self.user_dr = User.objects.create_user('dr_employee', 'basil@iitrpr.ac.in', 'qweasdzxc',
                                                 first_name='Basil', last_name='Varghese')
         self.employee_dr = Employee.objects.create(
             employee_id=30056, nationality='Indian', date_of_joining='2017-04-21',
@@ -66,13 +66,13 @@ class PurchaseViewTests(TestCase):
 
     def test_purchase_index_view(self):
         """Test if purchase index (home) view is being rendered without errors."""
-        self.client.post(reverse('home:login'), {'username': 'jainendramandavi', 'password': 'qweasdzxc'})
+        self.client.post(reverse('home:login'), {'username': 'normalemployee', 'password': 'qweasdzxc'})
         response = self.client.get(reverse('purchase:purchase-index'))
         self.assertEqual(response.status_code, 200)
 
     def test_submissions_view(self):
         """Test if My Submissions page lists current users submission & only his submissions."""
-        self.client.post(reverse('home:login'), {'username': 'jainendramandavi', 'password': 'qweasdzxc'})
+        self.client.post(reverse('home:login'), {'username': 'normalemployee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Mine", budget_head="Institute")
         PurchaseIndentRequest.objects.create(indenter=self.employee_hod, project_name="Not Mine",
                                              budget_head="Institute")
@@ -84,7 +84,7 @@ class PurchaseViewTests(TestCase):
 
     def test_pending_requests_view_employee(self):
         """Test if Pending page lists no forms regular employee."""
-        self.client.post(reverse('home:login'), {'username': 'jainendramandavi', 'password': 'qweasdzxc'})
+        self.client.post(reverse('home:login'), {'username': 'normalemployee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test hod",
                                              budget_head="Institute", state="Submitted")
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test jr",
@@ -100,7 +100,7 @@ class PurchaseViewTests(TestCase):
 
     def test_pending_requests_view_hod(self):
         """Test if Pending page lists fomrs approvable by current user(hod) & only those."""
-        self.client.post(reverse('home:login'), {'username': 'nishanthvijayan', 'password': 'qweasdzxc'})
+        self.client.post(reverse('home:login'), {'username': 'hod_employee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test hod",
                                              budget_head="Institute", state="Submitted")
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test jr",
@@ -117,7 +117,7 @@ class PurchaseViewTests(TestCase):
 
     def test_pending_requests_view_jao(self):
         """Test if Pending page lists fomrs approvable by current user(jao) & only those."""
-        response = self.client.post(reverse('home:login'), {'username': 'jitin', 'password': 'qweasdzxc'})
+        response = self.client.post(reverse('home:login'), {'username': 'jao_employee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test hod",
                                              budget_head="Institute", state="Submitted")
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test jao",
@@ -134,7 +134,7 @@ class PurchaseViewTests(TestCase):
 
     def test_pending_requests_view_dr(self):
         """Test if Pending page lists forms approvable by current user (dr) & only those."""
-        response = self.client.post(reverse('home:login'), {'username': 'basil', 'password': 'qweasdzxc'})
+        response = self.client.post(reverse('home:login'), {'username': 'dr_employee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test hod",
                                              budget_head="Institute", state="Submitted")
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test jr",
@@ -150,7 +150,7 @@ class PurchaseViewTests(TestCase):
 
     def test_previous_requests_view_employee(self):
         """Test if Previous Requests page lists no forms for a regular employee."""
-        response = self.client.post(reverse('home:login'), {'username': 'jainendramandavi', 'password': 'qweasdzxc'})
+        response = self.client.post(reverse('home:login'), {'username': 'normalemployee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test hod",
                                              budget_head="Institute", state="Submitted")
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test jr",
@@ -165,7 +165,7 @@ class PurchaseViewTests(TestCase):
 
     def test_previous_requests_view_hod(self):
         """Test if Previous Requests page lists forms appropriately for HOD."""
-        response = self.client.post(reverse('home:login'), {'username': 'nishanthvijayan', 'password': 'qweasdzxc'})
+        response = self.client.post(reverse('home:login'), {'username': 'hod_employee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Project_one",
                                              budget_head="Institute", state="Submitted")
         second_form = PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Project_two",
@@ -210,7 +210,7 @@ class PurchaseViewTests(TestCase):
 
     def test_previous_requests_view_jao(self):
         """Test if Previous Requests page lists forms appropriately for JAO."""
-        response = self.client.post(reverse('home:login'), {'username': 'jitin', 'password': 'qweasdzxc'})
+        response = self.client.post(reverse('home:login'), {'username': 'jao_employee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Project_one",
                                              budget_head="Institute", state="Approved by Head of Department")
         second_form = PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Project_two",
@@ -259,7 +259,7 @@ class PurchaseViewTests(TestCase):
 
     def test_previous_requests_view_dr(self):
         """Test if Previous Requests page lists forms appropriately for DR."""
-        response = self.client.post(reverse('home:login'), {'username': 'basil', 'password': 'qweasdzxc'})
+        response = self.client.post(reverse('home:login'), {'username': 'dr_employee', 'password': 'qweasdzxc'})
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Project_one",
                                              budget_head="Institute", state="Approved by Junior Accounts Officer")
         second_form = PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Project_two",
