@@ -24,6 +24,9 @@ class Medical(BaseModel):
         default=STATE.SUBMITTED,
     )
 
+    class Meta:
+        verbose_name = "Medical"
+
     @transition(field=state, source=STATE.SUBMITTED, target=STATE.APPROVED_BY_DA)
     def approve_by_da(self):
         """
