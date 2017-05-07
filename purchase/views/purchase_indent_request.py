@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
+from django.contrib import messages
 from django_fsm import can_proceed
 from django.forms.formsets import formset_factory
 
@@ -31,7 +32,10 @@ def purchase_indent_new(request):
                                 email=item_form.cleaned_data['vendor_email'],
                                 address=item_form.cleaned_data['vendor_address'])
                 vendor.save()
+            messages.success(request, 'Purchase Indent form was successfully submitted for approval')
             return redirect('purchase:purchase-submissions')
+        else:
+            messages.warning(request, 'Form submission failed due to some error')
     else:
         form = PurchaseIndentRequestForm()
         item_vendor_formset = ItemVendorFormSet()
@@ -110,6 +114,7 @@ def purchase_indent_hod_approve(request, request_id):
             remark=remark
         )
         transition_record.save()
+        messages.success(request, 'The Purchase Indent form was Approved')
 
     elif request.POST.get('Reject'):
         if not can_proceed(purchase_indent_request.reject):
@@ -127,6 +132,7 @@ def purchase_indent_hod_approve(request, request_id):
             remark=remark
         )
         transition_record.save()
+        messages.warning(request, 'The Purchase Indent form was Rejected')
 
     return redirect('purchase:purchase-requests-pending')
 
@@ -158,6 +164,7 @@ def purchase_indent_jao_approve(request, request_id):
                 remark=remark
             )
             transition_record.save()
+            messages.success(request, 'The Purchase Indent form was Approved')
 
         elif request.POST.get('Reject'):
             if not can_proceed(purchase_indent_request.reject):
@@ -175,6 +182,7 @@ def purchase_indent_jao_approve(request, request_id):
                 remark=remark
             )
             transition_record.save()
+            messages.warning(request, 'The Purchase Indent form was Rejected')
 
         return redirect('purchase:purchase-requests-pending')
     else:
@@ -207,6 +215,7 @@ def purchase_indent_dr_approve(request, request_id):
             remark=remark
         )
         transition_record.save()
+        messages.success(request, 'The Purchase Indent form was Approved')
 
     elif request.POST.get('Reject'):
         if not can_proceed(purchase_indent_request.reject):
@@ -224,5 +233,6 @@ def purchase_indent_dr_approve(request, request_id):
             remark=remark
         )
         transition_record.save()
+        messages.warning(request, 'The Purchase Indent form was Rejected')
 
     return redirect('purchase:purchase-requests-pending')
