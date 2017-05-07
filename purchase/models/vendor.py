@@ -3,13 +3,13 @@
 from django.db import models
 
 from erp_core.models import BaseModel
-from purchase.models import PurchaseIndentRequest
+from purchase.models import Item
 
 
 class Vendor(BaseModel):
     """This stores all the information regarding a vendor."""
 
-    purchase_request = models.ForeignKey(PurchaseIndentRequest, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     address = models.EmailField(max_length=500)
     email = models.TextField(max_length=50)

@@ -13,6 +13,15 @@ class Item(BaseModel):
     specification = models.TextField(max_length=500)
     quantity = models.IntegerField()
     estimated_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    TYPES = (
+        ('lab_consumables', 'Lab Consumables'),
+        ('general_items', 'General Items'),
+        ('lab_equipments', 'Lab Equipment(s)'),
+        ('office_equipments', 'Office Equipment(s)'),
+        ('lab_furniture', 'Lab Furniture'),
+        ('office_furniture', 'Office Furniture')
+    )
+    type = models.CharField(max_length=30, choices=TYPES)
 
     def __str__(self):
         """Return string representing the Item by its Specification."""
