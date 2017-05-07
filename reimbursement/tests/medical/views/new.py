@@ -7,32 +7,32 @@ from erp_core.models.department import Department
 from erp_core.models.employee import Employee
 from erp_core.models.pay import Pay
 
-from models.medical.medical import Medical
-from forms.medical.general_detail.general_detail import GeneralDetailForm
-from forms.medical.medical_detail.medical_detail import MedicalDetailForm
+from reimbursement.models.medical.medical import Medical
+from reimbursement.forms.medical.general_detail.general_detail import GeneralDetailForm
+from reimbursement.forms.medical.medical_detail.medical_detail import MedicalDetailForm
 
 
 class NewMedicalReimbursementViewTests(TestCase):
-
     def setUp(self):
         self.user = User.objects.create_user('jainendramandavi', 'jainendra.mandavi@iitrpr.ac.in', 'qweasdzxc',
-                                        first_name='Jainendra', last_name='Mandavi')
-        self.address = Address.objects.create(address='QrNo 7/B, Street - 1, Sector 8', town_city='Bhilai', district='Durg',
-                                         state='Chhattisgarh', country='India', zipcode=490009)
+                                             first_name='Jainendra', last_name='Mandavi')
+        self.address = Address.objects.create(address='QrNo 7/B, Street - 1, Sector 8', town_city='Bhilai',
+                                              district='Durg',
+                                              state='Chhattisgarh', country='India', zipcode=490009)
         self.department = Department.objects.create(name='Computer Science and Engineering', short_name='CSE',
-                                               description='Computer Waale Noobde')
+                                                    description='Computer Waale Noobde')
         self.pay = Pay.objects.create(band=18000, grade=12000, da=24000, hra=12000, ta=6000, nps=2000, lic=2000)
         self.employee = Employee.objects.create(
-                                            employee_id=30052, nationality='Indian',
-                                            date_of_joining='2017-04-21',
-                                            designation='Head of Department',
-                                            short_designation='HOD',
-                                            user=self.user,
-                                            department=self.department,
-                                            current_address=self.address,
-                                            permanent_address=self.address,
-                                            pay=self.pay
-                                        )
+            employee_id=30052, nationality='Indian',
+            date_of_joining='2017-04-21',
+            designation='Head of Department',
+            short_designation='HOD',
+            user=self.user,
+            department=self.department,
+            current_address=self.address,
+            permanent_address=self.address,
+            pay=self.pay
+        )
         self.group = Group.objects.create(name='Employee')
         self.group.user_set.add(self.user)
         # self.user = User.objects.create_user('gurpreetsingh', 'gurpreet.singh@iitrpr.ac.in', 'qweasdzxc',
@@ -109,7 +109,7 @@ class NewMedicalReimbursementViewTests(TestCase):
         response = self.client.post(reverse('reimbursement:medical-new'), data)
         self.assertRedirects(
             response=response,
-            expected_url=reverse('reimbursement:medical-show',kwargs={"medical_id": 1})
+            expected_url=reverse('reimbursement:medical-show', kwargs={"medical_id": 1})
         )
 
         medical = Medical.objects.filter(general_detail__employee__user_id=self.user.id).first()
@@ -157,7 +157,7 @@ class NewMedicalReimbursementViewTests(TestCase):
         def xstr(s):
             if s is None:
                 return ''
-            return str(s).replace('.00','')
+            return str(s).replace('.00', '')
 
         for gd in general_detail:
             self.assertEqual(xstr(gd[0]), gd[1])
@@ -166,10 +166,10 @@ class NewMedicalReimbursementViewTests(TestCase):
             self.assertEqual(xstr(md[0]), md[1])
 
         for c in consultation_detail:
-            self.assertEqual(xstr(c[0]),c[1])
+            self.assertEqual(xstr(c[0]), c[1])
 
         for i in injection_detail:
-            self.assertEqual(xstr(i[0]),i[1])
+            self.assertEqual(xstr(i[0]), i[1])
 
         # for sc in specialist_consultation_detail:
         #     self.assertEqual(xstr(sc[0]),sc[1])
