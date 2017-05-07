@@ -28,6 +28,8 @@ class TelephoneExpense(BaseModel):
         help_text='Enter serial number for the record in the register'
     )
     amount_passed = models.DecimalField(
+        null=True,
+        blank=True,
         max_digits=8,
         decimal_places=2,
         help_text='Enter the amount passed for reimbursement'
