@@ -18,9 +18,13 @@ class TelephoneExpense(BaseModel):
         related_name='telephone_expenses'
     )
     register_page_no = models.PositiveIntegerField(
+        null=True,
+        blank=True,
         help_text='Enter page number of the register'
     )
     register_serial_no = models.PositiveIntegerField(
+        null=True,
+        blank=True,
         help_text='Enter serial number for the record in the register'
     )
     amount_passed = models.DecimalField(

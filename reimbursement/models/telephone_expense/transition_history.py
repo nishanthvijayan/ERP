@@ -20,7 +20,7 @@ class TransitionHistory(BaseModel):
         TelephoneExpense,
         on_delete=models.CASCADE,
         help_text='Telephone Expense',
-        related_name='telephone_expense_transition_history'
+        related_name='transition_history_set'
     )
     state_from = FSMField(
         null=True,
@@ -37,7 +37,7 @@ class TransitionHistory(BaseModel):
     approved_by = models.ForeignKey(
         User,
         help_text='Employee',
-        related_name='telephone_expense_transition_history'
+        related_name='transition_history_set'
     )
     remarks = models.CharField(
         null=True,

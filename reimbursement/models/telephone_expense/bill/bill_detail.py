@@ -22,7 +22,7 @@ class BillDetail(BaseModel):
     bill_date = models.DateField(
         help_text='Enter date mentioned on the bill'
     )
-    date_form = models.DateField(
+    date_from = models.DateField(
         help_text='Enter starting date of the billing'
     )
     date_to = models.DateField(
@@ -37,4 +37,11 @@ class BillDetail(BaseModel):
     )
     is_telephone_line = models.BooleanField(
         help_text='Is it a telephone number'
+    )
+    amount = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=10,
+        decimal_places=2,
+        help_text='Amount mentioned on the bill'
     )

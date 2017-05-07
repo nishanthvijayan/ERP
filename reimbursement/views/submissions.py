@@ -22,15 +22,15 @@ def reimbursement_submissions(request):
     print result_list
 
     page = request.GET.get('page')
-    paginator = Paginator(medical_list, 10)
+    paginator = Paginator(result_list, 10)
     try:
-        medicals = paginator.page(page)
+        results = paginator.page(page)
     except PageNotAnInteger:
-        medicals = paginator.page(1)
+        results = paginator.page(1)
     except EmptyPage:
-        medicals = paginator.page(paginator.num_pages)
+        results = paginator.page(paginator.num_pages)
     context = {
-        'medicals': medicals
+        'results': results
     }
     return render(request, 'reimbursement/submissions.html', context)
 
