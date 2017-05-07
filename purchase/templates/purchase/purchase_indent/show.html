@@ -110,7 +110,7 @@
                 </table>
             </div>
         </div>
-        {% if purchase_indent_request.state not in ['Submitted', 'Approved by Head of Department']%}
+        {% if purchase_indent_request.state != 'Submitted' and purchase_indent_request.state != 'Approved by Head of Department'%}
         <div class="panel panel-default">
             <div class="panel-heading">Budget Details</div>
             <div class="panel-body">
