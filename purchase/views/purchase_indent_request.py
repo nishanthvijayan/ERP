@@ -1,24 +1,43 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django_fsm import can_proceed
+from django.forms.formsets import formset_factory
 
-from purchase.models import PurchaseIndentRequest, TransitionHistory, STATE
-from purchase.forms import PurchaseIndentRequestForm, PurchaseIndentBudgetDetailsForm
+from purchase.models import PurchaseIndentRequest, TransitionHistory, STATE, Item, Vendor
+from purchase.forms import PurchaseIndentRequestForm, PurchaseIndentBudgetDetailsForm, ItemVendorForm
 
 
 def purchase_indent_new(request):
     """View function that handles new form submission."""
+    ItemVendorFormSet = formset_factory(ItemVendorForm)
     if request.method == 'POST':
         form = PurchaseIndentRequestForm(request.POST, request.FILES)
-        if form.is_valid():
+        item_vendor_formset = ItemVendorFormSet(request.POST)
+
+        if form.is_valid() and item_vendor_formset.is_valid():
             submission = form.save(commit=False)
             submission.indenter = request.user.employee_set.all()[0]
             submission.save()
+
+            for item_form in item_vendor_formset:
+                item = Item(purchase_request=submission,
+                            specification=item_form.cleaned_data['specification'],
+                            quantity=item_form.cleaned_data['quantity'],
+                            type=item_form.cleaned_data['type'],
+                            estimated_cost=item_form.cleaned_data['estimated_cost']
+                            )
+                item.save()
+                vendor = Vendor(item=item, name=item_form.cleaned_data['vendor_name'],
+                                email=item_form.cleaned_data['vendor_email'],
+                                address=item_form.cleaned_data['vendor_address'])
+                vendor.save()
             return redirect('purchase:purchase-submissions')
     else:
         form = PurchaseIndentRequestForm()
+        item_vendor_formset = ItemVendorFormSet()
 
-    return render(request, 'purchase/purchase_indent/new.html', {'form': form})
+    return render(request, 'purchase/purchase_indent/new.html',
+                  {'form': form, 'item_vendor_formset': item_vendor_formset})
 
 
 def purchase_indent_show(request, request_id):

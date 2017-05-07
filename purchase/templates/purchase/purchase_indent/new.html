@@ -1,5 +1,7 @@
 {% extends "purchase/app_base.html" %}
 
+{% load static %}
+
 {% block content %}
 <div class="row">
     <div class="row">
@@ -31,10 +33,63 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Item Specification & Vendor details </div>
-                    <div class="panel-body"></div>
+                    <div class="panel-body">
+                        <!-- For each form in form set -->
+                        {{ item_vendor_formset.management_form }}
+                        {% for item_vendor_form in item_vendor_formset %}
+                        <div class="panel panel-default item-vender-spec">
+                            <div class="panel-heading">
+                                Item
+                                <a class="delete-row btn btn-danger btn-xs pull-right" href="javascript:void(0)">Remove</a>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Item Specification</label>
+                                    <div class="col-md-6 col-sm-10">
+                                        {{ item_vendor_form.specification }}
+                                    </div>
+                                    <label class="col-md-1 col-sm-2 control-label">Type</label>
+                                    <div class="col-md-3 col-sm-10">
+                                        {{ item_vendor_form.type }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 col-sm-2 control-label">Quantity</label>
+                                    <div class="col-md-4 col-sm-10">
+                                        {{ item_vendor_form.quantity }}
+                                    </div>
+
+                                    <label class="col-md-2 col-sm-2 control-label">Estimate Cost</label>
+                                    <div class="col-md-4 col-sm-10">
+                                        {{ item_vendor_form.estimated_cost }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 col-sm-2 control-label">Vendor Name</label>
+                                    <div class="col-md-4 col-sm-10">
+                                        {{ item_vendor_form.vendor_name }}
+                                    </div>
+
+                                    <label class="col-md-2 col-sm-2 control-label">Vendor Email</label>
+                                    <div class="col-md-4 col-sm-10">
+                                        {{ item_vendor_form.vendor_email }}
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-sm-2 control-label">Vendor Address</label>
+                                    <div class="col-md-10 col-sm-10">
+                                        {{ item_vendor_form.vendor_address }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
+
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Approval Documents (as applicable)</div>
                     <div class="panel-body">
@@ -88,4 +143,15 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'home/js/jquery.formset.min.js' %}"></script>
+    <script>
+        $('.item-vender-spec').formset({
+            addText: 'Add new Item',
+            deleteText: ''
+        });
+        $('.add-row').addClass('btn btn-primary pull-right');
+    </script>
 {% endblock %}
