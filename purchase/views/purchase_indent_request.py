@@ -18,7 +18,7 @@ def purchase_indent_new(request):
     else:
         form = PurchaseIndentRequestForm()
 
-    return render(request, 'purchase/new.html', {'form': form})
+    return render(request, 'purchase/purchase_indent/new.html', {'form': form})
 
 
 def purchase_indent_show(request, request_id):
@@ -30,7 +30,8 @@ def purchase_indent_show(request, request_id):
     if purchase_indent_request.indenter == current_employee or \
        purchase_indent_request.indenter.department.hod_id == current_employee.id or \
        request.user.groups.filter(name__in=['JrAO_AccountsDepartment', 'DR_AccountsDepartment']).exists():
-        return render(request, 'purchase/show.html', {'purchase_indent_request': purchase_indent_request})
+        return render(request, 'purchase/purchase_indent/show.html',
+                      {'purchase_indent_request': purchase_indent_request})
 
     else:
         return PermissionDenied
@@ -44,20 +45,22 @@ def purchase_indent_approve(request, request_id):
     if purchase_indent_request.state == 'Submitted':
         if purchase_indent_request.indenter.department.hod_id != current_employee.id:
             raise PermissionDenied
-        return render(request, 'purchase/show_hod.html', {'purchase_indent_request': purchase_indent_request})
+        return render(request, 'purchase/purchase_indent/show_hod.html',
+                      {'purchase_indent_request': purchase_indent_request})
 
     elif purchase_indent_request.state == 'Approved by Head of Department':
         if not request.user.groups.filter(name='JrAO_AccountsDepartment').exists():
             raise PermissionDenied
         form = PurchaseIndentBudgetDetailsForm()
 
-        return render(request, 'purchase/show_jao.html',
+        return render(request, 'purchase/purchase_indent/show_jao.html',
                       {'purchase_indent_request': purchase_indent_request, 'form': form})
 
     elif purchase_indent_request.state == 'Approved by Junior Accounts Officer':
         if not request.user.groups.filter(name='DR_AccountsDepartment').exists():
             raise PermissionDenied
-        return render(request, 'purchase/show_dr.html', {'purchase_indent_request': purchase_indent_request})
+        return render(request, 'purchase/purchase_indent/show_dr.html',
+                      {'purchase_indent_request': purchase_indent_request})
 
     else:
         return PermissionDenied
@@ -156,7 +159,7 @@ def purchase_indent_jao_approve(request, request_id):
 
         return redirect('purchase:purchase-requests-pending')
     else:
-        return render(request, 'purchase/show_jao.html',
+        return render(request, 'purchase/purchase_indent/show_jao.html',
                       {'purchase_indent_request': purchase_indent_request}, {'form': form})
 
 
