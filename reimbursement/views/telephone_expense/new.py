@@ -27,25 +27,31 @@ def telephone_expense_new(request):
 
         bill_detail_formset = bill_detail_modelformset(
             data=request.POST,
-            prefix="bill-detail-form",
+            prefix="bill-detail-formset",
             queryset = BillDetail.objects.none()
         )
         bill_image_formset = bill_image_modelformset(
             data=request.POST,
-            prefix="bill-image-form",
+            prefix="bill-image-formset",
             queryset = BillImage.objects.none()
         )
+
+        print 'Date is not valid'
 
         if bill_detail_formset.is_valid() \
                 and bill_image_formset.is_valid():
 
+            print 'Date is valid'
+
             try:
                 with transaction.atomic():
 
-                    employee = Employee.objects.filter(user_id=request.user.id)
+                    employee = Employee.objects.filter(user_id=request.user.id).first()
 
                     telephone_expense = TelephoneExpense.objects.create(employee=employee)
                     telephone_expense.save()
+
+                    print 'Telephone done'
 
                     for bill_detail_form in bill_detail_formset:
                         if bill_detail_form.has_changed():
@@ -53,32 +59,36 @@ def telephone_expense_new(request):
                             bill_detail_form_obj.telephone_expense = telephone_expense
                             bill_detail_form_obj.save()
 
+                    print 'Bill Detail done'
+
                     for bill_image_form in bill_image_formset:
                         if bill_image_form.has_changed():
                             bill_image_form_obj = bill_image_form.save(commit=False)
                             bill_image_form_obj.telephone_expense = telephone_expense
                             bill_image_form_obj.save()
 
+                    print 'Bill Image done'
+
                     messages.success(request, 'New telephone expense reimbursement'
                                      + ' request submitted successfully with ID #'
                                      + str(telephone_expense.id))
-                    return redirect('forms:workflow-show', telephone_expense.id)
+                    return redirect('reimbursement:telephone-expense-show', telephone_expense.id)
 
             except IntegrityError:  # If the transaction failed
                 messages.error(request, 'There was an error submitting your reimbursement request.')
     else:
         bill_detail_formset = bill_detail_modelformset(
-            prefix="bill-detail-form",
+            prefix="bill-detail-formset",
             queryset=BillDetail.objects.none()
         )
         bill_image_formset = bill_image_modelformset(
-            prefix="bill-image-form",
+            prefix="bill-image-formset",
             queryset=BillImage.objects.none()
         )
 
     context = {
         'bill_detail_formset': bill_detail_formset,
-        'bill_image_formset': bill_image_formset,
+        'bill_image_formset': bill_image_formset
     }
 
     return render(request, 'reimbursement/telephone_expense/new.html', context)
