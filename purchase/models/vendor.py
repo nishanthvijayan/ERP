@@ -11,8 +11,8 @@ class Vendor(BaseModel):
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    address = models.EmailField(max_length=500)
-    email = models.TextField(max_length=50)
+    address = models.TextField(max_length=500)
+    email = models.EmailField(max_length=50)
 
     def __str__(self):
         """Return string representing the vendor by its Name."""
