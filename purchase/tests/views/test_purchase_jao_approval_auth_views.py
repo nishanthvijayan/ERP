@@ -49,7 +49,7 @@ class PurchaseApprovalJAOViewTests(TestCase):
             department=self.department, current_address=self.address,
             permanent_address=self.address, pay=self.pay
         )
-        self.group_jao = Group.objects.create(name='JAO_AccountsDepartment')
+        self.group_jao = Group.objects.create(name='JrAO_AccountsDepartment')
         self.group_jao.user_set.add(self.user_jao)
 
         # Define test DR user

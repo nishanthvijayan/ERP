@@ -37,9 +37,9 @@ def requests_pending(request):
     if Department.objects.filter(hod=current_employee).exists():
         subordinates = current_employee.department.employee_set.values_list('id', flat=True)
         pending_requests_list = PurchaseIndentRequest.objects.filter(state='Submitted', indenter_id__in=subordinates)
-    elif request.user.groups.filter(name='JAO_AccountsDepartment'):
+    elif request.user.groups.filter(name='JrAO_AccountsDepartment').exists():
         pending_requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Head of Department')
-    elif request.user.groups.filter(name='DR_AccountsDepartment'):
+    elif request.user.groups.filter(name='DR_AccountsDepartment').exists():
         pending_requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Junior Accounts Officer')
     else:
         pending_requests_list = PurchaseIndentRequest.objects.none()
@@ -70,7 +70,7 @@ def requests_previous(request):
             indenter_id__in=subordinates
         )
 
-    elif request.user.groups.filter(name='JAO_AccountsDepartment'):
+    elif request.user.groups.filter(name='JrAO_AccountsDepartment').exists():
         previous_approved_ids = TransitionHistory.objects.filter(
             from_state='Approved by Head of Department'
         ).values_list('form_id', flat=True)
@@ -78,7 +78,7 @@ def requests_previous(request):
             id__in=previous_approved_ids
         )
 
-    elif request.user.groups.filter(name='DR_AccountsDepartment'):
+    elif request.user.groups.filter(name='DR_AccountsDepartment').exists():
         previous_approved_ids = TransitionHistory.objects.filter(
             from_state='Approved by Junior Accounts Officer'
         ).values_list('form_id', flat=True)
@@ -124,7 +124,7 @@ def purchase_indent_show(request, request_id):
     # Check if logged in user is indenter, indenter's HOD, JAO or DR
     if purchase_indent_request.indenter == current_employee or \
        purchase_indent_request.indenter.department.hod_id == current_employee.id or \
-       request.user.groups.filter(name__in=['JAO_AccountsDepartment', 'DR_AccountsDepartment']).exists():
+       request.user.groups.filter(name__in=['JrAO_AccountsDepartment', 'DR_AccountsDepartment']).exists():
         return render(request, 'purchase/show.html', {'purchase_indent_request': purchase_indent_request})
 
     else:
@@ -142,7 +142,7 @@ def purchase_indent_approve(request, request_id):
         return render(request, 'purchase/show_hod.html', {'purchase_indent_request': purchase_indent_request})
 
     elif purchase_indent_request.state == 'Approved by Head of Department':
-        if not request.user.groups.filter(name='JAO_AccountsDepartment').exists():
+        if not request.user.groups.filter(name='JrAO_AccountsDepartment').exists():
             raise PermissionDenied
         form = PurchaseIndentBudgetDetailsForm()
 
@@ -207,7 +207,7 @@ def purchase_indent_hod_approve(request, request_id):
 def purchase_indent_jao_approve(request, request_id):
     """View function that handles approving a form instance by JAO."""
     # Check if logged in user is JAO
-    if not request.user.groups.filter(name='JAO_AccountsDepartment').exists():
+    if not request.user.groups.filter(name='JrAO_AccountsDepartment').exists():
         raise PermissionDenied
 
     current_employee = request.user.employee_set.all()[0]
