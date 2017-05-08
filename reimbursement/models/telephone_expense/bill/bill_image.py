@@ -27,3 +27,9 @@ class BillImage(BaseModel):
         TelephoneExpense,
         related_name='bill_image_set'
     )
+
+    def __str__(self):
+        return 'Form#' + str(self.telephone_expense_id) + ' - ' + str(self.id)
+
+    def __unicode__(self):
+        return 'Form#' + str(self.telephone_expense_id) + ' - ' + str(self.id)
