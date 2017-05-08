@@ -131,7 +131,6 @@
             <div class="panel-heading"> No other make or model is acceptable for the following reasons :</div>
             <div class="panel-body">
                 <div class="form-group">
-                    
                     <div class="col-sm-12">
                         <textarea class="form-control" cols="40" id="id_make_or_model_reason" name="make_or_model_reason" rows="10" disabled>{{purchase_indent_request.proprietary_owner}}</textarea>
                     </div>
@@ -143,25 +142,31 @@
         <div class="panel panel-default">
             <div class="panel-heading">Budget Details</div>
             <div class="panel-body">
-                <div class="form-group">
-                    
-                    <label class="col-sm-2 control-label">Budget Sanctioned :</label>
-                    <div class="col-sm-10">
+                <div class="row">
+                    <label class="col-sm-3 control-label">Budget Sanctioned :</label>
+                    <div class="col-sm-9">
                         <input class="form-control" type="number" value="{{purchase_indent_request.budget_sanctioned}}" disabled>
                     </div>
                 </div>
-                <div class="form-group">
-                    
-                    <label class="col-sm-2 control-label">Amount already spent :</label>
-                    <div class="col-sm-10">
+                <br>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Amount already spent :</label>
+                    <div class="col-sm-9">
                         <input class="form-control" type="number" value="{{purchase_indent_request.amount_already_spent}}" disabled>
                     </div>
                 </div>
-                <div class="form-group">
-                    
-                    <label class="col-sm-2 control-label">Budget Available :</label>
-                    <div class="col-sm-10">
+                <br>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Budget Available :</label>
+                    <div class="col-sm-9">
                         <input class="form-control" type="number" value="{{purchase_indent_request.budget_available}}" disabled>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-sm-3 control-label">Expenditure debited to :</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" value="{{purchase_indent_request.expenditure_debitable_to}}" disabled>
                     </div>
                 </div>
             </div>

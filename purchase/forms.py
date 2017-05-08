@@ -7,7 +7,8 @@ from .models import PurchaseIndentRequest
 class PurchaseIndentRequestForm(ModelForm):
     class Meta:
         model = PurchaseIndentRequest
-        exclude = ['indenter', 'state', 'budget_sanctioned', 'amount_already_spent', 'budget_available']
+        exclude = ['indenter', 'state', 'budget_sanctioned', 'amount_already_spent', 'budget_available',
+                   'expenditure_debitable_to']
 
     def __init__(self, *args, **kwargs):
         super(PurchaseIndentRequestForm, self).__init__(*args, **kwargs)
@@ -37,7 +38,7 @@ class PurchaseIndentRequestForm(ModelForm):
 class PurchaseIndentBudgetDetailsForm(ModelForm):
     class Meta:
         model = PurchaseIndentRequest
-        fields = ['budget_sanctioned', 'amount_already_spent', 'budget_available']
+        fields = ['budget_sanctioned', 'amount_already_spent', 'budget_available', 'expenditure_debitable_to']
 
     def __init__(self, *args, **kwargs):
         super(PurchaseIndentBudgetDetailsForm, self).__init__(*args, **kwargs)
@@ -47,6 +48,9 @@ class PurchaseIndentBudgetDetailsForm(ModelForm):
                                                                         'placeholder': 'Amount already spent (Rs)'})
         self.fields['budget_available'].widget = NumberInput(attrs={'class': 'form-control', 'step': 0.01,
                                                                     'placeholder': 'Budget Available (Rs)'})
+        self.fields['expenditure_debitable_to'].widget = TextInput(attrs={
+            'class': 'form-control'
+        })
 
 
 class ItemVendorForm(Form):

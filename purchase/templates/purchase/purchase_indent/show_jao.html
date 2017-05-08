@@ -148,23 +148,30 @@
                 <div class="panel-body">
                     <div class="form-group">
                         {{ form.budget_sanctioned.errors }}
-                        <label class="col-sm-2 control-label">Budget Sanctioned :</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-3 control-label">Budget Sanctioned :</label>
+                        <div class="col-sm-9">
                             {{ form.budget_sanctioned }}
                         </div>
                     </div>
                     <div class="form-group">
                         {{ form.amount_already_spent.errors }}
-                        <label class="col-sm-2 control-label">Amount already spent :</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-3 control-label">Amount already spent :</label>
+                        <div class="col-sm-9">
                             {{ form.amount_already_spent }}
                         </div>
                     </div>
                     <div class="form-group">
                         {{ form.budget_available.errors }}
-                        <label class="col-sm-2 control-label">Budget Available :</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-3 control-label">Budget Available :</label>
+                        <div class="col-sm-9">
                             {{ form.budget_available }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <!-- <label>Budget has been noted in the relevant budget head.</label> -->
+                            <label class="col-sm-3 control-label">Expenditure debitable to:</label>
+                            <div class="col-sm-9">
+                            {{ form.expenditure_debitable_to }}
                         </div>
                     </div>
                 </div>
