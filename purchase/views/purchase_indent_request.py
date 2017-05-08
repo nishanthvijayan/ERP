@@ -3,11 +3,13 @@ from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django_fsm import can_proceed
 from django.forms.formsets import formset_factory
+from django.contrib.auth.decorators import login_required
 
 from purchase.models import PurchaseIndentRequest, TransitionHistory, STATE, Item, Vendor
 from purchase.forms import PurchaseIndentRequestForm, PurchaseIndentBudgetDetailsForm, ItemVendorForm
 
 
+@login_required
 def purchase_indent_new(request):
     """View function that handles new form submission."""
     ItemVendorFormSet = formset_factory(ItemVendorForm)
@@ -44,6 +46,7 @@ def purchase_indent_new(request):
                   {'form': form, 'item_vendor_formset': item_vendor_formset})
 
 
+@login_required
 def purchase_indent_show(request, request_id):
     """View function that displays current state of a form instance for viewing."""
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
@@ -60,6 +63,7 @@ def purchase_indent_show(request, request_id):
         return PermissionDenied
 
 
+@login_required
 def purchase_indent_approve(request, request_id):
     """View function that displays current state of a form instance for approval."""
     purchase_indent_request = get_object_or_404(PurchaseIndentRequest, pk=request_id)
@@ -89,6 +93,7 @@ def purchase_indent_approve(request, request_id):
         return PermissionDenied
 
 
+@login_required
 def purchase_indent_hod_approve(request, request_id):
     """View function that handles approving a form instance by HOD."""
     current_employee = request.user.employee_set.all()[0]
@@ -137,6 +142,7 @@ def purchase_indent_hod_approve(request, request_id):
     return redirect('purchase:purchase-requests-pending')
 
 
+@login_required
 def purchase_indent_jao_approve(request, request_id):
     """View function that handles approving a form instance by JAO."""
     # Check if logged in user is JAO
@@ -190,6 +196,7 @@ def purchase_indent_jao_approve(request, request_id):
                       {'purchase_indent_request': purchase_indent_request}, {'form': form})
 
 
+@login_required
 def purchase_indent_dr_approve(request, request_id):
     """View function that handles approving a form instance by DR."""
     # Check if logged in user is DR

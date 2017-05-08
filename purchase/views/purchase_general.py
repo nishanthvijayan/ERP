@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 from erp_core.models import Department
 from purchase.models import PurchaseIndentRequest, TransitionHistory
 
 
+@login_required
 def index(request):
     """View function that renders list of purchase list."""
     return render(request, 'purchase/index.html')
 
 
+@login_required
 def submissions(request):
     """View function that renders current users purchase related form submissions."""
     current_employee = request.user.employee_set.all()[0]
@@ -27,6 +30,7 @@ def submissions(request):
     return render(request, 'purchase/submissions.html', {'submissions': submissions})
 
 
+@login_required
 def requests_pending(request):
     """View function that renders list of purchase forms pending current user's approval."""
     current_employee = request.user.employee_set.all()[0]
@@ -53,6 +57,7 @@ def requests_pending(request):
     return render(request, 'purchase/requests_pending.html', {'pending_requests': pending_requests})
 
 
+@login_required
 def requests_previous(request):
     """View function that renders list of purchase forms previously approved by current user."""
     current_employee = request.user.employee_set.all()[0]
