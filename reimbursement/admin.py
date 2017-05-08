@@ -12,6 +12,9 @@ from .models.telephone_expense.bill.bill_detail import BillDetail
 from .models.telephone_expense.bill.bill_image import BillImage
 from .models.telephone_expense.telephone_expense_transition_history import TelephoneExpenseTransitionHistory
 
+from .models.professional_tour.professional_tour import ProfessionalTour
+from .models.professional_tour.meeting_date.meeting_date import MeetingDate
+
 
 # Medical Expenses Reimbursements
 admin.site.register(Medical)
@@ -30,3 +33,8 @@ admin.site.register(TelephoneExpense)
 admin.site.register(BillDetail)
 admin.site.register(BillImage)
 admin.site.register(TelephoneExpenseTransitionHistory)
+
+
+# Telephone Expenses Reimbursements
+admin.site.register(ProfessionalTour)
+admin.site.register(MeetingDate)

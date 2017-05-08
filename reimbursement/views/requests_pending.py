@@ -25,9 +25,10 @@ def reimbursement_requests_pending(request):
     ).exists():
         medical_list = get_medical_list(request)
         telephone_expense_list = get_telephone_expense_list(request)
+        professional_tour_list = get_professional_tour_list(request)
 
         result_list = sorted(
-            chain(medical_list, telephone_expense_list),
+            chain(medical_list, telephone_expense_list, professional_tour_list),
             key=attrgetter('modified_at'),
             reverse=True
         )
@@ -80,3 +81,23 @@ def get_telephone_expense_list(request):
     else:
         telephone_expense_list = TelephoneExpense.objects.none()
     return telephone_expense_list
+
+
+def get_professional_tour_list(request):
+    looged_in_employee = request.user.employee_set.all().first()
+    if looged_in_employee:
+        professional_tour_list = []
+        if looged_in_employee.department.hod.user.id == looged_in_employee.user.id:
+            professional_tour_list += ProfessionalTour.objects.filter(employee__department_id=looged_in_employee
+                                                                      .department.id).filter(state=STATE.SUBMITTED)
+        elif request.user.groups.filter(name='DR_AccountsDepartment').exists():
+            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_HOD)
+        elif request.user.groups.filter(name='SrAO_AuditDepartment').exists():
+            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_DR)
+        elif request.user.groups.filter(name='AR_AdministrativeDepartment').exists():
+            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_SrAO)
+        elif request.user.groups.filter(name='R_AdministrativeDepartment').exists():
+            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_AR)
+        else:
+            professional_tour_list = ProfessionalTour.objects.none()
+        return professional_tour_list

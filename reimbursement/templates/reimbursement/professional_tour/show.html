@@ -1,0 +1,130 @@
+{% extends 'reimbursement/app_base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Professional Tour Reimbursement ID : {{ professional_tour.id }}</h2>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <strong>Current Status : </strong>{{ professional_tour.state }} <br>
+                        <strong>Submission Date : </strong>{{ professional_tour.created_at }}
+                    </p>
+                </blockquote>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li role="presentation" class="active"><a href="#general-details" aria-controls="general-details" role="tab" data-toggle="tab">General Details</a></li>
+                    <li role="presentation"><a href="#professional-tour-details" aria-controls="professional-tour-details" role="tab" data-toggle="tab">Professional Tour Details</a></li>
+                </ul>
+{#                <br>#}
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane table-responsive active" id="general-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th><b>Name of the Employee</b></th>
+                                <td>{{ professional_tour.employee.user.first_name }} {{ professional_tour.employee.user.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Designation of the Employee</b></th>
+                                <td>{{ professional_tour.employee.department.name }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Employee Code</b></th>
+                                <td>{{ professional_tour.employee.employee_id }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Band Pay</b></th>
+                                <td>{{ professional_tour.employee.pay.band }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Grade Pay</b></th>
+                                <td>{{ professional_tour.employee.pay.grade }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Residential Address</b></th>
+                                <td>{{ professional_tour.employee.current_address}}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Employee Code</b></th>
+                                <td>{{ professional_tour.employee.employee_id }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="professional-tour-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th><b>Place At Which Employee Visited</b></th>
+                                <td>{{ professional_tour.station_visited }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Fair Paid For The Both Ways</b></th>
+                                <td>Rs. {{ professional_tour.fair_paid }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Fair Paid For Expenditure For Boarding And Lodging</b></th>
+                                <td>Rs. {{ professional_tour.expenditure }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Purpose of Visit</b></th>
+                                <td>{{ professional_tour.purpose_visit }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Approval of Director or HOD</b></th>
+                                <td>
+                                    {% if professional_tour.approval %}
+                                        {{ professional_tour.approval.url }}
+                                    {% else  %}
+                                        No
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><b>Other Information</b></th>
+                                <td>{% if professional_tour.information %}
+                                        {{ professional_tour.information }}
+                                    {% else  %}
+                                        No Information
+                                    {% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Meeting Dates</b></th>
+                                <td>
+                                    <tr>
+                                        <th><b>Date</b></th>
+                                        {% for meetingdate in meeting_dates %}
+
+                                            <td>{{ meetingdate.meeting_date }}</td>
+
+                                        {% endfor %}
+                                    </tr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><b>Amount Spent On Local Journey</b></th>
+                                <td>Rs. {{ professional_tour.amount_spent }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Advance Taken</b></th>
+                                <td>Rs. {{ professional_tour.advance_taken }}</td>
+                            </tr>
+                            <tr>
+                                <th><b>Amount of Reimbursement</b></th>
+                                <td>Rs. {{ professional_tour.reimbursement_amount }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

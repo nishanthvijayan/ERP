@@ -10,10 +10,16 @@ class MeetingDate(BaseModel):
     This stores all the information regarding professional tour reimbursement of an employee 
     """
     meeting_date = models.DateField(
-        help_text='Mansion dates of meeting or conference'
+        help_text='Mention dates of meeting or conference'
     )
-    professional = models.ForeignKey(
+    professional_tour = models.ForeignKey(
         ProfessionalTour,
         on_delete=models.CASCADE,
         help_text=''
     )
+
+    def __str__(self):
+        return str(self.id)
+
+    def __unicode__(self):
+        return str(self.id)

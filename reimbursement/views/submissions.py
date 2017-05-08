@@ -7,14 +7,16 @@ from operator import attrgetter
 
 from reimbursement.models.medical import Medical
 from reimbursement.models.telephone_expense.telephone_expense import TelephoneExpense
+from reimbursement.models.professional_tour.professional_tour import ProfessionalTour
 
 
 def reimbursement_submissions(request):
     medical_list = Medical.objects.filter(general_detail__employee__user_id=request.user.id)
     telephone_expense_list = TelephoneExpense.objects.filter(employee__user_id=request.user.id)
+    professional_tour_list = ProfessionalTour.objects.filter(employee__user_id=request.user.id)
 
     result_list = sorted(
-        chain(medical_list, telephone_expense_list),
+        chain(medical_list, telephone_expense_list, professional_tour_list),
         key=attrgetter('modified_at'),
         reverse=True
     )

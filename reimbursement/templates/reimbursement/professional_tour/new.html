@@ -1,0 +1,114 @@
+{% extends "reimbursement/app_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="row">
+        <div class="col-md-12 page-header">
+            <h3>New Professional Tour Reimbursement</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" action="{% url 'reimbursement:professional-tour-new' %}" method="post">
+                {% csrf_token %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Professional Tour Details</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{ professional_tour_form.station_visited.errors }}
+                            <label class="col-sm-2 control-label">Station Visited</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.station_visited }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.fair_paid.errors }}
+                            <label class="col-sm-2 control-label">Fair Paid For The Both Ways</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.fair_paid }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.expenditure.errors }}
+                            <label class="col-sm-2 control-label">Expenditure On Boarding And Lodging</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.expenditure }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.purpose_visit.errors }}
+                            <label class="col-sm-2 control-label">Purpose of Visit</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.purpose_visit }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.approval.errors }}
+                            <label class="col-sm-2 control-label">Approval of Director or HOD</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.approval }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.information.errors }}
+                            <label class="col-sm-2 control-label">Any Other Information</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.information }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.amount_spent.errors }}
+                            <label class="col-sm-2 control-label">Amount Spent On Local Journey</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.amount_spent }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.advance_taken.errors }}
+                            <label class="col-sm-2 control-label">Advance Taken</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.advance_taken }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ professional_tour_form.reimbursement_amount.errors }}
+                            <label class="col-sm-2 control-label">Reimbursement Amount</label>
+                            <div class="col-sm-10">
+                                {{ professional_tour_form.reimbursement_amount }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Meeting Dates</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{ meeting_date_form.meeting_date.errors }}
+                            <label class="col-sm-2 control-label">Dates of Meeting</label>
+                            <div class="col-sm-10">
+                                {{ meeting_date_form.meeting_date }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Respond</label>
+                    <div class="col-sm-10 btn-group" role="group">
+                        <input name="SUBMITTED" type="submit" class="btn btn-primary" value="Submit"/>
+                        <a href="{% url 'reimbursement:reimbursement-index' %}" class="btn btn-danger" role="button">Cancel</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'home/js/jquery.formset.min.js' %}"></script>
+    <script src="{% static 'reimbursement/js/medical/new.js' %}"></script>
+{% endblock %}

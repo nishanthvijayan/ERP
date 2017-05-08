@@ -43,6 +43,8 @@
                             <a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:medical-show' result.id %}" role="button">View Full details</a>
                         {% elif type == 'Telephone Expense'%}
                             <a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:telephone-expense-show' result.id %}" role="button">View Full details</a>
+                        {% elif type == 'Professional Tour'%}
+                            <a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:professional-tour-show' result.id %}" role="button">View Full details</a>
                         {% endif %}
                     {% endwith %}
                     </td>

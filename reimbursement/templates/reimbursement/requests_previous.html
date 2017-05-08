@@ -49,6 +49,16 @@
                         <td>{{ result.state }}</td>
                         <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:telephone-expense-show' result.id %}" role="button">View Full details</a></td>
                     </tr>
+                    {% elif type == 'Professional Tour' %}
+                    <tr>
+                        <td>{{ result.id }}</td>
+                        <td>{{ type }} Reimbursement</td>
+                        <td>{{ result.created_at }}</td>
+                        <td>{{ result.modified_at }}</td>
+                        <td>{{ result.employee.user.first_name }} {{ result.employee.user.last_name }}</td>
+                        <td>{{ result.state }}</td>
+                        <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:professional-tour-show' result.id %}" role="button">View Full details</a></td>
+                    </tr>
                     {% endif %}
                 {% endwith %}
             {% endfor %}

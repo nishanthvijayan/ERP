@@ -62,6 +62,23 @@
                             </td>
                             <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:telephone-expense-show' result.id %}" role="button">View Full details</a></td>
                         </tr>
+                        {% elif type == 'Professional Tour' %}
+                        <tr>
+                            <td>{{ result.id }}</td>
+                            <td>{{ type }} Reimbursement</td>
+                            <td>{{ result.created_at }}</td>
+                            <td>{{ result.employee.user.first_name }} {{ result.employee.user.last_name }}</td>
+                            <td>
+                                {% with result.professional_tour_transition_history.all|first as professional_tour_transition_history %}
+                                    {% if professional_tour_transition_history.remarks %}
+                                        {{ professional_tour_transition_history.remarks }}
+                                    {% else %}
+                                        None
+                                    {% endif %}
+                                {% endwith %}
+                            </td>
+                            <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:professional-tour-show' result.id %}" role="button">View Full details</a></td>
+                        </tr>
                         {% endif %}
                     {% endwith %}
                 {% endfor %}
