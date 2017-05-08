@@ -1,0 +1,83 @@
+{% extends "purchase/app_base.html" %}
+
+{% load bootstrap_pagination %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Submissions</h2>
+        <div class="text-muted">
+            Track all your submitted purchase indents
+        </div>
+    </div>
+
+    <div class="col-md-12 table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date Submitted</th>
+                    <th>State</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.created_at }}</td>
+                    <td>
+                        {{ submission.state }}
+                        {% if submission.state == 'Rejected' %}
+                            By
+                            {% if submission.transitionhistory_set.last.from_state == 'Submitted' %}
+                                Head of Department
+                            {% elif submission.transitionhistory_set.last.from_state == 'Approved by Head of Department' %}
+                                Junior Accounts Officer
+                            {% else %}
+                                Deputy Registrar
+                            {% endif %}
+                        {% endif %}
+                        {% if submission.state == 'Rejected' and submission.transitionhistory_set.last.remark %}
+                            <button type="button" class="btn btn-xs btn-link" data-toggle="modal" data-target=".modal-remark-{{ submission.id }}">
+                                (See Remarks)
+                            </button>
+                            <div class="modal fade modal-remark-{{ submission.id }}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                            <h4 class="modal-title">
+                                                Remarks from
+                                                {% if submission.transitionhistory_set.last.from_state == 'Submitted' %}
+                                                    Head of Department
+                                                {% elif submission.transitionhistory_set.last.from_state == 'Approved by Head of Department' %}
+                                                    Junior Accounts Officer
+                                                {% else %}
+                                                    Deputy Registrar
+                                                {% endif %}
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ submission.transitionhistory_set.last.remark }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{% url 'purchase:purchase-indent-show' submission.id %}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {% bootstrap_paginate submissions %}
+        </div>
+    </div>
+</div>
+{% endblock %}

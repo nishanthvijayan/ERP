@@ -1,0 +1,165 @@
+{% extends "purchase/app_base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>PURCHASE INDENT</h2>
+        <span>
+            Sl. No: {{ purchase_indent_request.id }}
+        </span>
+        <span class="pull-right">
+            Submitted on {{ purchase_indent_request.created_at }}
+        </span>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">General Details</div>
+            <div class="panel-body">
+                <table class="table table-responsive table-bordered">
+                    <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <label> Name of the Intender: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.indenter.user }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Designation: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.indenter.designation }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Department: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.indenter.department.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Budget Head: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.budget_head }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Project Name: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.project_name }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Approvals</div>
+            <div class="panel-body">
+                <table class="table table-responsive table-bordered">
+                    <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <label> Directors's Approval: </label>
+                        </td>
+                        <td>
+                            {% if purchase_indent_request.directors_approval %}
+                            <a class="btn btn-primary btn-xs" target="_blank"
+                                href="{{ purchase_indent_request.directors_approval.url }}">View</a>
+                            {% else %}
+                            None
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Project Approval: </label>
+                        </td>
+                        <td>
+                            {% if purchase_indent_request.project_approval %}
+                            <a class="btn btn-primary btn-xs" target="_blank"
+                                href="{{ purchase_indent_request.project_approval.url }}">View</a>
+                            {% else %}
+                            None
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Budgetary Approval: </label>
+                        </td>
+                        <td>
+                            {% if purchase_indent_request.budgetary_approval %}
+                            <a class="btn btn-primary btn-xs" target="_blank"
+                                href="{{ purchase_indent_request.budgetary_approval.url }}">View</a>
+                            {% else %}
+                            None
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Budget Details</div>
+            <div class="panel-body">
+                <table class="table table-responsive table-bordered">
+                    <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <label> Budget sanctioned: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.budget_sanctioned }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Amount already spent: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.amount_already_spent }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Budget Available: </label>
+                        </td>
+                        <td>
+                            {{ purchase_indent_request.budget_available }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <form action="{% url 'purchase:purchase-indent-dr-approve' purchase_indent_request.id %}" method="post">
+            {% csrf_token %}
+            <div class="panel panel-default">
+                <div class="panel-heading">Remarks (if any)</div>
+                <div class="panel-body">
+                    <textarea class="form-control" cols="40" id="id_remark" name="remark" rows="5"></textarea>
+                    <small>Note: If approved, the remark will be forwarded to the next approver. If rejected, the remark will be visible to the indenter.</small>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="...">
+                <input type="submit" value="Approve" name="Approve" class="btn btn-success" />
+                <input type="submit" value="Reject" name="Reject" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

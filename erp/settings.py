@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'user_management.apps.UserManagementConfig',
     'forms.apps.FormsConfig',
     'reimbursement.apps.ReimbursementConfig',
-
+    'purchase.apps.PurchaseConfig',
     'bootstrap_pagination',
 ]
 
