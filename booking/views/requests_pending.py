@@ -29,15 +29,16 @@ def booking_requests_pending(request):
 
 
 def get_mp_hall_list(request):
-    employee = request.user.employee_set.all().first()
-    if employee:
-        if employee.department.hod.user.id == employee.user.id:
-            mp_hall_list = MpHall.objects.filter(state=STATE.SUBMITTED)
-        elif request.user.groups.filter(name='HindiTranslator').exists():
-            mp_hall_list = MpHall.objects.filter(state=STATE.APPROVED_BY_HOD)
-        elif request.user.groups.filter(name='R_AdministrativeDepartment').exists():
-            mp_hall_list = MpHall.objects.filter(state=STATE.APPROVED_BY_DA)
-        else:
+    logged_in_employee = request.user.employee_set.all().first()
+    if logged_in_employee:
+        mp_hall_list = []
+        if logged_in_employee.department.hod.user.id == logged_in_employee.user.id:
+            mp_hall_list+= MpHall.objects.filter(employee__department_id=logged_in_employee.department.id).filter(state=STATE.SUBMITTED)
+        if request.user.groups.filter(name='HindiTranslator').exists():
+            mp_hall_list+= MpHall.objects.filter(state=STATE.APPROVED_BY_HOD)
+        if request.user.groups.filter(name='R_AdministrativeDepartment').exists():
+            mp_hall_list+= MpHall.objects.filter(state=STATE.APPROVED_BY_DA)
+        if not mp_hall_list:
             mp_hall_list = MpHall.objects.none()
         return mp_hall_list
 

@@ -1,0 +1,21 @@
+{% extends "booking/app_base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>MP Hall Booking ID : {{ mp_hall.id }}</h2>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <strong>Current Status : </strong>{{ mp_hall.state }} <br>
+                        <strong>Submission Date : </strong>{{ mp_hall.created_at }}
+                    </p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+{% block state-change-fields %}
+{% endblock %}
+{% endblock %}

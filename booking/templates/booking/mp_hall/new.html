@@ -1,0 +1,91 @@
+{% extends "booking/app_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="row">
+        <div class="col-md-12 page-header">
+            <h3>New MP Hall Booking</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" action="{% url 'booking:mp-hall-new' %}" method="post">
+                {% csrf_token %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Booking Details</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{ mp_hall_form.date.errors }}
+                            <label class="col-sm-2 control-label">Date of Booking</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.date }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ mp_hall_form.from_time.errors }}
+                            <label class="col-sm-2 control-label">Booking From</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.from_time }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ mp_hall_form.to_time.errors }}
+                            <label class="col-sm-2 control-label">Booking To</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.to_time }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ mp_hall_form.purpose.errors }}
+                            <label class="col-sm-2 control-label">Purpose</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.purpose }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ mp_hall_form.laptop_req.errors }}
+                            <label class="col-sm-2 control-label">Laptop Requirements</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.laptop_req }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ mp_hall_form.projector_req.errors }}
+                            <label class="col-sm-2 control-label">Projector Requirements</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.projector_req }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ mp_hall_form.audio_req.errors }}
+                            <label class="col-sm-2 control-label">Audio Requirements</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.audio_req }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ mp_hall_form.video_req.errors }}
+                            <label class="col-sm-2 control-label">Video Requirements</label>
+                            <div class="col-sm-10">
+                                {{ mp_hall_form.video_req }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Respond</label>
+                    <div class="col-sm-10 btn-group" role="group">
+                        <input name="SUBMITTED" type="submit" class="btn btn-primary" value="Submit"/>
+                        <a href="{% url 'booking:booking-index' %}" class="btn btn-danger" role="button">Cancel</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

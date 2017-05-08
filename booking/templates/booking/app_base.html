@@ -1,5 +1,7 @@
 {% extends "home/container.html" %}
 
+{% load has_group %}
+
 {% block navbar-side-tabs %}
 <ul class="nav navbar-nav">
     <li>
@@ -8,11 +10,10 @@
     <li>
         <a href="{% url 'booking:booking-submissions' %}">My Submissions</a>
     </li>
+    {% if request.user|has_group:"Booking_MPHall_Change_State" %}
     <li>
         <a href="{% url 'booking:booking-requests-pending' %}">Pending Requests</a>
     </li>
-    <li>
-        <a href="{% url 'booking:booking-requests-previous' %}">Previous Requests</a>
-    </li>
+    {% endif %}
 </ul>
 {% endblock %}

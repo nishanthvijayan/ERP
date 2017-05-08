@@ -1,0 +1,103 @@
+{% extends 'booking/app_base.html' %}
+
+{% load mp_hall_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>MP Hall Booking ID : {{ mp_hall.id }}</h2>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <strong>Current Status : </strong>{{ mp_hall.state }} <br>
+                        <strong>Submission Date : </strong>{{ mp_hall.created_at }}
+                    </p>
+                </blockquote>
+            </div>
+            {% if request.user|has_state_change_permission:mp_hall.id %}
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <a href="{% url 'booking:mp-hall-state-change' mp_hall.id %}" type="button" class="btn btn-primary">Respond to Request</a>
+                    </p>
+                </blockquote>
+            </div>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li role="presentation" class="active"><a href="#general-details" aria-controls="general-details" role="tab" data-toggle="tab">General Details</a></li>
+                    <li role="presentation"><a href="#mp-hall-details" aria-controls="mp-hall-details" role="tab" data-toggle="tab">MP Hall Booking Details</a></li>
+                </ul>
+{#                <br>#}
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane table-responsive active" id="general-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Name of the Employee</b></td>
+                                <td>{{ mp_hall.employee.user.first_name }} {{ mp_hall.employee.user.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Designation of the Employee</b></td>
+                                <td>{{ mp_hall.employee.designation }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Department of the Employee</b></td>
+                                <td>{{ mp_hall.employee.department.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>E-mail ID</b></td>
+                                <td>{{ mp_hall.employee.user.email }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="mp-hall-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Date of Booking</b></td>
+                                <td>{{ mp_hall.date }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Booking From</b></td>
+                                <td>{{ mp_hall.from_time }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Booking To</b></td>
+                                <td>{{ mp_hall.to_time }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Purpose of Booking</b></td>
+                                <td>{{ mp_hall.purpose }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Laptop Requirements</b></td>
+                                <td>{{ mp_hall.laptop_req }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Projector Requirements</b></td>
+                                <td>{{ mp_hall.projector_req }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Audio System Requirements</b></td>
+                               <td>{{ mp_hall.audio_req }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Video Conf. System Requirements</b></td>
+                                <td>{{ mp_hall.video_req }}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

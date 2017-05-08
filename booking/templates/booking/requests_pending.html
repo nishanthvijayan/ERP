@@ -39,7 +39,7 @@
                             {% endif %}
                         {% endwith %}
                     </td>
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="#" role="button">View Full details</a></td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'booking:mp-hall-show' mp_hall.id %}" role="button">View Full details</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

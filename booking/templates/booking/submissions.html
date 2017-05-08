@@ -27,7 +27,7 @@
                 <tr>
                     <td>{{ mp_hall.id }}</td>
                     <td>MP Hall Booking</td>
-                    <td>{{ mp_hall.modified_at }}</td>
+                    <td>{{ mp_hall.created_at }}</td>
                     {% if mp_hall.state == "Approved by Registrar and MP Hall Booked" %}
                         <td class="text-success"><b>{{ mp_hall.state }}</b></td>
                     {% elif mp_hall.state|slice:":8" == "Rejected" %}
@@ -35,7 +35,7 @@
                     {% else %}
                         <td>{{ mp_hall.state }}</td>
                     {% endif %}
-                    <td><a class="btn btn-primary btn-xs" target="_blank" href="#" role="button">View Full details</a></td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'booking:mp-hall-show' mp_hall.id %}" role="button">View Full details</a></td>
                 </tr>
             {% endfor %}
             </tbody>

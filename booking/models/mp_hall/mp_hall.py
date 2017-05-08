@@ -113,3 +113,9 @@ class MpHall(BaseModel):
         :return: null
         """
         pass
+
+    def __str__(self):
+        return str(self.id)
+
+    def __unicode__(self):
+        return str(self.id)
