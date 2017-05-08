@@ -45,7 +45,7 @@
         </div>
         <div id="content" class="container">
             <div id="apps" class="row">
-                <div id="user-management" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center">
+                <div id="reimbursement" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center">
                     <a href="{% url 'reimbursement:reimbursement-index' %}">
                         <div class="app-logo center-block">
                             <i class="fa fa-money fa-big" aria-hidden="true"></i><br>
@@ -55,17 +55,47 @@
                         </div>
                     </a>
                 </div>
-                <div id="forms" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center"> 
+                <div id="purchase" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center">
                     <a href="{% url 'purchase:purchase-index' %}">
                         <div class="app-logo center-block">
-                            <i class="fa fa-file-text fa-big" aria-hidden="true"></i><br>
+                            <i class="fa fa-shopping-bag fa-big" aria-hidden="true"></i><br>
                         </div>
                         <div class="app-label">
                             <h4>Purchase</h4>
                         </div>
                     </a>
                 </div>
-            </div>  
+                <div id="booking" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center">
+                    <a href="#">
+                        <div class="app-logo center-block">
+                            <i class="fa fa-book fa-big" aria-hidden="true"></i><br>
+                        </div>
+                        <div class="app-label">
+                            <h4>Booking</h4>
+                        </div>
+                    </a>
+                </div>
+                <div id="leave" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center">
+                    <a href="#">
+                        <div class="app-logo center-block">
+                            <i class="fa fa-level-up fa-big" aria-hidden="true"></i><br>
+                        </div>
+                        <div class="app-label">
+                            <h4>Leave</h4>
+                        </div>
+                    </a>
+                </div>
+                <div id="advance-payment" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 white text-center">
+                    <a href="#">
+                        <div class="app-logo center-block">
+                            <i class="fa fa-credit-card-alt fa-big" aria-hidden="true"></i><br>
+                        </div>
+                        <div class="app-label">
+                            <h4>Advance Payment</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
         <script src="{% static 'home/js/jquery.min.js' %}"></script>
         <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
