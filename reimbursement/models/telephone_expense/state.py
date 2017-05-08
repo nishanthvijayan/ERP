@@ -6,7 +6,7 @@ class STATE:
     APPROVED_BY_DA = 'Approved by Dealing Assistant'
     APPROVED_BY_DR = 'Approved by Deputy Registrar'
     APPROVED_BY_SrAO = 'Approved by Senior Audit Officer'
-    APPROVED_BY_R = 'Reimbursed'
+    APPROVED_BY_R = 'Approved by Registrar'
     AMOUNT_TRANSFERRED = 'Reimbursed'
     REJECTED_BY_DA = 'Rejected by Dealing Assistant'
     REJECTED_BY_DR = 'Rejected by Deputy Registrar'
