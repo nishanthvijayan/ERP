@@ -1,0 +1,300 @@
+{% extends "reimbursement/app_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="row">
+        <div class="col-md-12 page-header">
+            <h3>New Medical Reimbursement</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" action="{% url 'reimbursement:medical-new' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Patient Details</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{ general_detail_form.patient_name.errors }}
+                            <label class="col-sm-2 control-label">Patient Name</label>
+                            <div class="col-sm-10">
+                                {{ general_detail_form.patient_name }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ general_detail_form.patient_age.errors }}
+                            <label class="col-sm-2 control-label">Patient Age</label>
+                            <div class="col-sm-10">
+                                {{ general_detail_form.patient_age }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ general_detail_form.employee_relationship.errors }}
+                            <label class="col-sm-2 control-label">Patient relation</label>
+                            <div class="col-sm-10">
+                                {{ general_detail_form.employee_relationship }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medical Details</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{ medical_detail_form.place_at_which_patient_fell_ill.errors }}
+                            <label class="col-sm-2 control-label">Place at which the patient fell ill</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.place_at_which_patient_fell_ill }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.consultant_name.errors }}
+                            <label class="col-sm-2 control-label">Name of the Consultant</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.consultant_name }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.consultant_designation.errors }}
+                            <label class="col-sm-2 control-label">Designation of the Consultant</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.consultant_designation }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.consultant_hospital.errors }}
+                            <label class="col-sm-2 control-label">Hospital of the Consultant</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.consultant_hospital }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.consultation_place.errors }}
+                            <label class="col-sm-2 control-label">Place of Consultation</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.consultation_place }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ consultation_formset.management_form }}
+                            <label class="col-sm-2 control-label">Consultation Date and Fee</label>
+                            <div class="col-sm-10">
+                            {% for consultation_form in consultation_formset.forms %}
+                                <div class="row consultation-formset">
+                                    <div class="col-lg-6">
+                                    {{ consultation_form.date.errors }}
+                                        <div class="input-group">
+                                            {{ consultation_form.date }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    {{ consultation_form.fee.errors }}
+                                        <div class="input-group">
+                                            {{ consultation_form.fee }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% if consultation_form.non_form_errors %}
+                            {% for error in consultation_form.non_form_errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.injection_place.errors }}
+                            <label class="col-sm-2 control-label">Place of Injection</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.injection_place }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ injection_formset.management_form }}
+                            <label class="col-sm-2 control-label">Injection Date and Fee</label>
+                            <div class="col-sm-10">
+                            {% for injection_form in injection_formset %}
+                                <div class="row injection-formset">
+                                    <div class="col-lg-6">
+                                    {{ injection_form.date.errors }}
+                                        <div class="input-group">
+                                            {{ injection_form.date }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    {{ injection_form.fee.errors }}
+                                        <div class="input-group">
+                                            {{ injection_form.fee }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% if injection_form.non_form_errors %}
+                            {% for error in injection_form.non_form_errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.diagnosis_place.errors }}
+                            <label class="col-sm-2 control-label">Place of Diagnosis</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.diagnosis_place }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.diagnosis_advised.errors }}
+                            <label class="col-sm-2 control-label">Whether diagnosis advised</label>
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        {{ medical_detail_form.diagnosis_advised }}
+                                        {{ medical_detail_form.diagnosis_advised.help_text }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.diagnosis_advised_certificate.errors }}
+                            <label class="col-sm-2 control-label">Diagnosis advised certificate</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.diagnosis_advised_certificate }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.cost_of_medicines_market.errors }}
+                            <label class="col-sm-2 control-label">Cost of medicines </label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.cost_of_medicines_market }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.specialist_consultant_name.errors }}
+                            <label class="col-sm-2 control-label">Name of the Specialist Consultant</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.specialist_consultant_name }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.specialist_consultant_designation.errors }}
+                            <label class="col-sm-2 control-label">Designation of the Specialist Consultant</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.specialist_consultant_designation }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.specialist_consultant_hospital.errors }}
+                            <label class="col-sm-2 control-label">Hospital of the Specialist Consultant</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.specialist_consultant_hospital }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.specialist_consultation_place.errors }}
+                            <label class="col-sm-2 control-label">Place of Consultation with Specialist</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.specialist_consultation_place }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Specialist Consultation Date and Fee</label>
+                            {{ specialist_consultation_formset.management_form }}
+                            <div class="col-sm-10">
+                            {% for specialist_consultation_form in specialist_consultation_formset %}
+                                <div class="row specialist-consultation-formset">
+                                    <div class="col-lg-6">
+                                    {{ specialist_consultation_form.date.errors }}
+                                        <div class="input-group">
+                                            {{ specialist_consultation_form.date }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    {{ specialist_consultation_form.fee.errors }}
+                                        <div class="input-group">
+                                            {{ specialist_consultation_form.fee }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% if specialist_consultation_form.non_form_errors %}
+                            {% for error in specialist_consultation_form.non_form_errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.total_amount_claimed.errors }}
+                            <label class="col-sm-2 control-label">Total Amount Claimed</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.total_amount_claimed }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.less_amount_taken.errors }}
+                            <label class="col-sm-2 control-label">Less Advance Taken</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.less_advance_taken }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.net_amount_taken.errors }}
+                            <label class="col-sm-2 control-label">Net Amount Claimed</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.net_amount_taken }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Medicines</label>
+                            {{ medicine_formset.management_form }}
+                            <div class="col-sm-10">
+                            {% for medicine_form in medicine_formset %}
+                                <div class="row specialist-consultation-formset">
+                                    <div class="col-lg-6">
+                                    {{ medicine_form.name.errors }}
+                                        <div class="input-group">
+                                            {{ medicine_form.name }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    {{ medicine_form.price.errors }}
+                                        <div class="input-group">
+                                            {{ medicine_form.price }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% if medicine_form.non_form_errors %}
+                            {% for error in medicine_form.non_form_errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Respond</label>
+                    <div class="col-sm-10 btn-group" role="group">
+                        <input name="SUBMITTED" type="submit" class="btn btn-primary" value="Submit"/>
+                        <a href="{% url 'reimbursement:reimbursement-index' %}" class="btn btn-danger" role="button">Cancel</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'home/js/jquery.formset.min.js' %}"></script>
+    <script src="{% static 'reimbursement/js/medical/new.js' %}"></script>
+{% endblock %}

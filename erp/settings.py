@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'user_management.apps.UserManagementConfig',
     'forms.apps.FormsConfig',
+    'reimbursement.apps.ReimbursementConfig',
 
     'bootstrap_pagination',
 ]
@@ -67,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },

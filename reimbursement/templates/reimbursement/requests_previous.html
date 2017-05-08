@@ -1,0 +1,65 @@
+{% extends "reimbursement/app_base.html" %}
+
+{% load bootstrap_pagination %}
+
+{% load get_verbose_name %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Previously Approved</h2>
+        <div class="text-muted">
+            All reimbursement requests approved previously
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        {% if results %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Date Submitted</th>
+                    <th>Date Approved</th>
+                    <th>Submitted by</th>
+                    <th>Current State</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for result in results %}
+                {% with type=result|get_verbose_name  %}
+                    {% if type == 'Medical' %}
+                    <tr>
+                        <td>{{ result.id }}</td>
+                        <td>{{ type }} Reimbursement</td>
+                        <td>{{ result.created_at }}</td>
+                        <td>{{ result.modified_at }}</td>
+                        <td>{{ result.general_detail.employee.user.first_name }} {{ result.general_detail.employee.user.last_name }}</td>
+                        <td>{{ result.state }}</td>
+                        <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:medical-show' result.id %}" role="button">View Full details</a></td>
+                    </tr>
+                    {% elif type == 'Telephone Expense' %}
+                    <tr>
+                        <td>{{ result.id }}</td>
+                        <td>{{ type }} Reimbursement</td>
+                        <td>{{ result.created_at }}</td>
+                        <td>{{ result.modified_at }}</td>
+                        <td>{{ result.employee.user.first_name }} {{ result.employee.user.last_name }}</td>
+                        <td>{{ result.state }}</td>
+                        <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:telephone-expense-show' result.id %}" role="button">View Full details</a></td>
+                    </tr>
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {% bootstrap_paginate results %}
+        </div>
+        {% else %}
+            <p>You haven't approved any requests yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

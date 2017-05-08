@@ -1,0 +1,136 @@
+{% extends "reimbursement/app_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="row">
+        <div class="col-md-12 page-header">
+            <h3>New Telephone Expense Reimbursement</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" action="{% url 'reimbursement:telephone-expense-new' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Bill Details</div>
+                    <div class="panel-body">
+                        {{ bill_detail_formset.management_form }}
+                        <ul class="list-group">
+                            {% for bill_detail_form in bill_detail_formset.forms %}
+                            <li class="list-group-item bill-detail-formset">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <a type="button" class="delete-row btn btn-danger pull-right">
+                                            Remove
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Bill Number</label>
+                                    <div class="col-sm-10">
+                                        {{ bill_detail_form.bill_number }}
+                                        {{ bill_detail_form.bill_number.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group {%if bill_detail_form.bill_date.errors %}has-error{%endif%}">
+                                    <label class="col-sm-2 control-label">Bill Date</label>
+                                    <div class="col-sm-10">
+                                        {{ bill_detail_form.bill_date }}
+                                        {{ bill_detail_form.bill_date.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Billing from date</label>
+                                    <div class="col-sm-10">
+                                        {{ bill_detail_form.date_from }}
+                                        {{ bill_detail_form.date_from.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Billing to date</label>
+                                    <div class="col-sm-10">
+                                        {{ bill_detail_form.date_to }}
+                                        {{ bill_detail_form.date_to.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Phone Number</label>
+                                    <div class="col-sm-10">
+                                        {{ bill_detail_form.phone_number }}
+                                        {{ bill_detail_form.phone_number.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Telephone number or not</label>
+                                    <div class="col-sm-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                {{ bill_detail_form.is_telephone_line }}
+                                                {{ bill_detail_form.is_telephone_line.help_text }}
+                                                {{ bill_detail_form.is_telephone_line.errors }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Amount</label>
+                                    <div class="col-sm-10">
+                                        {{ bill_detail_form.amount }}
+                                        {{ bill_detail_form.amount.errors }}
+                                    </div>
+                                </div>
+                                {% if bill_detail_form.non_form_errors %}
+                                    {% for error in bill_detail_form.non_form_errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                            <a type="button" class="add-row btn btn-primary pull-right">
+                                Add another
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Bill Uploads</div>
+                    <div class="panel-body">
+                    {{ bill_image_formset.management_form }}
+                        {% for bill_image_form in bill_image_formset.forms %}
+                            <ul class="list-group">
+                                <li class="list-group-item bill-image-formset">
+                                    {{ bill_image_form.image_file }}
+                                    {{ bill_image_form.image_file.errors }}<br>
+                                </li>
+                                {% if bill_image_form.non_form_errors %}
+                                    {% for error in bill_image_form.non_form_errors %}
+                                        {{ error|escape }}
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Respond</label>
+                    <div class="col-sm-10 btn-group" role="group">
+                        <input name="SUBMITTED" type="submit" class="btn btn-primary" value="Submit"/>
+                        <a href="{% url 'reimbursement:reimbursement-index' %}" class="btn btn-danger" role="button">Cancel</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'home/js/jquery.formset.min.js' %}"></script>
+    <script src="{% static 'reimbursement/js/telephone_expense/new.js' %}"></script>
+{% endblock %}
