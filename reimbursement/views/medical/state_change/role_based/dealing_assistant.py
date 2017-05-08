@@ -12,6 +12,13 @@ from reimbursement.forms.medical.amount_detail.amount_detail import AmountDetail
 
 
 def generate_state_change_dealing_assistant(request, medical_id):
+    """
+    Generates view for dealing assistant i.e AAO-Accounts Department for changing of states(Approve, Reject)
+    This function assumes current user is authenticated as AAO-Accounts Department
+    :param request: HttpRequestObject
+    :param telephone_expense_id:
+    :return: HttpResponseObject
+    """
     medical = get_object_or_404(Medical, id=medical_id)
     if request.method == 'POST':
         form = AmountDetailForm(data=request.POST, instance=medical.amount_detail)
