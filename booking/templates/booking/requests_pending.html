@@ -31,9 +31,9 @@
                     <td>{{ mp_hall.created_at }}</td>
                     <td>{{ mp_hall.employee.user.first_name }} {{ mp_hall.employee.user.last_name }}</td>
                     <td>
-                        {% with mp_hall.transition_history_mp_hall.all|first as transition_history_mp_hall %}
-                            {% if transition_history_mp_hall.remarks %}
-                                {{ transition_history_mp_hall.remarks }}
+                        {% with mp_hall.mp_hall_transition_history.all|first as mp_hall_transition_history %}
+                            {% if mp_hall_transition_history.remarks %}
+                                {{ mp_hall_transition_history.remarks }}
                             {% else %}
                                 None
                             {% endif %}

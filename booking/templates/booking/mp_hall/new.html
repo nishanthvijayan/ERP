@@ -16,25 +16,39 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Booking Details</div>
                     <div class="panel-body">
+                        {% if mp_hall_form.non_field_errors %}
+                            {% for error in mp_hall_form.non_field_errors %}
+                                <div class="alert alert-danger alert-dismissable">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                    <h4><strong>Alert!</strong> {{ error|escape }} </h4>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                         <div class="form-group">
                             {{ mp_hall_form.date.errors }}
                             <label class="col-sm-2 control-label">Date of Booking</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                                 {{ mp_hall_form.date }}
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
                             {{ mp_hall_form.from_time.errors }}
                             <label class="col-sm-2 control-label">Booking From</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 input-group date form_time" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
                                 {{ mp_hall_form.from_time }}
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
                             {{ mp_hall_form.to_time.errors }}
                             <label class="col-sm-2 control-label">Booking To</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 input-group date form_time" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
                                 {{ mp_hall_form.to_time }}
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -88,4 +102,35 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap-datetimepicker.min.css' %}">
+{% endblock %}
+
+{% block js %}
+{{ block.super }}
+    <script type="text/javascript" src="{% static 'home/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script type="text/javascript">
+       $('.form_date').datetimepicker({
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+        $('.form_time').datetimepicker({
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 1,
+            minView: 0,
+            maxView: 1,
+            forceParse: 0
+        });
+    </script>
 {% endblock %}

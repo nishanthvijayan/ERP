@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 from django_fsm import transition, FSMField
 
