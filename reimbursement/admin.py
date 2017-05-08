@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models.medical import Medical
-from .models.medical import TransitionHistory
+from .models.medical import MedicalTransitionHistory
 from .models.medical.general_detail import GeneralDetail
 from .models.medical.amount_detail import AmountDetail
 from .models.medical.medical_detail import Injection, SpecialistConsultation, Medicine, Consultation, MedicineBill,\
@@ -15,7 +15,7 @@ from .models.telephone_expense.telephone_expense_transition_history import Telep
 
 # Medical Expenses Reimbursements
 admin.site.register(Medical)
-admin.site.register(TransitionHistory)
+admin.site.register(MedicalTransitionHistory)
 admin.site.register(GeneralDetail)
 admin.site.register(AmountDetail)
 admin.site.register(Consultation)

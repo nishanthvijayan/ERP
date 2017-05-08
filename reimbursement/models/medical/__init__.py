@@ -1,2 +1,2 @@
 from medical import Medical
-from transition_history import TransitionHistory
+from medical_transition_history import MedicalTransitionHistory
