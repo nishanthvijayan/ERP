@@ -10,7 +10,7 @@
     <li>
         <a href="{% url 'reimbursement:reimbursement-submissions' %}">My Submissions</a>
     </li>
-    {% if request.user|has_group:"Reimbursement_Medical_Change_State" %}
+    {% if request.user|has_group:"Reimbursement_Medical_Change_State" or request.user|has_group:"Reimbursement_Telephone_Expense_Change_State" %}
     <li>
         <a href="{% url 'reimbursement:reimbursement-requests-pending' %}">Pending Requests</a>
     </li>
