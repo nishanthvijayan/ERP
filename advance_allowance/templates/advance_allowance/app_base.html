@@ -1,0 +1,18 @@
+{% extends "home/container.html" %}
+
+{% block navbar-side-tabs %}
+<ul class="nav navbar-nav">
+    <li>
+        <a href="{% url 'advance_allowance:advance-allowance-index' %}">Home - payment</a>
+    </li>
+    <li>
+        <a href="{% url 'advance_allowance:advance-allowance-submissions' %}">My Submissions</a>
+    </li>
+    <li>
+        <a href="{% url 'advance_allowance:advance-allowance-requests-pending' %}">Pending Requests</a>
+    </li>
+    <li>
+        <a href="{% url 'advance_allowance:advance-allowance-requests-previous' %}">Previous Requests</a>
+    </li>
+</ul>
+{% endblock %}

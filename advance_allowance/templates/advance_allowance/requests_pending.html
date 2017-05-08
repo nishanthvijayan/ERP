@@ -1,0 +1,55 @@
+{% extends "advance_allowance/app_base.html" %}
+
+{% load bootstrap_pagination %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Pending Approvals</h2>
+        <div class="text-muted">
+            All advance allowance and tour advance requests for approval
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        {% if advance_allowances %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Date Submitted</th>
+                    <th>Submitted by</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for advance_allowance in advance_allowances %}
+                <tr>
+                    <td>{{ advance_allowance.id }}</td>
+                    <td>Tour Program and TA Advance </td>
+                    <td>{{ advance_allowance.created_at }}</td>
+                    <td>{{ advance_allowance.general_detail.employee.user.first_name }} {{ advance_allowance.general_detail.employee.user.last_name }}</td>
+                    <td>
+                        {% with advance_allowance.transition_history_advance_allowance.all|first as transition_history_advance_allowance %}
+                            {% if transition_history_advance_allowance.remarks %}
+                                {{ transition_history_advance_allowance.remarks }}
+                            {% else %}
+                                None
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+                    <td><a class="btn btn-primary btn-xs" target="_blank" href="{% url 'advance_allowance:advance-allowance-show' advance_allowance.id %}" role="button">View Full details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {% bootstrap_paginate advance_allowances %}
+        </div>
+        {% else %}
+            <p>You have no pending requests.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

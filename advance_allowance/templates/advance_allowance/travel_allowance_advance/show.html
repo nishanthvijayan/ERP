@@ -1,0 +1,119 @@
+{% extends 'advance_allowance/app_base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Tour Program and Travel Allowance Advance ID : {{ travel_allowance_advance.id }}</h2>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <strong>Current Status : </strong>{{ travel_allowance_advance.state }} <br>
+                        <strong>Submission Date : </strong>{{ travel_allowance_advance.created_at }}
+                    </p>
+                </blockquote>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li role="presentation" class="active"><a href="#general-details" aria-controls="general-details" role="tab" data-toggle="tab">General Details</a></li>
+                    <li role="presentation"><a href="#travel-details" aria-controls="travel-details" role="tab" data-toggle="tab">Travel Details</a></li>
+                    <li role="presentation"><a href="#amount-details" aria-controls="amount-details" role="tab" data-toggle="tab">Amount Details</a></li>
+                </ul>
+{#                <br>#}
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane table-responsive active" id="general-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Name of the Employee</b></td>
+                                <td>{{ travel_allowance_advance.employee }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Designation of the Employee</b></td>
+                                <td>{{ travel_allowance_advance.employee.department.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Grade Pay</b></td>
+                                <td>{{ travel_allowance_advance.employee.pay.grade }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="travel-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Purpose of Visit</b></td>
+                                <td>{{ travel_allowance_advance.visit_purpose }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Budget Head</b></td>
+                                <td>{{ travel_allowance_advance.budget_head }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Project Name</b></td>
+                                <td>{{ travel_allowance_advance.project_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Project Number</b></td>
+                                <td>{{ travel_allowance_advance.project_no }}</td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th><b>Date</b></th>
+                                <th><b>From</b></th>
+                                <th><b>To</b></th>
+                                <th><b>Mode of Travel</b></th>
+                            </tr>
+                            <tr>
+                            {% for travel_detail in travel_details %}
+                                <tr>
+                                    <td>{{ travel_detail.date }}</td>
+                                    <td>{{ travel_detail.from_place }}</td>
+                                    <td>{{ travel_detail.to_place }}</td>
+                                    <td>{{ travel_detail.travel_mode }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="amount-details">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Advance amount required</b></td>
+                                <td>{{ travel_allowance_advance.advance_amount_required }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Bus/Train/Air Fare</b></td>
+                                <td>{{ travel_allowance_advance.bus_train_air_fare }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Taxi Fare</b></td>
+                                <td>{{ travel_allowance_advance.taxi_fare }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Food Expenses</b></td>
+                                <td>{{ travel_allowance_advance.food_expenses }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Accommodation/Hotel Charges</b></td>
+                                <td>{{ travel_allowance_advance.accomodation_charges }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Registration Fee</b></td>
+                                <td>{{ travel_allowance_advance.registration_fee }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Total</b></td>
+                                <td>{{ travel_allowance_advance.total_amount }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
