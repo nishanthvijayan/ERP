@@ -45,39 +45,6 @@
             </div>
           </div>
             <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="children-education">
-              <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-children-education" aria-expanded="false" aria-controls="collapse-children-education">
-                  Children Education Expenses Reimbursement
-                </a>
-              </h4>
-            </div>
-            <div id="collapse-children-education" class="panel-collapse collapse" role="tabpanel" aria-labelledby="children-education">
-              <div class="panel-body">
-                <table class="table table-bordered">
-                      <tr>
-                          <td><b>Brief</b></td>
-                          <td>Reimbursements for the medical expenses such as for consultation, operation, surgery, medicines, therapy</td>
-                      </tr>
-                      <tr>
-                          <td><b>Applicable for</b></td>
-                          <td>Employee or his dependents (Wife/Father/Mother/Children)</td>
-                      </tr>
-                      <tr>
-                          <td><b>Documents Required</b></td>
-                          <td>Medical bills, Essentiality Certificate signed by competent medical authority</td>
-                      </tr>
-                  </table>
-                  <div class="row">
-                      <div class="col-md-12">
-                          <button type="button" class="btn btn-primary">Help</button>
-                          <button type="button" class="btn btn-primary">Apply</button>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-            <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="telephone">
               <h4 class="panel-title">
                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-telephone" aria-expanded="false" aria-controls="collapse-telephone">
@@ -86,6 +53,39 @@
               </h4>
             </div>
             <div id="collapse-telephone" class="panel-collapse collapse" role="tabpanel" aria-labelledby="telephone">
+              <div class="panel-body">
+                <table class="table table-bordered">
+                      <tr>
+                          <td><b>Brief</b></td>
+                          <td>Reimbursements for the telephone expenses such as for Telephone bills, Recharge coupons, internet bills etc</td>
+                      </tr>
+                      <tr>
+                          <td><b>Applicable for</b></td>
+                          <td>Only for Employee, employed at IIT Ropar</td>
+                      </tr>
+                      <tr>
+                          <td><b>Documents Required</b></td>
+                          <td>Original Telephone bills, Internet bills, Recharge coupons</td>
+                      </tr>
+                  </table>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <button type="button" class="btn btn-primary">Help</button>
+                          <a href="{% url 'reimbursement:telephone-expense-new' %}" type="button" class="btn btn-primary">Apply</a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+            <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="children-education">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-children-education" aria-expanded="false" aria-controls="collapse-children-education">
+                  Children Education Expenses Reimbursement
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-children-education" class="panel-collapse collapse" role="tabpanel" aria-labelledby="children-education">
               <div class="panel-body">
                 <table class="table table-bordered">
                       <tr>
