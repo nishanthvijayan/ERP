@@ -14,9 +14,20 @@ class PurchaseIndentRequestForm(ModelForm):
         self.fields['project_name'].widget = TextInput(attrs={
             'class': 'form-control', 'placeholder': 'Name of the Project'
         })
-        self.fields['budget_head'].widget = TextInput(attrs={
-            'class': 'form-control', 'placeholder': 'Budget Head (Institute, Department, Project, Others)'
-        })
+        AVAILABLE_HEADS = (
+            ('Institute', 'Institute'),
+            ('Department', 'Department'),
+            ('Project', 'Project'),
+            ('Others', 'Others'),
+        )
+        self.fields['budget_head'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_HEADS)
+        AVAILABLE_TYPES = (
+            ('Equipment', 'Equipment'),
+            ('Non Recurring', 'Non Recurring'),
+            ('Recurring', 'Recurring'),
+            ('Others', 'Others'),
+        )
+        self.fields['type'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_TYPES)
         self.fields['make_or_model_reason'].widget = Textarea(attrs={
             'class': 'form-control', 'placeholder': 'Reasons why no other make or model is acceptable'
         })
@@ -59,12 +70,12 @@ class ItemVendorForm(Form):
             'step': 0.01
         }), required=True)
     AVAILABLE_TYPES = (
-        ('lab_consumables', 'Lab Consumables'),
-        ('general_items', 'General Items'),
-        ('lab_equipments', 'Lab Equipment(s)'),
-        ('office_equipments', 'Office Equipment(s)'),
-        ('lab_furniture', 'Lab Furniture'),
-        ('office_furniture', 'Office Furniture')
+        ('Lab Consumables', 'Lab Consumables'),
+        ('General Items', 'General Items'),
+        ('Lab Equipment(s)', 'Lab Equipment(s)'),
+        ('Office Equipment(s)', 'Office Equipment(s)'),
+        ('Lab Furniture', 'Lab Furniture'),
+        ('Office Furniture', 'Office Furniture')
     )
     type = ChoiceField(widget=Select(attrs={'class': 'form-control'}), choices=AVAILABLE_TYPES)
 

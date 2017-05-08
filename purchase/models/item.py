@@ -14,12 +14,12 @@ class Item(BaseModel):
     quantity = models.IntegerField()
     estimated_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     TYPES = (
-        ('lab_consumables', 'Lab Consumables'),
-        ('general_items', 'General Items'),
-        ('lab_equipments', 'Lab Equipment(s)'),
-        ('office_equipments', 'Office Equipment(s)'),
-        ('lab_furniture', 'Lab Furniture'),
-        ('office_furniture', 'Office Furniture')
+        ('Lab Consumables', 'Lab Consumables'),
+        ('General Items', 'General Items'),
+        ('Lab Equipment(s)', 'Lab Equipment(s)'),
+        ('Office Equipment(s)', 'Office Equipment(s)'),
+        ('Lab Furniture', 'Lab Furniture'),
+        ('Office Furniture', 'Office Furniture')
     )
     type = models.CharField(max_length=30, choices=TYPES)
 

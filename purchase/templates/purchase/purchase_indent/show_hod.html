@@ -14,100 +14,128 @@
 
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">General Details</div>
+            <div class="panel-heading">Basic Details</div>
             <div class="panel-body">
-                <table class="table table-responsive table-bordered">
-                    <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <label> Name of the Intender: </label>
-                        </td>
-                        <td>
-                            {{ purchase_indent_request.indenter.user }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label> Designation: </label>
-                        </td>
-                        <td>
-                            {{ purchase_indent_request.indenter.designation }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label> Department: </label>
-                        </td>
-                        <td>
-                            {{ purchase_indent_request.indenter.department.name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label> Budget Head: </label>
-                        </td>
-                        <td>
-                            {{ purchase_indent_request.budget_head }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label> Project Name: </label>
-                        </td>
-                        <td>
-                            {{ purchase_indent_request.project_name }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Name of the Intender:</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_project_name" name="project_name" type="text" required=""
+                        value="{{ purchase_indent_request.indenter.user.first_name }} {{ purchase_indent_request.indenter.user.last_name }}" disabled>
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Designation:</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_project_name" name="project_name" type="text" required=""
+                        value="{{ purchase_indent_request.indenter.designation }}" disabled>
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Department:</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_project_name" name="project_name" type="text" required=""
+                        value="{{ purchase_indent_request.indenter.department }}" disabled>
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Budget Head</label>
+                    <div class="col-sm-5">
+                        <input class="form-control" id="id_project_name" name="project_name" type="text" required=""
+                        value="{{ purchase_indent_request.budget_head}}" disabled>
+                    </div>
+                    <div class="col-sm-5">
+                        <input class="form-control" id="id_project_name" name="project_name" type="text" required=""
+                        value="{{ purchase_indent_request.type}}" disabled>
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Project Name</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="id_project_name" name="project_name" type="text" required=""
+                        value="{{ purchase_indent_request.project_name}}" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Item Specification &amp; Vendor details </div>
+            <div class="panel-body">
+            <!-- For loop for looping through specified items -->
+            {% for item in purchase_indent_request.item_set.all%}
+                <div class="panel panel-default item-vender-spec">
+                    <div class="panel-heading">Item</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <label class="col-sm-2">Item Specification</label>
+                            <div class="col-md-6 col-sm-10">
+                                <textarea class="form-control" cols="40" maxlength="1000" rows="3" disabled>{{item.specification}}</textarea>
+                            </div>
+                            <label class="col-md-1 col-sm-2 control-label">Type</label>
+                            <div class="col-md-3 col-sm-10">
+                                <input class="form-control" value="{{item.type}}" disabled>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <label class="col-md-2 col-sm-2 control-label">Quantity</label>
+                            <div class="col-md-4 col-sm-10">
+                                <input class="form-control" value="{{item.quantity}}" disabled>
+                            </div>
+
+                            <label class="col-md-2 col-sm-2 control-label">Estimate Cost (Rs)</label>
+                            <div class="col-md-4 col-sm-10">
+                                <input class="form-control" type="number" value="{{item.estimated_cost}}" disabled>
+                            </div>
+                        </div>
+                        <br>
+                        {% with item.vendor_set.all|first as vendor %}
+                        <div class="row">
+                            <label class="col-md-2 col-sm-2 control-label">Vendor Name</label>
+                            <div class="col-md-4 col-sm-10">
+                                <input class="form-control" maxlength="100" value={{vendor.name}} disabled>
+                            </div>
+
+                            <label class="col-md-2 col-sm-2 control-label">Vendor Email</label>
+                            <div class="col-md-4 col-sm-10">
+                                <input class="form-control" maxlength="50" type="email" value={{vendor.email}} disabled>
+                            </div>
+                        </div>
+                        <br>
+                        <label class="col-md-2 col-sm-2 control-label">Vendor Address</label>
+                        <div class="col-md-10 col-sm-10">
+                            <textarea class="form-control" cols="40" maxlength="500" placeholder="Address" rows="2" disabled>{{vendor.address}}</textarea>
+                        </div>
+                        {% endwith %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Certificate for Proprietary Items</div>
+            <div class="panel-body">
+                Certified that to the best of my knowledge, the items indented are the proprietary item of M/s
+                <input id="id_proprietary_owner" name="proprietary_owner" size="30" type="text" value="{{purchase_indent_request.proprietary_owner}}" disabled>
+                and is marketed by their only authorized distributors M/s
+                <input id="id_proprietary_distributor" name="proprietary_distributor" size="30" type="text" value="{{purchase_indent_request.proprietary_distributor}}" disabled>
+                in India. If the above statement will be found incorrect I will be solely responsible for this.
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">Approvals</div>
+            <div class="panel-heading"> No other make or model is acceptable for the following reasons :</div>
             <div class="panel-body">
-                <table class="table table-responsive table-bordered">
-                    <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <label> Directors's Approval: </label>
-                        </td>
-                        <td>
-                            {% if purchase_indent_request.directors_approval %}
-                            <a class="btn btn-primary btn-xs" target="_blank"
-                                href="{{ purchase_indent_request.directors_approval.url }}">View</a>
-                            {% else %}
-                            None
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label> Project Approval: </label>
-                        </td>
-                        <td>
-                            {% if purchase_indent_request.project_approval %}
-                            <a class="btn btn-primary btn-xs" target="_blank"
-                                href="{{ purchase_indent_request.project_approval.url }}">View</a>
-                            {% else %}
-                            None
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label> Budgetary Approval: </label>
-                        </td>
-                        <td>
-                            {% if purchase_indent_request.budgetary_approval %}
-                            <a class="btn btn-primary btn-xs" target="_blank"
-                                href="{{ purchase_indent_request.budgetary_approval.url }}">View</a>
-                            {% else %}
-                            None
-                            {% endif %}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    
+                    <div class="col-sm-12">
+                        <textarea class="form-control" cols="40" id="id_make_or_model_reason" name="make_or_model_reason" rows="10" disabled>{{purchase_indent_request.proprietary_owner}}</textarea>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
