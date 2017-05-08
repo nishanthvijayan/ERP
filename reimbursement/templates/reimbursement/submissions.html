@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{ result.id }}</td>
                     <td>{{ result | get_verbose_name }} Reimbursement</td>
-                    <td>{{ result.modified_at }}</td>
+                    <td>{{ result.created_at }}</td>
                     {% if result.state == "Reimbursed" %}
                         <td class="text-success"><b>{{ result.state }}</b></td>
                     {% elif result.state|slice:":8" == "Rejected" %}
@@ -42,7 +42,7 @@
                         {% if type == 'Medical' %}
                             <a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:medical-show' result.id %}" role="button">View Full details</a>
                         {% elif type == 'Telephone Expense'%}
-                            <a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:medical-show' result.id %}" role="button">View Full details</a>
+                            <a class="btn btn-primary btn-xs" target="_blank" href="{% url 'reimbursement:telephone-expense-show' result.id %}" role="button">View Full details</a>
                         {% endif %}
                     {% endwith %}
                     </td>

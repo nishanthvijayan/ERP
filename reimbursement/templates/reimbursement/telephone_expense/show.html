@@ -1,5 +1,6 @@
 {% extends 'reimbursement/app_base.html' %}
 
+{% load telephone_expense_tags %}
 
 {% block content %}
 <div class="row">
@@ -14,43 +15,53 @@
                     </p>
                 </blockquote>
             </div>
+            {% if request.user|has_state_change_permission:telephone_expense.id %}
+            <div class="col-sm-12 col-md-6">
+                <blockquote>
+                    <p>
+                        <a href="{% url 'reimbursement:telephone-expense-state-change' telephone_expense.id %}" type="button" class="btn btn-primary">Respond to Request</a>
+                    </p>
+                </blockquote>
+            </div>
+            {% endif %}
         </div>
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">General Detail</div>
                 <table class="table table-bordered table-hover">
-                    <tr>
-                        <td><b>Name of the Employee</b></td>
-                        <td>{{ telephone_expense.employee.user.first_name }} {{ telephone.employee.user.last_name }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Department of the Employee</b></td>
-                        <td>{{ telephone_expense.employee.department.name }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Designation of the Employee</b></td>
-                        <td>{{ telephone_expense.employee.designation }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Employee Code</b></td>
-                        <td>{{ telephone_expense.employee.employee_id }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Band Pay</b></td>
-                        <td>{{ telephone_expense.employee.pay.band }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Grade Pay</b></td>
-                        <td>{{ telephone_expense.employee.pay.grade }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Residential Address</b></td>
-                        <td>{{ telephone_expense.employee.current_address}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Employee Code</b></td>
-                        <td>{{ telephone_expense.employee.employee_id }}</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td><b>Name of the Employee</b></td>
+                            <td>{{ telephone_expense.employee.user.first_name }} {{ telephone.employee.user.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Department of the Employee</b></td>
+                            <td>{{ telephone_expense.employee.department.name }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Designation of the Employee</b></td>
+                            <td>{{ telephone_expense.employee.designation }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Employee Code</b></td>
+                            <td>{{ telephone_expense.employee.employee_id }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Band Pay</b></td>
+                            <td>{{ telephone_expense.employee.pay.band }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Grade Pay</b></td>
+                            <td>{{ telephone_expense.employee.pay.grade }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Residential Address</b></td>
+                            <td>{{ telephone_expense.employee.current_address}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Employee Code</b></td>
+                            <td>{{ telephone_expense.employee.employee_id }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -95,22 +106,27 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Amount Detail</div>
-                {% if telephone_expense.amount_passed %}
                     <div class="panel-body">
-                        Amount of {{ telephone_expense.amount_passed }} rupees has be passed
-                        {% if telephone_expense.state != 'Reimbursed' and telephone_expense.state|slice:"8" != 'Rejected'%}
-                            and the transaction of fund is under process.
+                        {% if telephone_expense.state|slice:"8" == 'Rejected' %}
+                            No amount passed, Reimbursement was rejected <br>
+                            <b>Remarks : </b> {{ telephone_expense.trasaction_history_set.all }}
+                        {% elif telephone_expense.amount_passed %}
+                            Amount of {{ telephone_expense.amount_passed }} rupees has been passed
+                            {% if telephone_expense.state != 'Reimbursed' %}
+                                and the transaction of fund is under process.
+                            {% else %}
+                                and the amount has been reimbursed
+                            {% endif %}
+                        {% else %}
+                            No funds has been passed yet
                         {% endif %}
                     </div>
-                {% else %}
-                    No funds has been passed yet for the reimbursement request
-                {% endif %}
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">Enclosures </div>
                 <div class="panel-body">
-                    {% for image in telephone_expense.bill_image_set.all %}
-                        <a href="{{ image.url }}">Bill #{{ forloop.counter }}</a>
+                    {% for bill_image in telephone_expense.bill_image_set.all %}
+                        <a target="_blank" href="{{ bill_image.image_file.url }}">Bill #{{ forloop.counter }}</a>
                         {% if not forloop.last %}
                             ,
                         {% endif %}
