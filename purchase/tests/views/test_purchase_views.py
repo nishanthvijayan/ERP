@@ -234,7 +234,9 @@ class PurchaseViewTests(TestCase):
         Previous Requests."""
         self.client.post(reverse('purchase:purchase-indent-jao-approve', kwargs={"request_id": second_form.id}),
                          {'Approve': 'Approve', 'remark': '',
-                          'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5, 'budget_available': 45.24})
+                          'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5, 'budget_available': 45.24,
+                          'expenditure_debitable_to': 'Institute'
+                          })
         response = self.client.get(reverse('purchase:purchase-requests-pending'))
 
         self.assertEqual(response.status_code, 200)
@@ -248,7 +250,8 @@ class PurchaseViewTests(TestCase):
         Previous Requests page"""
         self.client.post(reverse('purchase:purchase-indent-jao-approve', kwargs={"request_id": third_form.id}),
                          {'Reject': 'Reject', 'remark': '',
-                          'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5, 'budget_available': 45.24})
+                          'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5, 'budget_available': 45.24,
+                          'expenditure_debitable_to': 'Institute'})
         response = self.client.get(reverse('purchase:purchase-requests-pending'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['pending_requests']), 1)

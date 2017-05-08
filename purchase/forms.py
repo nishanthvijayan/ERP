@@ -7,16 +7,27 @@ from .models import PurchaseIndentRequest
 class PurchaseIndentRequestForm(ModelForm):
     class Meta:
         model = PurchaseIndentRequest
-        exclude = ['indenter', 'state', 'budget_sanctioned', 'amount_already_spent', 'budget_available']
+        exclude = ['indenter', 'state', 'budget_sanctioned', 'amount_already_spent', 'budget_available',
+                   'expenditure_debitable_to']
 
     def __init__(self, *args, **kwargs):
         super(PurchaseIndentRequestForm, self).__init__(*args, **kwargs)
         self.fields['project_name'].widget = TextInput(attrs={
             'class': 'form-control', 'placeholder': 'Name of the Project'
         })
-        self.fields['budget_head'].widget = TextInput(attrs={
-            'class': 'form-control', 'placeholder': 'Budget Head (Institute, Department, Project, Others)'
-        })
+        AVAILABLE_HEADS = (
+            ('Institute', 'Institute'),
+            ('Department', 'Department'),
+            ('Project', 'Project'),
+            ('Others', 'Others'),
+        )
+        self.fields['budget_head'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_HEADS)
+        AVAILABLE_CATEGORIES = (
+            ('Non Recurring', 'Non Recurring'),
+            ('Recurring', 'Recurring'),
+            ('Others', 'Others'),
+        )
+        self.fields['category'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_CATEGORIES)
         self.fields['make_or_model_reason'].widget = Textarea(attrs={
             'class': 'form-control', 'placeholder': 'Reasons why no other make or model is acceptable'
         })
@@ -27,7 +38,7 @@ class PurchaseIndentRequestForm(ModelForm):
 class PurchaseIndentBudgetDetailsForm(ModelForm):
     class Meta:
         model = PurchaseIndentRequest
-        fields = ['budget_sanctioned', 'amount_already_spent', 'budget_available']
+        fields = ['budget_sanctioned', 'amount_already_spent', 'budget_available', 'expenditure_debitable_to']
 
     def __init__(self, *args, **kwargs):
         super(PurchaseIndentBudgetDetailsForm, self).__init__(*args, **kwargs)
@@ -37,6 +48,9 @@ class PurchaseIndentBudgetDetailsForm(ModelForm):
                                                                         'placeholder': 'Amount already spent (Rs)'})
         self.fields['budget_available'].widget = NumberInput(attrs={'class': 'form-control', 'step': 0.01,
                                                                     'placeholder': 'Budget Available (Rs)'})
+        self.fields['expenditure_debitable_to'].widget = TextInput(attrs={
+            'class': 'form-control'
+        })
 
 
 class ItemVendorForm(Form):
@@ -59,12 +73,12 @@ class ItemVendorForm(Form):
             'step': 0.01
         }), required=True)
     AVAILABLE_TYPES = (
-        ('lab_consumables', 'Lab Consumables'),
-        ('general_items', 'General Items'),
-        ('lab_equipments', 'Lab Equipment(s)'),
-        ('office_equipments', 'Office Equipment(s)'),
-        ('lab_furniture', 'Lab Furniture'),
-        ('office_furniture', 'Office Furniture')
+        ('Lab Consumables', 'Lab Consumables'),
+        ('General Items', 'General Items'),
+        ('Lab Equipment(s)', 'Lab Equipment(s)'),
+        ('Office Equipment(s)', 'Office Equipment(s)'),
+        ('Lab Furniture', 'Lab Furniture'),
+        ('Office Furniture', 'Office Furniture')
     )
     type = ChoiceField(widget=Select(attrs={'class': 'form-control'}), choices=AVAILABLE_TYPES)
 

@@ -16,6 +16,7 @@ class PurchaseIndentRequest(BaseModel):
     indenter = models.ForeignKey(Employee, on_delete=models.CASCADE)
     project_name = models.CharField(max_length=200)
     budget_head = models.CharField(max_length=50)
+    category = models.CharField(max_length=50)
     make_or_model_reason = models.TextField(max_length=500, null=True, blank=True)
     proprietary_owner = models.CharField(max_length=100, null=True, blank=True)
     proprietary_distributor = models.CharField(max_length=100, null=True, blank=True)
@@ -33,7 +34,7 @@ class PurchaseIndentRequest(BaseModel):
     budget_sanctioned = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     amount_already_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     budget_available = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    # expenditure dubitable_to field
+    expenditure_debitable_to = models.CharField(max_length=100, null=False, blank=False)
 
     @transition(field=state, source=STATE.SUBMITTED, target=STATE.APPROVED_BY_HOD)
     def hod_approve(self):

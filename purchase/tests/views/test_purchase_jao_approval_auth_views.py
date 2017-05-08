@@ -73,7 +73,7 @@ class PurchaseApprovalJAOViewTests(TestCase):
         response = self.client.post(reverse('purchase:purchase-indent-jao-approve', kwargs={"request_id": form.id}),
                                     {'Approve': 'Approve', 'remark': '',
                                      'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5,
-                                     'budget_available': 45.24})
+                                     'budget_available': 45.24, 'expenditure_debitable_to': 'Institute'})
         self.assertEqual(response.status_code, 403)
         self.assertEqual(PurchaseIndentRequest.objects.filter(id=form.id)[0].state, 'Approved by Head of Department')
 
@@ -95,7 +95,7 @@ class PurchaseApprovalJAOViewTests(TestCase):
         response = self.client.post(reverse('purchase:purchase-indent-jao-approve', kwargs={"request_id": form.id}),
                                     {'Approve': 'Approve', 'remark': '',
                                      'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5,
-                                     'budget_available': 45.24})
+                                     'budget_available': 45.24, 'expenditure_debitable_to': 'Institute'})
         self.assertEqual(response.status_code, 403)
         self.assertEqual(PurchaseIndentRequest.objects.filter(id=form.id)[0].state, 'Approved by Head of Department')
 
@@ -115,7 +115,7 @@ class PurchaseApprovalJAOViewTests(TestCase):
         response = self.client.post(reverse('purchase:purchase-indent-jao-approve', kwargs={"request_id": form.id}),
                                     {'Approve': 'Approve', 'remark': '',
                                      'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5,
-                                     'budget_available': 45.24})
+                                     'budget_available': 45.24, 'expenditure_debitable_to': 'Institute'})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('purchase:purchase-requests-pending'))
         self.assertEqual(PurchaseIndentRequest.objects.filter(id=form.id)[0].state,
@@ -130,7 +130,7 @@ class PurchaseApprovalJAOViewTests(TestCase):
         response = self.client.post(reverse('purchase:purchase-indent-jao-approve', kwargs={"request_id": form.id}),
                                     {'Reject': 'Reject', 'remark': '',
                                      'budget_sanctioned': 1000.34, 'amount_already_spent': 34.5,
-                                     'budget_available': 45.24})
+                                     'budget_available': 45.24, 'expenditure_debitable_to': 'Institute'})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('purchase:purchase-requests-pending'))
         self.assertEqual(PurchaseIndentRequest.objects.filter(id=form.id)[0].state, 'Rejected')
