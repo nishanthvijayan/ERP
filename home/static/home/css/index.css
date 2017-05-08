@@ -141,18 +141,18 @@
   }
 
   #logo {
-    float: left;
-    margin-right: 10px;
-    font-size: 1.6em;
-    color: #fff;
-    letter-spacing: -1px;
-    padding-top: 9px;
-    font-weight: bold;
-    padding-left: 40px;
-    &:hover {
-      color: #eee;
-      text-decoration:none;
-    }
+      float: left;
+      margin-right: 10px;
+      font-size: 1.6em;
+      color: #fff;
+      letter-spacing: -1px;
+      padding-top: 9px;
+      font-weight: bold;
+      padding-left: 40px;
+      &:hover {
+          color: #eee;
+          text-decoration:none;
+      }
   }
 
   .app-label > h4 {
