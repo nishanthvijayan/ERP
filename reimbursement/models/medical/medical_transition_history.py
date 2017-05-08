@@ -12,7 +12,7 @@ from .medical import Medical
 from .state import STATE
 
 
-class TransitionHistory(BaseModel):
+class MedicalTransitionHistory(BaseModel):
     """
     Stores transition that took place on a medical reimbursement model
     """

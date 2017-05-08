@@ -6,7 +6,7 @@ from django_fsm import can_proceed
 
 from reimbursement.models.medical import Medical
 from reimbursement.models.medical.state import STATE
-from reimbursement.models.medical.transition_history import TransitionHistory
+from reimbursement.models.medical.medical_transition_history import MedicalTransitionHistory
 
 
 def generate_state_change_senior_audit_officer(request, medical_id):
@@ -16,7 +16,7 @@ def generate_state_change_senior_audit_officer(request, medical_id):
         if request.POST.get('APPROVED_BY_SrAO', False):
             if not can_proceed(medical.approve_by_sr_ao):
                 raise PermissionDenied
-            transition = TransitionHistory.objects.create(
+            transition = MedicalTransitionHistory.objects.create(
                 state_from=STATE.APPROVED_BY_DR,
                 state_to=STATE.REJECTED_BY_SrAO,
                 remarks=request.POST.get('state-change-remarks', ''),
@@ -33,7 +33,7 @@ def generate_state_change_senior_audit_officer(request, medical_id):
         elif request.POST.get('REJECTED_BY_SrAO', False):
             if not can_proceed(medical.reject_by_sr_ao):
                 raise PermissionDenied
-            transition = TransitionHistory.objects.create(
+            transition = MedicalTransitionHistory.objects.create(
                 state_from=STATE.APPROVED_BY_DR,
                 state_to=STATE.REJECTED_BY_SrAO,
                 remarks=request.POST.get('state-change-remarks', ''),
