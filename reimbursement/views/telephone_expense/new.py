@@ -25,6 +25,8 @@ def telephone_expense_new(request):
     )
     if request.method == 'POST':
 
+        print request.POST
+
         bill_detail_formset = bill_detail_modelformset(
             data=request.POST,
             prefix="bill-detail-formset",
@@ -32,6 +34,7 @@ def telephone_expense_new(request):
         )
         bill_image_formset = bill_image_modelformset(
             data=request.POST,
+            files=request.FILES,
             prefix="bill-image-formset",
             queryset = BillImage.objects.none()
         )
@@ -76,6 +79,9 @@ def telephone_expense_new(request):
 
             except IntegrityError:  # If the transaction failed
                 messages.error(request, 'There was an error submitting your reimbursement request.')
+
+        else:
+            messages.error(request, 'Please resolve below issues')
     else:
         bill_detail_formset = bill_detail_modelformset(
             prefix="bill-detail-formset",
