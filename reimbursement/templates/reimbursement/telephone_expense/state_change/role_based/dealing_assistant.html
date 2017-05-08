@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "reimbursement/telephone_expense/state_change/state_change.html" %}
 
-</body>
-</html>
+{% block state-change-fields %}
+<div class="col-md-12">
+        <form class="form-horizontal" action="{% url 'reimbursement:telephone-expense-state-change' telephone_expense.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Register Page No</label>
+                <div class="col-sm-10">
+                    {{ telephone_expense_form.register_page_no }}
+                </div>
+                {{ telephone_expense_form.register_page_no.errors }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Register Serial No</label>
+                <div class="col-sm-10">
+                    {{ telephone_expense_form.register_serial_no }}
+                </div>
+                {{ telephone_expense_form.register_serial_no.errors }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Amount Passed</label>
+                <div class="col-sm-10">
+                    {{ telephone_expense_form.amount_passed }}
+                </div>
+                {{ telephone_expense_form.amount_passed.errors }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Remarks, if any</label>
+                <div class="col-sm-10">
+                    <textarea name="state-change-remarks" class="form-control" rows="3" placeholder="Enter any remarks that you would like to convey"></textarea>
+                </div>
+                {{ telephone_expense.remarks.errors }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Respond</label>
+                <div class="col-sm-10 btn-group" role="group">
+                    <input name="APPROVED_BY_DA" type="submit" class="btn btn-primary" value="Verified"/>
+                    <input name="REJECTED_BY_DA" type="submit" class="btn btn-danger" value="Rejected"/>
+                </div>
+            </div>
+            <br>
+            <br>
+        </form>
+    </div>
+{% endblock %}
+
