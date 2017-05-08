@@ -95,8 +95,7 @@ class PurchaseViewTests(TestCase):
                                              budget_head="Institute", state="Rejected")
 
         response = self.client.get(reverse('purchase:purchase-requests-pending'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context['pending_requests']), 0)
+        self.assertEqual(response.status_code, 403)
 
     def test_pending_requests_view_hod(self):
         """Test if Pending page lists fomrs approvable by current user(hod) & only those."""
@@ -160,8 +159,7 @@ class PurchaseViewTests(TestCase):
         PurchaseIndentRequest.objects.create(indenter=self.employee, project_name="Test reject",
                                              budget_head="Institute", state="Rejected")
         response = self.client.get(reverse('purchase:purchase-requests-previous'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context['previous_requests']), 0)
+        self.assertEqual(response.status_code, 403)
 
     def test_previous_requests_view_hod(self):
         """Test if Previous Requests page lists forms appropriately for HOD."""
