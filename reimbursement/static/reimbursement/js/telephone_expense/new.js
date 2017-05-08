@@ -3,7 +3,9 @@
  */
 $(function () {
    $('.bill-detail-formset').formset({
-        prefix:'bill-detail-formset'
+        prefix:'bill-detail-formset',
+       addText:'GG',
+       deleteText:'GG2'
     });
    $('.bill-image-formset').formset({
         prefix:'bill-image-formset'
