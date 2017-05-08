@@ -12,7 +12,7 @@ from .telephone_expense import TelephoneExpense
 from .state import STATE
 
 
-class TransitionHistory(BaseModel):
+class TelephoneExpenseTransitionHistory(BaseModel):
     """
     Stores transition that took place on a medical reimbursement model
     """
