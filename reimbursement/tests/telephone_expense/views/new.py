@@ -8,7 +8,6 @@ from erp_core.models.department import Department
 from erp_core.models.employee import Employee
 from erp_core.models.pay import Pay
 
-from reimbursement.models.telephone_expense.telephone_expense import TelephoneExpense
 from reimbursement.models.telephone_expense.bill.bill_detail import BillDetail
 from reimbursement.models.telephone_expense.bill.bill_image import BillImage
 
@@ -19,12 +18,20 @@ from reimbursement.forms.telephone_expense.bill.bill_image import BillImageForm
 class NewTelephoneReimbursementViewTests(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user('jainendramandavi', 'jainendra.mandavi@iitrpr.ac.in', 'qweasdzxc',
-                                        first_name='Jainendra', last_name='Mandavi')
-        self.address = Address.objects.create(address='QrNo 7/B, Street - 1, Sector 8', town_city='Bhilai', district='Durg',
-                                         state='Chhattisgarh', country='India', zipcode=490009)
-        self.department = Department.objects.create(name='Computer Science and Engineering', short_name='CSE',
-                                               description='Computer Waale Noobde')
+        self.user = User.objects.create_user(
+            'jainendramandavi', 'jainendra.mandavi@iitrpr.ac.in',
+            'qweasdzxc', first_name='Jainendra', last_name='Mandavi'
+        )
+        self.address = Address.objects.create(
+            address='QrNo 7/B, Street - 1, Sector 8',
+            town_city='Bhilai', district='Durg',
+            state='Chhattisgarh', country='India', zipcode=490009
+        )
+        self.department = Department.objects.create(
+            name='Computer Science and Engineering', short_name='CSE',
+
+            description='Computer Waale Noobde'
+        )
         self.pay = Pay.objects.create(band=18000, grade=12000, da=24000, hra=12000, ta=6000, nps=2000, lic=2000)
         self.employee = Employee.objects.create(
                                             employee_id=30052, nationality='Indian',
@@ -71,8 +78,8 @@ class NewTelephoneReimbursementViewTests(TestCase):
             'bill-image-formset-MAX_NUM_FORMS': '1000',
             'bill-image-formset-TOTAL_FORMS': '2',
 
-            'bill-image-formset-0-image_file': open('../a.jpg','r'),
-            'bill-image-formset-1-image_file': open('../b.jpg','r')
+            'bill-image-formset-0-image_file': open('../a.jpg', 'r'),
+            'bill-image-formset-1-image_file': open('../b.jpg', 'r')
         }
 
         bill_detail_modelformset = modelformset_factory(
@@ -101,7 +108,7 @@ class NewTelephoneReimbursementViewTests(TestCase):
         response = self.client.post(reverse('reimbursement:telephone-expense-new'), data)
         self.assertRedirects(
             response=response,
-            expected_url=reverse('reimbursement:telephone-expense-show',kwargs={"telephone_expense_id": 1})
+            expected_url=reverse('reimbursement:telephone-expense-show', kwargs={"telephone_expense_id": 1})
         )
         #
         # medical = Medical.objects.filter(general_detail__employee__user_id=self.user.id).first()

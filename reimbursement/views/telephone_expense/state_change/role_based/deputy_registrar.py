@@ -19,7 +19,7 @@ def generate_state_change_deputy_registrar(request, telephone_expense_id):
     :param telephone_expense_id:
     :return: HttpResponseObject
     """
-    telephone_expense = get_object_or_404(TelephoneExpense,id=telephone_expense_id)
+    telephone_expense = get_object_or_404(TelephoneExpense, id=telephone_expense_id)
     form_errors = {}
     if request.method == 'POST':
         if request.POST.get('APPROVED_BY_DR', False):
@@ -37,8 +37,10 @@ def generate_state_change_deputy_registrar(request, telephone_expense_id):
                     transition.save()
                     telephone_expense.approve_by_dr()
                     telephone_expense.save()
-                    messages.success(request, 'Request for Telephone Expense reimbursement #' + str(telephone_expense_id)
-                                     + ' successfully approved!')
+                    messages.success(request, 'Request for Telephone Expense reimbursement #'
+                                     + str(telephone_expense_id)
+                                     + ' successfully approved!'
+                                     )
                     return redirect('reimbursement:telephone-expense-show', telephone_expense_id)
             except IntegrityError:
                 messages.error(request, 'There was an error approving the reimbursement request')
@@ -59,8 +61,10 @@ def generate_state_change_deputy_registrar(request, telephone_expense_id):
                     transition.save()
                     telephone_expense.reject_by_dr()
                     telephone_expense.save()
-                    messages.success(request, 'Request for Telephone Expense reimbursement #' + str(telephone_expense_id)
-                                                        + ' successfully rejected!')
+                    messages.success(request, 'Request for Telephone Expense reimbursement #'
+                                     + str(telephone_expense_id)
+                                     + ' successfully rejected!'
+                                     )
                     return redirect('reimbursement:telephone-expense-show', telephone_expense_id)
             except IntegrityError:
                 messages.error(request, 'There was an error rejecting the reimbursement request')

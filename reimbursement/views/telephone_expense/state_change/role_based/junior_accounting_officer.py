@@ -19,7 +19,7 @@ def generate_state_change_junior_accounting_officer(request, telephone_expense_i
     :param telephone_expense_id:
     :return: HttpResponseObject
     """
-    telephone_expense = get_object_or_404(TelephoneExpense,id=telephone_expense_id)
+    telephone_expense = get_object_or_404(TelephoneExpense, id=telephone_expense_id)
     form_errors = {}
     if request.method == 'POST':
         if request.POST.get('APPROVED_BY_JrAO', False):
@@ -37,8 +37,10 @@ def generate_state_change_junior_accounting_officer(request, telephone_expense_i
                     transition.save()
                     telephone_expense.approve_by_jr_ao()
                     telephone_expense.save()
-                    messages.success(request, 'Request for Telephone Expense reimbursement #' + str(telephone_expense_id)
-                                     + ' successfully approved!')
+                    messages.success(request, 'Request for Telephone Expense reimbursement #'
+                                     + str(telephone_expense_id)
+                                     + ' successfully approved!'
+                                     )
                     return redirect('reimbursement:telephone-expense-show', telephone_expense_id)
             except IntegrityError:
                 messages.error(request, 'There was an error approving the reimbursement request')
@@ -50,4 +52,6 @@ def generate_state_change_junior_accounting_officer(request, telephone_expense_i
         'form_errors': form_errors,
         'telephone_expense': telephone_expense
     }
-    return render(request, 'reimbursement/telephone_expense/state_change/role_based/junior_accounting_officer.html', context)
+    return render(
+        request, 'reimbursement/telephone_expense/state_change/role_based/junior_accounting_officer.html', context
+                  )

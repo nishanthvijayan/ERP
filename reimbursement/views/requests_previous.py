@@ -15,8 +15,14 @@ from reimbursement.models.telephone_expense.state import STATE as TELEPHONE_EXPE
 
 
 def reimbursement_requests_previous(request):
-    if request.user.groups.filter(Q(name='Reimbursement_Medical_Change_State')
-                                          | Q(name='Reimbursement_Telephone_Expense_Change_State')).exists():
+    if request.user.groups.filter(
+                    Q(
+                        name='Reimbursement_Medical_Change_State'
+                    ) |
+                    Q(
+                        name='Reimbursement_Telephone_Expense_Change_State'
+                    )
+    ).exists():
         if request.user.groups.filter(name='AAO_AccountsDepartment').exists():
             states = {
                 'Medical': MEDICAL_STATE.SUBMITTED,
@@ -48,9 +54,7 @@ def reimbursement_requests_previous(request):
             }
         else:
             states = {}
-        print states
         result_list = get_reimbursement_list(request, states=states)
-        print result_list
         page = request.GET.get('page')
         paginator = Paginator(result_list, 10)
         try:

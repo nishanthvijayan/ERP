@@ -26,16 +26,22 @@ def state_change(request, telephone_expense_id):
             return generate_state_change_dealing_assistant(request, telephone_expense_id)
 
         elif request.user.groups.filter(name='DR_AccountsDepartment').exists() \
-                and TelephoneExpense.objects.filter(id=telephone_expense_id).filter(state=STATE.APPROVED_BY_DA).exists():
+                and TelephoneExpense.objects.filter(id=telephone_expense_id).filter(
+                    state=STATE.APPROVED_BY_DA
+                ).exists():
 
             return generate_state_change_deputy_registrar(request, telephone_expense_id)
 
         elif request.user.groups.filter(name='SrAO_AuditDepartment').exists() \
-                and TelephoneExpense.objects.filter(id=telephone_expense_id).filter(state=STATE.APPROVED_BY_DR).exists():
+                and TelephoneExpense.objects.filter(id=telephone_expense_id).filter(
+                    state=STATE.APPROVED_BY_DR
+                ).exists():
             return generate_state_change_senior_audit_officer(request, telephone_expense_id)
 
         elif request.user.groups.filter(name='R_AdministrativeDepartment').exists() \
-                and TelephoneExpense.objects.filter(id=telephone_expense_id).filter(state=STATE.APPROVED_BY_SrAO).exists():
+                and TelephoneExpense.objects.filter(id=telephone_expense_id).filter(
+                    state=STATE.APPROVED_BY_SrAO
+                ).exists():
             return generate_state_change_registrar(request, telephone_expense_id)
 
         elif request.user.groups.filter(name='JrAO_AccountsDepartment').exists() \

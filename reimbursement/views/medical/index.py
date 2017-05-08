@@ -7,9 +7,7 @@ from reimbursement.models.medical.medical import Medical
 def show(request, medical_id):
     medical = get_object_or_404(Medical, id=medical_id)
     if request.user.groups.filter(name='Reimbursement_Medical_Change_State').exists() \
-            or Medical.objects.filter(id=medical_id)\
-                    .filter(general_detail__employee__user_id=request.user.id)\
-                    .exists():
+            or Medical.objects.filter(id=medical_id).filter(general_detail__employee__user_id=request.user.id).exists():
         context = {
             'medical': medical
         }

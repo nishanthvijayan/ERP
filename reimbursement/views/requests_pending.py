@@ -15,8 +15,14 @@ from reimbursement.models.telephone_expense.state import STATE as TELEPHONE_EXPE
 
 
 def reimbursement_requests_pending(request):
-    if request.user.groups.filter(Q(name='Reimbursement_Medical_Change_State')
-                                          | Q(name='Reimbursement_Telephone_Expense_Change_State')).exists():
+    if request.user.groups.filter(
+                    Q(
+                        name='Reimbursement_Medical_Change_State'
+                    ) |
+                    Q(
+                        name='Reimbursement_Telephone_Expense_Change_State'
+                    )
+    ).exists():
         medical_list = get_medical_list(request)
         telephone_expense_list = get_telephone_expense_list(request)
 

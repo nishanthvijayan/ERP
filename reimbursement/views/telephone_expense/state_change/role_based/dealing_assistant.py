@@ -14,7 +14,7 @@ from reimbursement.forms.telephone_expense.telephone_expense import TelephoneExp
 
 
 def generate_state_change_dealing_assistant(request, telephone_expense_id):
-    telephone_expense = get_object_or_404(TelephoneExpense,id=telephone_expense_id)
+    telephone_expense = get_object_or_404(TelephoneExpense, id=telephone_expense_id)
     if request.method == 'POST':
         telephone_expense_form = TelephoneExpenseForm(data=request.POST, instance=telephone_expense)
         if telephone_expense_form.is_valid():
@@ -34,8 +34,10 @@ def generate_state_change_dealing_assistant(request, telephone_expense_id):
                             transition.save()
                             telephone_expense.approve_by_da()
                             telephone_expense.save()
-                            messages.success(request, 'Request for Telephone Expense reimbursement #' + str(telephone_expense_id)
-                                             + ' successfully approved!')
+                            messages.success(request, 'Request for Telephone Expense reimbursement #'
+                                             + str(telephone_expense_id)
+                                             + ' successfully approved!'
+                                             )
                             return redirect('reimbursement:telephone-expense-show', telephone_expense_id)
                     except IntegrityError:
                         messages.error(request, 'There was an error approving the reimbursement request')

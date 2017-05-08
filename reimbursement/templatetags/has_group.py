@@ -1,6 +1,3 @@
-from reimbursement.models.medical.medical import Medical
-from reimbursement.models.medical.state import STATE
-
 from django import template
 
 register = template.Library()

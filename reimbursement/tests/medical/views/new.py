@@ -145,14 +145,14 @@ class NewMedicalReimbursementViewTests(TestCase):
             [medical.medical_detail.injection.all()[0].date, '2017-05-02'],
             [medical.medical_detail.injection.all()[0].fee, '200']
         ]
-        specialist_consultation_detail = [
-            ['specialist_consultation_formset-MAX_NUM_FORMS', '1000'],
-            ['specialist_consultation_formset-TOTAL_FORMS', '1'],
-            ['specialist_consultation_formset-0-fee', ''],
-            ['specialist_consultation_formset-INITIAL_FORMS', '0'],
-            ['specialist_consultation_formset-0-date', ''],
-            ['specialist_consultation_formset-MIN_NUM_FORMS', '0']
-        ]
+        # specialist_consultation_detail = [
+        #     ['specialist_consultation_formset-MAX_NUM_FORMS', '1000'],
+        #     ['specialist_consultation_formset-TOTAL_FORMS', '1'],
+        #     ['specialist_consultation_formset-0-fee', ''],
+        #     ['specialist_consultation_formset-INITIAL_FORMS', '0'],
+        #     ['specialist_consultation_formset-0-date', ''],
+        #     ['specialist_consultation_formset-MIN_NUM_FORMS', '0']
+        # ]
 
         def xstr(s):
             if s is None:

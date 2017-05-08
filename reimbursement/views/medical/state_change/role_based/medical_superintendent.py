@@ -43,8 +43,11 @@ def generate_state_change_medical_superintendent(request, medical_id):
             transition.save()
             medical.reject_by_ms()
             medical.save()
-            messages.success(request, 'Request for medical reimbursement #' + str(medical_id)
-                         + ' successfully rejected!')
+            messages.success(
+                request, 'Request for medical reimbursement #'
+                + str(medical_id)
+                + ' successfully rejected!'
+            )
             return redirect('reimbursement:medical-show', medical_id)
         else:
             raise PermissionDenied

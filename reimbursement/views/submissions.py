@@ -33,4 +33,3 @@ def reimbursement_submissions(request):
         'results': results
     }
     return render(request, 'reimbursement/submissions.html', context)
-
