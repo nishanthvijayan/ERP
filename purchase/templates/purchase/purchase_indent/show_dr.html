@@ -118,6 +118,47 @@
         </div>
 
         <div class="panel panel-default">
+            <div class="panel-heading">Approvals</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Budgetary Approval :</label>
+                    <div class="col-sm-9">
+                        {% if purchase_indent_request.budgetary_approval %}
+                        <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{{ purchase_indent_request.budgetary_approval.url }}">View</a>
+                        {% else %}
+                        None
+                        {% endif %}
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Project Approval :</label>
+                    <div class="col-sm-9">
+                        {% if purchase_indent_request.project_approval %}
+                        <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{{ purchase_indent_request.project_approval.url }}">View</a>
+                        {% else %}
+                        None
+                        {% endif %}
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Director's Approval :</label>
+                    <div class="col-sm-9">
+                        {% if purchase_indent_request.directors_approval %}
+                        <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{{ purchase_indent_request.directors_approval.url }}">View</a>
+                        {% else %}
+                        None
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
             <div class="panel-heading">Certificate for Proprietary Items</div>
             <div class="panel-body">
                 Certified that to the best of my knowledge, the items indented are the proprietary item of M/s
