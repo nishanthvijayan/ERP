@@ -1,5 +1,5 @@
 {% extends "home/container.html" %}
-
+{% load has_group %}
 {% block navbar-side-tabs %}
 <ul class="nav navbar-nav">
     <li>
@@ -8,11 +8,20 @@
     <li>
         <a href="{% url 'purchase:purchase-submissions' %}">My Submissions</a>
     </li>
-    <li>
-        <a href="{% url 'purchase:purchase-requests-pending' %}">Pending Requests</a>
-    </li>
-    <li>
-        <a href="{% url 'purchase:purchase-requests-previous' %}">Previous Requests</a>
-    </li>
+    {% with request.user.employee_set.all|first as current_employee %}
+        {% if request.user|has_group:"JrAO_AccountsDepartment" or request.user|has_group:"DR_AccountsDepartment" or current_employee.department.hod_id == current_employee.id%}
+            <li>
+                <a href="{% url 'purchase:purchase-requests-pending' %}">Pending Requests</a>
+            </li>
+            <li>
+                <a href="{% url 'purchase:purchase-requests-previous' %}">Previous Requests</a>
+            </li>
+        {% endif %}
+    {% endwith %}
+    {% if request.user|has_group:"PurchaseDepartment" or request.user|has_group:"AccountsDepartment"%}
+        <li>
+            <a href="{% url 'purchase:purchase-requests-approved' %}">All Approved Requests</a>
+        </li>
+    {% endif %}
 </ul>
 {% endblock %}

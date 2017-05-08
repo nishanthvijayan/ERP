@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-
+from django.core.exceptions import PermissionDenied
 from erp_core.models import Department
 from purchase.models import PurchaseIndentRequest, TransitionHistory
 
@@ -34,6 +34,9 @@ def submissions(request):
 def requests_pending(request):
     """View function that renders list of purchase forms pending current user's approval."""
     current_employee = request.user.employee_set.all()[0]
+    if not request.user.groups.filter(name__in=['JrAO_AccountsDepartment', 'DR_AccountsDepartment']).exists() and \
+       current_employee.department.hod_id != current_employee.id:
+        raise PermissionDenied
 
     pending_requests_list_hod = PurchaseIndentRequest.objects.none()
     pending_requests_list_jao = PurchaseIndentRequest.objects.none()
@@ -73,6 +76,10 @@ def requests_pending(request):
 def requests_previous(request):
     """View function that renders list of purchase forms previously approved by current user."""
     current_employee = request.user.employee_set.all()[0]
+    if not request.user.groups.filter(name__in=['JrAO_AccountsDepartment', 'DR_AccountsDepartment']).exists() and \
+       current_employee.department.hod_id != current_employee.id:
+        raise PermissionDenied
+
     previous_requests_list_hod = PurchaseIndentRequest.objects.none()
     previous_requests_list_jao = PurchaseIndentRequest.objects.none()
     previous_requests_list_dr = PurchaseIndentRequest.objects.none()
@@ -117,3 +124,21 @@ def requests_previous(request):
         previous_requests = paginator.page(paginator.num_pages)
 
     return render(request, 'purchase/requests_previous.html', {'previous_requests': previous_requests})
+
+
+@login_required
+def all_approved_requests(request):
+    if not request.user.groups.filter(name__in=['AccountsDepartment', 'PurchaseDepartment']).exists():
+        raise PermissionDenied
+
+    requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Deputy Registrar')
+    page = request.GET.get('page')
+    paginator = Paginator(requests_list, 10)
+    try:
+        requests = paginator.page(page)
+    except PageNotAnInteger:
+        requests = paginator.page(1)
+    except EmptyPage:
+        requests = paginator.page(paginator.num_pages)
+
+    return render(request, 'purchase/all_approved_requests.html', {'requests': requests})

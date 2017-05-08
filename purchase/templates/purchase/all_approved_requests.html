@@ -1,0 +1,41 @@
+{% extends "purchase/app_base.html" %}
+
+{% load bootstrap_pagination %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 page-header">
+        <h2>Approved Requests</h2>
+        <div class="text-muted">
+            All Approved Purchase Indent Requests
+        </div>
+    </div>
+
+    <div class="col-md-12 table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Submitted By</th>
+                    <th>Date Submitted</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td>{{ request.indenter.user.first_name }} {{ request.indenter.user.last_name }}</td>
+                    <td>{{ request.created_at }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" target="_blank"
+                        href="{% url 'purchase:purchase-indent-show' request.id %}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {% bootstrap_paginate requests %}
+        </div>
+    </div>
+</div>
+{% endblock %}

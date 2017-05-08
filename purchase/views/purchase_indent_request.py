@@ -55,7 +55,8 @@ def purchase_indent_show(request, request_id):
     # Check if logged in user is indenter, indenter's HOD, JAO or DR
     if purchase_indent_request.indenter == current_employee or \
        purchase_indent_request.indenter.department.hod_id == current_employee.id or \
-       request.user.groups.filter(name__in=['JrAO_AccountsDepartment', 'DR_AccountsDepartment']).exists():
+       request.user.groups.filter(name__in=['JrAO_AccountsDepartment', 'DR_AccountsDepartment',
+                                            'AccountsDepartment', 'PurchaseDepartment']).exists():
         return render(request, 'purchase/purchase_indent/show.html',
                       {'purchase_indent_request': purchase_indent_request})
 
