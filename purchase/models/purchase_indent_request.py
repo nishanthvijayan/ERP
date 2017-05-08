@@ -34,7 +34,7 @@ class PurchaseIndentRequest(BaseModel):
     budget_sanctioned = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     amount_already_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     budget_available = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    # expenditure dubitable_to field
+    expenditure_debitable_to = models.CharField(max_length=100, null=False, blank=False)
 
     @transition(field=state, source=STATE.SUBMITTED, target=STATE.APPROVED_BY_HOD)
     def hod_approve(self):
