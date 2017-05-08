@@ -10,12 +10,14 @@ from reimbursement.models.medical.medical import Medical
 from reimbursement.models.medical.medical_detail.consultation import Consultation
 from reimbursement.models.medical.medical_detail.injection import Injection
 from reimbursement.models.medical.medical_detail.specialist_consultation import SpecialistConsultation
+from reimbursement.models.medical.medical_detail.medicine import Medicine
 
 from reimbursement.forms.medical.general_detail.general_detail import GeneralDetailForm
 from reimbursement.forms.medical.medical_detail.medical_detail import MedicalDetailForm
 from reimbursement.forms.medical.medical_detail.consultation import ConsultationForm
 from reimbursement.forms.medical.medical_detail.specialist_consultation import SpecialistConsultationForm
 from reimbursement.forms.medical.medical_detail.injection import InjectionForm
+from reimbursement.forms.medical.medical_detail.medicine import MedicineForm
 
 
 def new(request):
@@ -35,6 +37,11 @@ def new(request):
             SpecialistConsultation,
             form=SpecialistConsultationForm,
             fields=('date', 'fee')
+        )
+        MedicineFormSet = modelformset_factory(
+            Medicine,
+            form=MedicineForm,
+            fields=('name', 'price')
         )
 
         if request.method == 'POST':
@@ -59,12 +66,18 @@ def new(request):
                 prefix="specialist_consultation_formset",
                 queryset=SpecialistConsultation.objects.none()
             )
+            medicine_formset = MedicineFormSet(
+                data=request.POST,
+                prefix="medicine_formset",
+                queryset=Medicine.objects.none()
+            )
 
             if general_detail_form.is_valid() \
                     and medical_detail_form.is_valid() \
                     and consultation_formset.is_valid() \
                     and injection_formset.is_valid() \
-                    and specialist_consultation_formset.is_valid():
+                    and specialist_consultation_formset.is_valid() \
+                    and medicine_formset.is_valid():
                 try:
                     with transaction.atomic():
 
@@ -98,6 +111,12 @@ def new(request):
                                 specialist_consultation_form_obj.medical_detail = medical_detail
                                 specialist_consultation_form_obj.save()
 
+                        for medicine_form in medicine_formset:
+                            if medicine_form.has_changed():
+                                medicine_form_obj = medicine_form.save(commit=False)
+                                medicine_form_obj.medical_detail = medical_detail
+                                medicine_form_obj.save()
+
                         messages.success(request, 'New reimbursement request submitted successfully with ID #'
                                          + str(medical.id))
                         return redirect('reimbursement:medical-show', medical.id)
@@ -119,13 +138,18 @@ def new(request):
                 prefix="specialist_consultation_formset",
                 queryset=SpecialistConsultation.objects.none()
             )
+            medicine_formset = MedicineFormSet(
+                prefix="medicine_formset",
+                queryset=Medicine.objects.none()
+            )
 
         context = {
             'general_detail_form': general_detail_form,
             'medical_detail_form': medical_detail_form,
             'consultation_formset': consultation_formset,
             'injection_formset': injection_formset,
-            'specialist_consultation_formset': specialist_consultation_formset
+            'specialist_consultation_formset': specialist_consultation_formset,
+            'medicine_formset': medicine_formset
         }
         return render(request, 'reimbursement/medical/new.html', context)
     else:

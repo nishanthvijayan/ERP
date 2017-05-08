@@ -16,7 +16,8 @@ class Medicine(BaseModel):
     # What should be the max price for the medicines ?
     price = models.DecimalField(
         max_digits=10,
-        decimal_places=2
+        decimal_places=2,
+        help_text='Price of the medicine'
     )
     medical_detail = models.ForeignKey(
         MedicalDetail,
