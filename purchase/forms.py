@@ -21,13 +21,12 @@ class PurchaseIndentRequestForm(ModelForm):
             ('Others', 'Others'),
         )
         self.fields['budget_head'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_HEADS)
-        AVAILABLE_TYPES = (
-            ('Equipment', 'Equipment'),
+        AVAILABLE_CATEGORIES = (
             ('Non Recurring', 'Non Recurring'),
             ('Recurring', 'Recurring'),
             ('Others', 'Others'),
         )
-        self.fields['type'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_TYPES)
+        self.fields['category'].widget = Select(attrs={'class': 'form-control'}, choices=AVAILABLE_CATEGORIES)
         self.fields['make_or_model_reason'].widget = Textarea(attrs={
             'class': 'form-control', 'placeholder': 'Reasons why no other make or model is acceptable'
         })

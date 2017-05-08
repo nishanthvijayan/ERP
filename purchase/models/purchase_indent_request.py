@@ -16,7 +16,7 @@ class PurchaseIndentRequest(BaseModel):
     indenter = models.ForeignKey(Employee, on_delete=models.CASCADE)
     project_name = models.CharField(max_length=200)
     budget_head = models.CharField(max_length=50)
-    type = models.CharField(max_length=50)
+    category = models.CharField(max_length=50)
     make_or_model_reason = models.TextField(max_length=500, null=True, blank=True)
     proprietary_owner = models.CharField(max_length=100, null=True, blank=True)
     proprietary_distributor = models.CharField(max_length=100, null=True, blank=True)
