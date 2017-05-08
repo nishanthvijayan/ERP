@@ -10,6 +10,7 @@ from .models.medical.medical_detail import Injection, SpecialistConsultation, Me
 from .models.telephone_expense.telephone_expense import TelephoneExpense
 from .models.telephone_expense.bill.bill_detail import BillDetail
 from .models.telephone_expense.bill.bill_image import BillImage
+from .models.telephone_expense.telephone_expense_transition_history import TelephoneExpenseTransitionHistory
 
 
 # Medical Expenses Reimbursements
@@ -28,3 +29,4 @@ admin.site.register(MedicalDetail)
 admin.site.register(TelephoneExpense)
 admin.site.register(BillDetail)
 admin.site.register(BillImage)
+admin.site.register(TelephoneExpenseTransitionHistory)
