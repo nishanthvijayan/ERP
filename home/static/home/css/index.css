@@ -78,22 +78,25 @@
   text-shadow: 2px 2px 8px rgba(10,10,10,0.45);
 }
 
-#user-management > a > div.app-logo {
+#reimbursement > a > div.app-logo {
   background-color: #2285ff
 }
 
-#forms > a > div.app-logo {
+#purchase > a > div.app-logo {
   background-color: #F59D00;
 }
 
-#academics > a > div.app-logo {
+#booking > a > div.app-logo {
   background-color: #00BD9B;
 }
 
-#settings > a > div.app-logo {
+#advance-payment > a > div.app-logo {
   background-color: #7F8C8E;
 }
 
+#leave > a > div.app-logo {
+  background-color: #ff7b22;
+}
 /* col-xs */
 @media(max-width:767px){
   #header {
