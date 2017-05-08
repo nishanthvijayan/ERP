@@ -11,11 +11,15 @@ class PurchaseIndentRequestForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PurchaseIndentRequestForm, self).__init__(*args, **kwargs)
-        self.fields['project_name'].widget = TextInput(attrs={'class': 'form-control', 'placeholder': 'Name of the Project'})
-        self.fields['budget_head'].widget = TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': 'Budget Head (Institute, Department, Project, Others)'})
-        self.fields['make_or_model_reason'].widget = Textarea(attrs={'class': 'form-control',
-                                                                     'placeholder': 'Reasons why no other make or model is acceptable'})
+        self.fields['project_name'].widget = TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Name of the Project'
+        })
+        self.fields['budget_head'].widget = TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Budget Head (Institute, Department, Project, Others)'
+        })
+        self.fields['make_or_model_reason'].widget = Textarea(attrs={
+            'class': 'form-control', 'placeholder': 'Reasons why no other make or model is acceptable'
+        })
         self.fields['proprietary_owner'].widget = TextInput(attrs={'size': '30'})
         self.fields['proprietary_distributor'].widget = TextInput(attrs={'size': '30'})
 
