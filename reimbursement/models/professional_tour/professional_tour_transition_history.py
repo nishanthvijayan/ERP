@@ -12,23 +12,19 @@ from .professional_tour import ProfessionalTour
 from .state import STATE
 
 
-class TransitionHistory(BaseModel):
+class ProfessionalTourTransitionHistory(BaseModel):
     """
     Stores transition that took place on a professional tour reimbursement model
     """
+    class Meta:
+        ordering = ['-created_at']
+
     professional = models.ForeignKey(
         ProfessionalTour,
         on_delete=models.CASCADE,
         help_text='Professional Tour',
         related_name='professional_tour_transition_history'
     )
-    # transition = models.ForeignKey(
-    #     Transition,
-    #     null=True,
-    #     on_delete=models.CASCADE,
-    #     help_text='Transition',
-    #     related_name='transition_history_transition'
-    # )
     state_from = FSMField(
         null=True,
         blank=True,
@@ -51,6 +47,3 @@ class TransitionHistory(BaseModel):
         max_length=300,
         help_text='Remarks'
     )
-
-    class Meta:
-        ordering = ['-created_at']
