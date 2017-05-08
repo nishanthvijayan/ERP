@@ -18,5 +18,10 @@
             </li>
         {% endif %}
     {% endwith %}
+    {% if request.user|has_group:"PurchaseDepartment" or request.user|has_group:"AccountsDepartment"%}
+        <li>
+            <a href="{% url 'purchase:purchase-requests-approved' %}">All Approved Requests</a>
+        </li>
+    {% endif %}
 </ul>
 {% endblock %}

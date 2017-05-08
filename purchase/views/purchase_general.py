@@ -124,3 +124,21 @@ def requests_previous(request):
         previous_requests = paginator.page(paginator.num_pages)
 
     return render(request, 'purchase/requests_previous.html', {'previous_requests': previous_requests})
+
+
+@login_required
+def all_approved_requests(request):
+    if not request.user.groups.filter(name__in=['AccountsDepartment', 'PurchaseDepartment']).exists():
+        raise PermissionDenied
+
+    requests_list = PurchaseIndentRequest.objects.filter(state='Approved by Deputy Registrar')
+    page = request.GET.get('page')
+    paginator = Paginator(requests_list, 10)
+    try:
+        requests = paginator.page(page)
+    except PageNotAnInteger:
+        requests = paginator.page(1)
+    except EmptyPage:
+        requests = paginator.page(paginator.num_pages)
+
+    return render(request, 'purchase/all_approved_requests.html', {'requests': requests})

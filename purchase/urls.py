@@ -18,4 +18,6 @@ urlpatterns = [
         views.purchase_indent_jao_approve, name='purchase-indent-jao-approve'),
     url(r'^requests/(?P<request_id>[0-9]+)/approve_dr$',
         views.purchase_indent_dr_approve, name='purchase-indent-dr-approve'),
+    url(r'^requests/approved$',
+        views.all_approved_requests, name='purchase-requests-approved'),
 ]
