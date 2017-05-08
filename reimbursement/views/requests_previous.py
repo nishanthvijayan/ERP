@@ -82,11 +82,10 @@ def get_reimbursement_list(request, states):
         medical_list = Medical.objects.none()
 
     if states.get('TelephoneExpense', False):
-        telephone_expense_list = TelephoneExpense.objects.all()
-        # filter(
-        #     transition_history_set__state_from=TELEPHONE_EXPENSE_STATE.SUBMITTED
-        # )
-        # telephone_expense_transition_history__state_from = states['TelephoneExpense']
+        telephone_expense_list = TelephoneExpense.objects.filter(
+            transition_history_set__state_from=states['TelephoneExpense']
+        )
+        print telephone_expense_list
     else:
         telephone_expense_list = TelephoneExpense.objects.none()
 
