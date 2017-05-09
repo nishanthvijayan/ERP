@@ -160,12 +160,10 @@
                                 <tr>
                                     <td><b>Certificate for diagnosis</b></td>
                                     <td><a target="_blank" href="{{ medical.medical_detail.diagnosis_advised_certificate.url }}">Click here to view</a></td>
-                                </tr>
+
+                            {% else %}
+                                None
                             {% endif %}
-                            <tr>
-                                <td><b>Cost of medicines purchased from the market</b></td>
-                                <td>Rs. {{ medical.medical_detail.cost_of_medicines_market }}</td>
-                            </tr>
                             <tr>
                                 <td><b>Cash memos and bills of medicines</b></td>
                                 <td>
@@ -211,6 +209,29 @@
                                                 <td>{{ forloop.counter }}</td>
                                                 <td>{{ specialist_consultation.date }}</td>
                                                 <td>{{ specialist_consultation.fee }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Medicine name and price</b></td>
+                                <td>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for medicine in medical.medical_detail.medicine.all  %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ medicine.name }}</td>
+                                                <td>{{ medicine.price }}</td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>

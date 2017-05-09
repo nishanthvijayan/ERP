@@ -84,6 +84,11 @@
                             <div class="col-sm-10">
                             {% for consultation_form in consultation_formset.forms %}
                                 <div class="row consultation-formset">
+                                    <div class="col-sm-12">
+                                        <a type="button" class="delete-row btn  btn-xs btn-danger pull-right">
+                                            Remove
+                                        </a>
+                                    </div>
                                     <div class="col-lg-6">
                                     {{ consultation_form.date.errors }}
                                         <div class="input-group">
@@ -99,8 +104,8 @@
                                 </div>
                             {% endfor %}
                             </div>
-                        {% if consultation_form.non_form_errors %}
-                            {% for error in consultation_form.non_form_errors %}
+                        {% if consultation_form.non_field_errors %}
+                            {% for error in consultation_form.non_field_errors %}
                                 {{ error|escape }}
                             {% endfor %}
                         {% endif %}
@@ -118,6 +123,11 @@
                             <div class="col-sm-10">
                             {% for injection_form in injection_formset %}
                                 <div class="row injection-formset">
+                                    <div class="col-sm-12">
+                                        <a type="button" class="delete-row btn  btn-xs btn-danger pull-right">
+                                            Remove
+                                        </a>
+                                    </div>
                                     <div class="col-lg-6">
                                     {{ injection_form.date.errors }}
                                         <div class="input-group">
@@ -133,8 +143,8 @@
                                 </div>
                             {% endfor %}
                             </div>
-                        {% if injection_form.non_form_errors %}
-                            {% for error in injection_form.non_form_errors %}
+                        {% if injection_form.non_field_errors %}
+                            {% for error in injection_form.non_field_errors %}
                                 {{ error|escape }}
                             {% endfor %}
                         {% endif %}
@@ -144,18 +154,6 @@
                             <label class="col-sm-2 control-label">Place of Diagnosis</label>
                             <div class="col-sm-10">
                                 {{ medical_detail_form.diagnosis_place }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ medical_detail_form.diagnosis_advised.errors }}
-                            <label class="col-sm-2 control-label">Whether diagnosis advised</label>
-                            <div class="col-sm-10">
-                                <div class="checkbox">
-                                    <label>
-                                        {{ medical_detail_form.diagnosis_advised }}
-                                        {{ medical_detail_form.diagnosis_advised.help_text }}
-                                    </label>
-                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -206,6 +204,11 @@
                             <div class="col-sm-10">
                             {% for specialist_consultation_form in specialist_consultation_formset %}
                                 <div class="row specialist-consultation-formset">
+                                    <div class="col-sm-12">
+                                        <a type="button" class="delete-row btn  btn-xs btn-danger pull-right">
+                                            Remove
+                                        </a>
+                                    </div>
                                     <div class="col-lg-6">
                                     {{ specialist_consultation_form.date.errors }}
                                         <div class="input-group">
@@ -221,39 +224,23 @@
                                 </div>
                             {% endfor %}
                             </div>
-                        {% if specialist_consultation_form.non_form_errors %}
-                            {% for error in specialist_consultation_form.non_form_errors %}
+                        {% if specialist_consultation_form.non_field_errors %}
+                            {% for error in specialist_consultation_form.non_field_errors %}
                                 {{ error|escape }}
                             {% endfor %}
                         {% endif %}
-                        </div>
-                        <div class="form-group">
-                            {{ medical_detail_form.total_amount_claimed.errors }}
-                            <label class="col-sm-2 control-label">Total Amount Claimed</label>
-                            <div class="col-sm-10">
-                                {{ medical_detail_form.total_amount_claimed }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ medical_detail_form.less_amount_taken.errors }}
-                            <label class="col-sm-2 control-label">Less Advance Taken</label>
-                            <div class="col-sm-10">
-                                {{ medical_detail_form.less_advance_taken }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ medical_detail_form.net_amount_taken.errors }}
-                            <label class="col-sm-2 control-label">Net Amount Claimed</label>
-                            <div class="col-sm-10">
-                                {{ medical_detail_form.net_amount_taken }}
-                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Medicines</label>
                             {{ medicine_formset.management_form }}
                             <div class="col-sm-10">
                             {% for medicine_form in medicine_formset %}
-                                <div class="row specialist-consultation-formset">
+                                <div class="row medicine-formset">
+                                    <div class="col-sm-12">
+                                        <a type="button" class="delete-row btn  btn-xs btn-danger pull-right">
+                                            Remove
+                                        </a>
+                                    </div>
                                     <div class="col-lg-6">
                                     {{ medicine_form.name.errors }}
                                         <div class="input-group">
@@ -269,8 +256,69 @@
                                 </div>
                             {% endfor %}
                             </div>
-                        {% if medicine_form.non_form_errors %}
-                            {% for error in medicine_form.non_form_errors %}
+                        {% if medicine_form.non_field_errors %}
+                            {% for error in medicine_field.non_field_errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ amount_detail_form.amount_claimed_test.errors }}
+                            <label class="col-sm-2 control-label">Amount Claimed Test</label>
+                            <div class="col-sm-10">
+                                {{ amount_detail_form.amount_claimed_test }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ amount_detail_form.amount_claimed_room_rent.errors }}
+                            <label class="col-sm-2 control-label">Amount Claimed Room Rent</label>
+                            <div class="col-sm-10">
+                                {{ amount_detail_form.amount_claimed_room_rent }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ amount_detail_form.amount_claimed_other.errors }}
+                            <label class="col-sm-2 control-label">Amount Claimed Other</label>
+                            <div class="col-sm-10">
+                                {{ amount_detail_form.amount_claimed_other }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.less_advance_taken.errors }}
+                            <label class="col-sm-2 control-label">Less Advance Taken</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.less_advance_taken }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ medical_detail_form.net_amount_claimed.errors }}
+                            <label class="col-sm-2 control-label">Net Amount Claimed</label>
+                            <div class="col-sm-10">
+                                {{ medical_detail_form.net_amount_claimed }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Upload Bills</label>
+                            {{ medical_bill_formset.management_form }}
+                            <div class="col-sm-10">
+                            {% for medical_bill_form in medical_bill_formset %}
+                                <div class="row medical-bill-formset">
+                                    <div class="col-sm-12">
+                                        <a type="button" class="delete-row btn  btn-xs btn-danger pull-right">
+                                            Remove
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-12">
+                                    {{ medical_bill_form.image_file.errors }}
+                                        <div class="input-group">
+                                            {{ medical_bill_form.image_file }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% if medical_bill_form.non_field_errors %}
+                            {% for error in medical_bill_form.non_field_errors %}
                                 {{ error|escape }}
                             {% endfor %}
                         {% endif %}

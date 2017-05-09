@@ -99,13 +99,7 @@
                         {% for bill_image_form in bill_image_formset.forms %}
                             <ul class="list-group">
                                 <li class="list-group-item bill-image-formset">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <a type="button" class="delete-row btn btn-danger pull-right">
-                                                Remove
-                                            </a>
-                                        </div>
-                                    </div>
+
                                     {{ bill_image_form.image_file }}
                                     {{ bill_image_form.image_file.errors }}<br>
                                 </li>

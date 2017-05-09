@@ -1,5 +1,8 @@
 from django.db import models
 from django.forms import forms
+from django.core.validators import MinValueValidator
+
+from decimal import Decimal
 
 from erp_core.models import BaseModel
 
@@ -59,10 +62,10 @@ class MedicalDetail(BaseModel):
         max_length=150,
         help_text='Mention the hospital or laboratory where diagnosis held'
     )
-    diagnosis_advised = models.BooleanField(
-        help_text='Whether the tests were under taken on the advice of the authorized medical attendant. '
-                  'If so certificate to the effect should be attached.'
-    )
+    # diagnosis_advised = models.BooleanField(
+    #     help_text='Whether the tests were under taken on the advice of the authorized medical attendant. '
+    #               'If so certificate to the effect should be attached.'
+    # )
     diagnosis_advised_certificate = models.ImageField(
         null=True,
         blank=True,
@@ -70,11 +73,12 @@ class MedicalDetail(BaseModel):
         help_text='Upload Image of the certificate'
     )
     # Cost of medicines purchased from market
-    cost_of_medicines_market = models.PositiveIntegerField(
-        null=True,
-        blank=True,
-        help_text='Mention cost of medicines purchased from market'
-    )
+    # Not required
+    # cost_of_medicines_market = models.PositiveIntegerField(
+    #     null=True,
+    #     blank=True,
+    #     help_text='Mention cost of medicines purchased from market'
+    # )
     # 7(iii)
     # Upload cash memos/bills in image model
 
@@ -108,6 +112,7 @@ class MedicalDetail(BaseModel):
     total_amount_claimed = models.DecimalField(
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='Mention total claim amount'
     )
     less_advance_taken = models.DecimalField(
@@ -115,11 +120,13 @@ class MedicalDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='Mention Less advance taken before'
     )
-    net_amount_taken = models.DecimalField(
+    net_amount_claimed = models.DecimalField(
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='Enter net amount, ie Total - Less Amount'
     )
     # List of Medicines
@@ -144,9 +151,11 @@ class MedicalDetail(BaseModel):
          > if diagnosis_advised is true than certificate image must be uploaded
         :return:
         """
-        if self.diagnosis_advised:
-            if not self.diagnosis_advised_certificate:
-                raise forms.ValidationError('Image not uploaded')
+
+        self.total_amount_claimed = self.net_amount_claimed
+        if self.less_advance_taken:
+            self.total_amount_claimed += self.less_advance_taken
+
 
         if not self.specialist_consultant_name \
                 or not self.specialist_consultant_designation \
