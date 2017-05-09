@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_extensions',
-
     'erp_core.apps.ErpCoreConfig',
     'home.apps.HomeConfig',
     'user_management.apps.UserManagementConfig',
