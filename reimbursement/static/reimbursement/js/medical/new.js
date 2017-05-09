@@ -23,7 +23,7 @@ $(function () {
         deleteText: ''
     });
     $('.medical-bill-formset').formset({
-        prefix:'medicine_formset',
+        prefix:'medical_bill_formset',
         addText: 'Add another',
         deleteText: ''
     });
