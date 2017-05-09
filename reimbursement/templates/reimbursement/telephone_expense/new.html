@@ -88,9 +88,6 @@
                                 {% endif %}
                             </li>
                             {% endfor %}
-                            <a type="button" class="add-row btn btn-primary pull-right">
-                                Add another
-                            </a>
                         </ul>
                     </div>
                 </div>
@@ -102,6 +99,7 @@
                         {% for bill_image_form in bill_image_formset.forms %}
                             <ul class="list-group">
                                 <li class="list-group-item bill-image-formset">
+
                                     {{ bill_image_form.image_file }}
                                     {{ bill_image_form.image_file.errors }}<br>
                                 </li>

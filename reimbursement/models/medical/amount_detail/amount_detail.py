@@ -1,5 +1,8 @@
 from django.db import models
 from django.forms import forms
+from django.core.validators import MinValueValidator
+
+from decimal import Decimal
 
 from erp_core.models import BaseModel
 
@@ -16,6 +19,7 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='The amount claimed for the medicines, if any'
     )
     amount_claimed_test = models.DecimalField(
@@ -23,6 +27,7 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='The amount claimed for the tests, if any'
     )
     amount_claimed_room_rent = models.DecimalField(
@@ -30,6 +35,7 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='The amount claimed for room rented, if any'
     )
     amount_claimed_other = models.DecimalField(
@@ -37,13 +43,14 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='Others, Ex :- Operation, Procedure, ICU / CCU/ Consultation / Others)'
     )
     other_expenses = models.CharField(
         null=True,
         blank=True,
         max_length=150,
-        help_text='Please specify, Ex :- Operation, Procedure, ICU / CCU/ Consultation / Others)'
+        help_text='Please specify, Ex :- Operation, Procedure, ICU / CCU / Others)'
     )
     # Passed Amount
     amount_passed_medicine = models.DecimalField(
@@ -51,6 +58,7 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='The amount passed for the medicines, if any'
     )
     amount_passed_test = models.DecimalField(
@@ -58,6 +66,7 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='The amount passed for the tests, if any'
     )
     amount_passed_room_rent = models.DecimalField(
@@ -65,6 +74,7 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='The amount passed for room rented, if any'
     )
     amount_passed_other = models.DecimalField(
@@ -72,25 +82,29 @@ class AmountDetail(BaseModel):
         blank=True,
         max_digits=12,
         decimal_places=2,
-        help_text='Others, Ex :- Operation, Procedure, ICU / CCU/ Consultation / Others)'
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text='Others, Ex :- Operation, Procedure, ICU / CCU / Others)'
     )
     # Total Amount Claimed
     total_amount_claimed = models.DecimalField(
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='Total amount claimed'
     )
     total_amount_passed = models.DecimalField(
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='Total amount passed'
     )
     total_amount_rejected = models.DecimalField(
         blank=True,
         max_digits=12,
         decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
         help_text='Total amount rejected'
     )
     medical_reimbursement_register_page_no = models.PositiveIntegerField(

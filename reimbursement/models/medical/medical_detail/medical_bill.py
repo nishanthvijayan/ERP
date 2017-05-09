@@ -15,7 +15,7 @@ def generate_filename(instance, filename):
         format(instance.medical_detail.medical.general_detail.employee.user.id, filename)
 
 
-class MedicineBill(BaseModel):
+class MedicalBill(BaseModel):
     image_file = models.ImageField(
         upload_to=generate_filename,
         help_text='Upload Image of bills'
