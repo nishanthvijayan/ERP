@@ -12,3 +12,10 @@ from .medical import state_change
 from .telephone_expense import new
 from .telephone_expense import show
 from .telephone_expense import state_change
+
+# Professional
+from .professional_tour import new
+from .professional_tour import show
+from .professional_tour import state_change
+
+

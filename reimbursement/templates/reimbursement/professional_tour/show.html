@@ -96,14 +96,9 @@
                             <tr>
                                 <th><b>Meeting Dates</b></th>
                                 <td>
-                                    <tr>
-                                        <th><b>Date</b></th>
-                                        {% for meetingdate in meeting_dates %}
-
-                                            <td>{{ meetingdate.meeting_date }}</td>
-
-                                        {% endfor %}
-                                    </tr>
+                                    {% for meetingdate in meeting_dates %}
+                                        {{ meetingdate.meeting_date }}
+                                    {% endfor %}
                                 </td>
                             </tr>
                             <tr>

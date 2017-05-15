@@ -33,12 +33,16 @@ def new(request):
                 try:
                     with transaction.atomic():
 
+                        print 'PT - 1'
                         professional_tour_form_obj = professional_tour_form.save(commit=False)
+                        print 'PT - 2'
                         professional_tour_form_obj.employee = Employee.objects.filter(user=request.user).first()
+                        print 'PT - 3', professional_tour_form_obj.employee
                         professional_tour_form_obj.save()
+                        print 'PT - 4'
 
                         meeting_date_form_obj = meeting_date_form.save(commit=False)
-                        meeting_date_form_obj.employee = Employee.objects.filter(user=request.user).first()
+                        meeting_date_form_obj.professional_tour = professional_tour_form_obj#ProfessionalTour.objects.filter(id=professional_tour_form_obj.id).first()
                         meeting_date_form_obj.save()
 
                         messages.success(request, 'New Reimbursement  request submitted successfully with ID #'

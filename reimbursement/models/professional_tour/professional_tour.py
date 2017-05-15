@@ -60,11 +60,13 @@ class ProfessionalTour(BaseModel):
         help_text='Enter the amount of reimbursement'
     )
     amount_passed = models.DecimalField(
+        null=True,
         max_digits=10,
         decimal_places=2,
         help_text='Enter amount that passed '
     )
     cheque_no = models.PositiveIntegerField(
+        null=True,
         help_text='Enter cheque no.'
     )
     employee = models.ForeignKey(
@@ -77,6 +79,9 @@ class ProfessionalTour(BaseModel):
         protected=not settings.DEBUG,
         default=STATE.SUBMITTED,
     )
+
+    class Meta:
+        verbose_name = "Professional Tour"
 
     @transition(field=state, source=STATE.SUBMITTED, target=STATE.APPROVED_BY_HOD)
     def approve_by_hod(self):

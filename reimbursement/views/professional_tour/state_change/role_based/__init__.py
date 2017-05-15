@@ -1,0 +1,5 @@
+from dealing_assistant import generate_state_change_dealing_assistant
+from senior_audit_officer import generate_state_change_senior_audit_officer
+from registrar import generate_state_change_registrar
+from assistant_registrar import generate_state_change_assistant_registrar
+from head_of_department import generate_state_change_head_of_department

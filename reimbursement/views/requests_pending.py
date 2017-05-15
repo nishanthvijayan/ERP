@@ -13,6 +13,9 @@ from reimbursement.models.medical.state import STATE as MEDICAL_STATE
 from reimbursement.models.telephone_expense.telephone_expense import TelephoneExpense
 from reimbursement.models.telephone_expense.state import STATE as TELEPHONE_EXPENSE_STATE
 
+from reimbursement.models.professional_tour.professional_tour import ProfessionalTour
+from reimbursement.models.professional_tour.state import STATE as PROFESSIONAL_TOUR_STATE
+
 
 def reimbursement_requests_pending(request):
     if request.user.groups.filter(
@@ -21,6 +24,9 @@ def reimbursement_requests_pending(request):
                     ) |
                     Q(
                         name='Reimbursement_Telephone_Expense_Change_State'
+                    ) |
+                    Q(
+                        name='Reimbursement_Professional_Tour_Change_State'
                     )
     ).exists():
         medical_list = get_medical_list(request)
@@ -89,15 +95,15 @@ def get_professional_tour_list(request):
         professional_tour_list = []
         if looged_in_employee.department.hod.user.id == looged_in_employee.user.id:
             professional_tour_list += ProfessionalTour.objects.filter(employee__department_id=looged_in_employee
-                                                                      .department.id).filter(state=STATE.SUBMITTED)
+                                                                      .department.id).filter(state=PROFESSIONAL_TOUR_STATE.SUBMITTED)
         elif request.user.groups.filter(name='DR_AccountsDepartment').exists():
-            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_HOD)
+            professional_tour_list += ProfessionalTour.objects.filter(state=PROFESSIONAL_TOUR_STATE.APPROVED_BY_HOD)
         elif request.user.groups.filter(name='SrAO_AuditDepartment').exists():
-            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_DR)
+            professional_tour_list += ProfessionalTour.objects.filter(state=PROFESSIONAL_TOUR_STATE.APPROVED_BY_DR)
         elif request.user.groups.filter(name='AR_AdministrativeDepartment').exists():
-            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_SrAO)
+            professional_tour_list += ProfessionalTour.objects.filter(state=PROFESSIONAL_TOUR_STATE.APPROVED_BY_SrAO)
         elif request.user.groups.filter(name='R_AdministrativeDepartment').exists():
-            professional_tour_list += ProfessionalTour.objects.filter(state=STATE.APPROVED_BY_AR)
+            professional_tour_list += ProfessionalTour.objects.filter(state=PROFESSIONAL_TOUR_STATE.APPROVED_BY_AR)
         else:
             professional_tour_list = ProfessionalTour.objects.none()
         return professional_tour_list

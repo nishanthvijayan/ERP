@@ -13,6 +13,9 @@ from reimbursement.models.medical.state import STATE as MEDICAL_STATE
 from reimbursement.models.telephone_expense.telephone_expense import TelephoneExpense
 from reimbursement.models.telephone_expense.state import STATE as TELEPHONE_EXPENSE_STATE
 
+from reimbursement.models.professional_tour.professional_tour import ProfessionalTour
+from reimbursement.models.professional_tour.state import STATE as PROFESSIONAL_TOUR_STATE
+
 
 def reimbursement_requests_previous(request):
     if request.user.groups.filter(
@@ -21,6 +24,9 @@ def reimbursement_requests_previous(request):
                     ) |
                     Q(
                         name='Reimbursement_Telephone_Expense_Change_State'
+                    )|
+                    Q(
+                        name='Reimbursement_Professional_Tour_Change_State'
                     )
     ).exists():
         if request.user.groups.filter(name='AAO_AccountsDepartment').exists():
@@ -92,6 +98,13 @@ def get_reimbursement_list(request, states):
         print telephone_expense_list
     else:
         telephone_expense_list = TelephoneExpense.objects.none()
+
+    if states.get('ProfessionalTour', False):
+        professional_tour_list = ProfessionalTour.objects.filter(
+            professional_tour_transition_history__state_from=states['ProfessionalTour']
+        )
+    else:
+        professional_tour_list = ProfessionalTour.objects.none()
 
     result_list = sorted(
         chain(medical_list, telephone_expense_list),
