@@ -9,5 +9,4 @@ def show(request, mp_hall_id):
     context = {
         'mp_hall' : mp_hall
     }
-    print mp_hall
     return render(request,'booking/mp_hall/show.html',context)
