@@ -1,4 +1,4 @@
-Django==1.11.23
+Django==1.11.28
 django-bootstrap-pagination==1.6.2
 django-fsm==2.5.0
 django-positions==0.5.4
